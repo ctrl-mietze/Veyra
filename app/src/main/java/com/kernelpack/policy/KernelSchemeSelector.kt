@@ -1,0 +1,244 @@
+package com.kernelpack.policy
+
+import com.kernelpack.profile.BaselineRegistry
+
+/**
+ * **构建前的内核方案选择** —— 先看内核版本，再决定用哪套方案，最后才动手打包。
+ *
+ * 为什么要在闸门之外**再加**这一层
+ * --------------------------------
+ * [BuildGate] 是在 `KernelPack.pack()` **内部**跑的：它已经读完 boot.img、
+ * 解析出内核、算完基线对比，才有机会说"不行"。也就是说，被拦下时前面那些工作
+ * 已经白做了 —— 用户也经历了一段"看起来在构建"的过程才等到拒绝。
+ *
+ * 本类的定位是**前置**判定：调用方在真正开跑之前（甚至只拿到 release 串时）
+ * 就能问一句"这个内核该用哪套方案？能不能建？"，把拒绝提前到**零成本**的位置。
+ *
+ * 三层判定（顺序即优先级）
+ * ```
+ *   ① 版本解析不出来        → Blocked（认不出内核就不该动内核内存）
+ *   ② 6.x（主线）           → Selected(主方案)
+ *   ③ 5.x 且开关关着        → Blocked（引导去设置里开「5.x 内核支持（beta）」）
+ *      5.x 且开关开着        → Selected(测试方案) + 强制风险提示
+ * ```
+ *
+ * [与 BuildGate 的关系] 两层**都必须保留**，不是重复：
+ * `BuildGate` 是最后一道硬闸（无论谁调用 `pack()` 都拦得住，包括将来别的入口）；
+ * 本类是体验层的提前量。**宁可拦两次，也不要有一层因为调用路径不同而被绕过。**
+ */
+object KernelSchemeSelector {
+
+    /** 判定结果。 */
+    sealed class Decision {
+        abstract val ok: Boolean
+
+        /**
+         * 可以采用方案了。
+         *
+         * @param series     解析出的内核系列，如 `6.6`。
+         * @param useTestScheme 是否走**测试**（5.x）方案。
+         * @param notes      必须显示给用户的提示（测试线风险等）。空表示没有特别要说的。
+         */
+        data class Selected(
+            val series: String,
+            val major: Int,
+            val useTestScheme: Boolean,
+            val notes: List<String>,
+            /**
+             * 完整内核串（如 `6.6.118-android15-8-g2e6b9c3812c5-ab15114928-4k`）。
+             *
+             * 带上它是为了让下游能**按小版本**路由到具体档位 ——
+             * 上游那 50 档是按小版本登记的，只给 [series]（`6.6`）的话它们永远选不中。
+             */
+            val release: String = "",
+        ) : Decision() {
+            override val ok = true
+            /** 该用哪条线：主线还是测试。 */
+            val tier: KernelTier get() = if (useTestScheme) KernelTier.TEST else KernelTier.MAINLINE
+        }
+
+        /** 拒绝构建，必须给出可操作的补救方式。 */
+        data class Blocked(
+            val title: String,
+            val detail: List<String>,
+            val remedy: String,
+        ) : Decision() {
+            override val ok = false
+        }
+    }
+
+    /** 主线系列 —— **单一来源**，直接引用注册表，避免两处清单漂移。 */
+    val MAINLINE_SERIES: List<String> get() = BaselineRegistry.MAINLINE_SERIES
+
+    /** 测试系列（需开「5.x 内核支持（beta）」）。 */
+    val TEST_SERIES: List<String> get() = BaselineRegistry.TEST_SERIES
+
+    /**
+     * 先检查内核版本，再选方案。
+     *
+     * @param kernelRelease boot.img 里读出的 release 串（如 `6.6.89-android15-8-g...`）
+     * @param allowTestKernel 设置里「5.x 内核支持（beta）」开关。**默认 false**
+     *        —— 漏传时得到的是"拒绝未验证的 5.x"，安全的那一侧。
+     * @param override 设置里「内核系列」的强制指定。**[勘误] 第一版没有这个参数**，
+     *        于是"强制 6.x"配一台 5.x 机器会在这里被判 Selected、一路跑到
+     *        `KernelPack` 内部的 [BuildGate] 才被拦下 —— 也就是说 boot.img 白解了一遍、
+     *        日志刷了一屏才说不行。现在在这里就拦，代价为零。
+     */
+    fun select(
+        kernelRelease: String,
+        allowTestKernel: Boolean = false,
+        allowUnstable4x: Boolean = false,
+        override: SeriesOverride = SeriesOverride.AUTO,
+    ): Decision {
+        val series = BuildGate.seriesOf(kernelRelease)
+            ?: return Decision.Blocked(
+                title = "认不出这个内核版本，已停止构建",
+                detail = listOf(
+                    "boot.img 里的 release 串是「$kernelRelease」，解析不出主.次版本号。",
+                    "选方案完全依赖内核版本 —— 认不出来就无法决定用哪套布局规则，",
+                    "继续下去只会把偏移改到错误的位置上。",
+                ),
+                remedy = "请确认这个 boot.img 确实来自目标设备（有些厂商会改 release 串）。",
+            )
+
+        val major = series.substringBefore('.').toIntOrNull() ?: 0
+
+        // ── 强制指定 vs 实测：**在这里就拦**，不要等到打包内部 ──
+        // 放在最前面（拿到 major 之后立刻判）：无论目标是主线、测试还是不支持，
+        // "强制的那套与实测对不上"都是最优先要说的错误。
+        if (override != SeriesOverride.AUTO) {
+            val forced = override.wireValue.toIntOrNull() ?: 0
+            if (forced != major) {
+                return Decision.Blocked(
+                    title = "强制指定与实测内核不一致，已停止构建",
+                    detail = listOf(
+                        "设置里强制指定 ${forced}.x，但 boot.img 实测是 $series（$kernelRelease）。",
+                        "两边的 rt_mutex / task_struct 布局规则不同，硬按强制的那套改偏移会打到错误字段上。",
+                    ),
+                    remedy = "到「设置 → 内核系列」改成「自动（按 boot.img 实测）」，或换成与该内核匹配的 boot.img。",
+                )
+            }
+        }
+
+        // ── ① 主线：6.6 / 6.12 ──
+        if (series in MAINLINE_SERIES) {
+            return Decision.Selected(
+                series = series,
+                major = major,
+                useTestScheme = false,
+                notes = listOf("主线内核 $series，采用主线方案。"),
+                release = kernelRelease,
+            )
+        }
+
+        // ── ② 4.x unstable analysis route ─────────────────────────────
+        if (major == 4) {
+            if (series !in BaselineRegistry.UNSTABLE_4X_SERIES) {
+                return Decision.Blocked(
+                    title = "4.x 内核系列 $series 尚未纳入 unstable 列表",
+                    detail = listOf(
+                        "实测内核：$kernelRelease",
+                        "当前 4.x unstable 分析族：${BaselineRegistry.UNSTABLE_4X_SERIES.joinToString(" / ")}。",
+                        "4.x 的 rt_mutex_waiter / pselect 栈布局必须逐内核验证，不能跨系列照搬。",
+                    ),
+                    remedy = "使用 Magic Builder 导出分析包，或添加该系列的精确 baseline 后再构建。",
+                )
+            }
+            if (!allowUnstable4x) {
+                return Decision.Blocked(
+                    title = "4.x (unstable) 未开启",
+                    detail = listOf(
+                        "实测内核：$kernelRelease",
+                        "4.x 可以完整分析，但 runnable 输出仍需要精确 baseline。",
+                    ),
+                    remedy = "在 Builder Settings 中开启 4.x (unstable)，或使用 Magic Builder。",
+                )
+            }
+            val exactAdapter = kernelRelease.contains("4.19.152-perf+", ignoreCase = true)
+            return Decision.Selected(
+                series = series,
+                major = major,
+                useTestScheme = true,
+                notes = listOf(
+                    if (exactAdapter) {
+                        "[4.x unstable] 发现公开的 4.19.152-perf+ GhostLock adapter 证据。"
+                    } else {
+                        "[4.x unstable] $series 进入完整分析路径；没有精确 baseline 时仅生成分析产物。"
+                    },
+                    "不会把 5.x / 6.x 偏移静默套到 4.x。",
+                ),
+                release = kernelRelease,
+            )
+        }
+
+        // ── ③ 6.x 但既不在主线、也没有专属基线：明确拒绝，**不**落进 5.x 的 beta 开关 ──
+        //
+        // [2026-09-25 更正] 这里原本连 **6.1 一起拦掉**，理由是"6.1 是 flat 形态，
+        // 与 6.6/6.12 的 nested 不是一套"。理由本身成立，但**结论已经过时**：
+        // 6.1 现在有专属基线 `libbaseline_6_1.so`（6_1 族结构体偏移），
+        // 已被 `MAINLINE_SERIES` 收录，走不到这个分支。
+        //
+        // 保留这个分支是为了拦住**真正没有基线**的 6.x（如 6.2 / 6.5 / 6.7…）——
+        // 对它们仍然必须拒绝：拿 6.6 的偏移打上去会命中错误的结构体字段。
+        if (major == 6) {
+            return Decision.Blocked(
+                title = "不支持的 6.x 内核版本 $series",
+                detail = listOf(
+                    "实测内核：$kernelRelease",
+                    "本工程只支持 6.x 里的 ${MAINLINE_SERIES.joinToString(" / ")}（主线）。",
+                    "$series 既不在主线（${MAINLINE_SERIES.joinToString(" / ")}），也没有专属基线。",
+                    "每个内核系列的结构体布局各自独立（6.1 是 flat、6.6/6.12 是 nested），",
+                    "拿别的系列的偏移打上去会命中错误的结构体字段。",
+                ),
+                remedy = "该 6.x 次版本没有专属基线，暂不支持；请在「设置 → 内核系列」保持「自动」。",
+            )
+        }
+
+        // ── ③ 其余主版本（4.x / 7.x 等）──
+        if (major !in 5..6) {
+            return Decision.Blocked(
+                title = "不支持的内核主版本 $major",
+                detail = listOf(
+                    "实测内核：$kernelRelease",
+                    "本工具只处理 6.x（主线 ${MAINLINE_SERIES.joinToString(" / ")}）",
+                    "与 5.x（测试 ${TEST_SERIES.joinToString(" / ")}）。",
+                    "4.x / 7.x 的 rt_mutex 与 task_struct 布局与两者都不同，不存在“回退默认值”。",
+                ),
+                remedy = "该设备暂不支持；请勿强行构建。",
+            )
+        }
+
+        // ── 5.x：默认**不采用**五系方案 ──
+        if (!allowTestKernel) {
+            return Decision.Blocked(
+                title = "识别到 5.x Legacy 内核，但该模式未开启",
+                detail = listOf(
+                    "实测内核：$kernelRelease（$series，Legacy 5.x / Unverified）",
+                    "当前「5.x Kernel Support」是关闭的，因此不会进入 5.x Legacy 构建路径。",
+                    "Veyra会使用5.4 / 5.10 / 5.15自己的布局与分析规则，不会静默借用6.x偏移。",
+                    "没有精确注册基线时只生成分析数据；开启Nearest-family属于单独的高风险覆盖。",
+                ),
+                remedy = "在 Builder Settings 中启用「5.x Kernel Support」，然后重新构建。",
+            )
+        }
+
+        return Decision.Selected(
+            series = series,
+            major = major,
+            useTestScheme = true,
+            notes = listOf(
+                "[Legacy 5.x] $series uses the dedicated legacy layout/analysis path.",
+                "Runnable output still requires a matching registered baseline; no cross-series fallback is used.",
+            ),
+            release = kernelRelease,
+        )
+    }
+
+    /** 构建前给用户看的一句话摘要（UI 可直接用）。 */
+    fun describe(decision: Decision): String = when (decision) {
+        is Decision.Selected ->
+            "内核 ${decision.series}（${decision.tier.label}）→ 采用" +
+                if (decision.useTestScheme) "Legacy / Unverified" else "主线方案"
+        is Decision.Blocked -> "${decision.title}：${decision.remedy}"
+    }
+}

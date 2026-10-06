@@ -1,0 +1,145 @@
+name: Back-merge
+
+# The other direction. `main` moves ahead of `dev` whenever a fix lands on it or a release is merged,
+# and a `dev` that is behind is a `dev` whose next build tests a state main has already passed - which
+# is the one thing the testing branch is not allowed to be. So every push to `main` levels the two:
+#
+#   - dev has nothing of its own  -> **fast-forward dev to main**, which cannot lose a commit and needs
+#                                    no review, since there is nothing on dev to overwrite;
+#   - the two have diverged       -> **one pull request from main into dev**, updated rather than
+#                                    duplicated, because a merge is a decision and this is where the
+#                                    release pull request leaves those decisions already.
+#
+# `workflow_dispatch` is here so a dev that drifted can be levelled without pushing to main again.
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  # For the back-merge pull request.
+  pull-requests: write
+  # To start `CI Build` for the levelled state - see the fast-forward step for why that cannot be left
+  # to the push itself.
+  actions: write
+
+concurrency:
+  group: back-merge
+  # Superseded by a newer push, which recomputes the whole comparison anyway - so a cancelled run costs
+  # nothing but the work, and never half a push: the ref update is a single API call.
+  cancel-in-progress: true
+
+jobs:
+  back-merge:
+    name: Back-merge main into dev
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Level dev with main
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          # There is no checkout in this job - nothing here needs the files - and without one `gh`
+          # cannot work out which repository it is talking to: `gh pr list` in particular fails with
+          # "not a git repository" and takes the whole step with it. The repo has to be named.
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          # Read from the API rather than from git, for the same reason the release pull request does:
+          # there is no checkout here, and a shallow one could not answer this at all.
+          #
+          # `main`'s tip is looked up rather than taken from `GITHUB_SHA`, so a dispatch from any ref
+          # means the same thing: there is no way to point this at main while it levels something else,
+          # which is what using the dispatched ref would allow.
+          MAIN_SHA="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/main" --jq '.object.sha')"
+          COMPARE="repos/${GITHUB_REPOSITORY}/compare/dev...${MAIN_SHA}"
+          # What main has and dev does not, then the other way round.
+          AHEAD="$(gh api "$COMPARE" --jq '.ahead_by')"
+          BEHIND="$(gh api "$COMPARE" --jq '.behind_by')"
+          DEV_SHA="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/dev" --jq '.object.sha')"
+          SHORT_SHA="$(echo "$MAIN_SHA" | cut -c1-7)"
+          PR="$(gh pr list --repo "$GITHUB_REPOSITORY" --base dev --head main --state open \
+            --json number --jq '.[0].number // empty')"
+
+          {
+            echo "### Back-merge"
+            echo
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "${AHEAD:-0}" -eq 0 ]; then
+            echo "dev already has everything main has; nothing to bring across."
+            if [ -n "$PR" ]; then
+              # An open back-merge that has nothing left in it is worse than no pull request: it reads as
+              # work waiting to be done.
+              gh pr close "$PR" --repo "$GITHUB_REPOSITORY" \
+                --comment "main and dev are level again, so there is nothing left to bring across."
+              echo "Closed back-merge pull request #${PR}, which had nothing left in it." >> "$GITHUB_STEP_SUMMARY"
+            else
+            echo "dev is level with \`main\`; nothing to bring across." >> "$GITHUB_STEP_SUMMARY"
+            fi
+            exit 0
+          fi
+
+          if [ "${BEHIND:-0}" -eq 0 ]; then
+            # A fast-forward: dev holds nothing of its own, so this cannot drop a commit - and `force`
+            # stays false, so GitHub refuses the update rather than clobbering dev if the comparison
+            # above was stale by the time this ran.
+            gh api --method PATCH "repos/${GITHUB_REPOSITORY}/git/refs/heads/dev" \
+              -f sha="$MAIN_SHA" \
+              -F force=false >/dev/null
+            echo "Fast-forwarded dev from ${DEV_SHA:0:7} to ${SHORT_SHA} (${AHEAD} commit(s))."
+            echo "- dev fast-forwarded \`${DEV_SHA:0:7}\` -> \`${SHORT_SHA}\`, ${AHEAD} commit(s)" \
+              >> "$GITHUB_STEP_SUMMARY"
+
+            # Moving a ref with this workflow's own token does *not* start another workflow - that is
+            # GitHub's recursion guard, and it was measured rather than assumed: the first fast-forward
+            # of this branch produced no `CI Build` at all. So the build a push to dev would have
+            # started is asked for by name, which is the one event the guard excepts. It is a warning
+            # rather than a failure if it cannot be started: levelling dev is this job, and a build of
+            # the levelled state is the point of the branch rather than of this step.
+            if gh workflow run ci.yml --repo "$GITHUB_REPOSITORY" --ref dev; then
+              echo "- \`CI Build\` started for the levelled state" >> "$GITHUB_STEP_SUMMARY"
+            else
+              echo "::warning::dev was levelled, but the CI Build for it could not be started."
+              echo "- \`CI Build\` could not be started; run it from the Actions tab" \
+                >> "$GITHUB_STEP_SUMMARY"
+            fi
+            exit 0
+          fi
+
+          # Diverged: dev carries commits main does not, so bringing main across is a merge rather than a
+          # move - and a merge is a decision, which is why this opens a pull request instead of doing it.
+          {
+            echo "\`dev\` has diverged from \`main\`: ${AHEAD} commit(s) on \`main\` are not on \`dev\`,"
+            echo "and ${BEHIND} on \`dev\` are not on \`main\`."
+            echo
+            echo "A fast-forward would drop the \`dev\` commits, so this needs a merge. Nothing merges it"
+            echo "automatically."
+            echo
+            echo "### Commits this brings into dev"
+            echo              gh api "repos/${GITHUB_REPOSITORY}/compare/dev...${MAIN_SHA}" \
+              --jq '.commits[] | "- " + (.commit.message | split("\n")[0])'
+            echo
+            echo "### Only on dev"
+            echo
+            gh api "repos/${GITHUB_REPOSITORY}/compare/${MAIN_SHA}...dev" \
+              --jq '.commits[] | "- " + (.commit.message | split("\n")[0])'
+          } > "$RUNNER_TEMP/backmerge.md"
+
+          TITLE="Back-merge: main into dev (${AHEAD} commit(s))"
+          if [ -n "$PR" ]; then
+            gh pr edit "$PR" --repo "$GITHUB_REPOSITORY" \
+              --title "$TITLE" --body-file "$RUNNER_TEMP/backmerge.md"
+            URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/pull/${PR}"
+            echo "Updated back-merge pull request #${PR}: ${URL}"
+          else
+            OUT="$(gh pr create --repo "$GITHUB_REPOSITORY" --base dev --head main \
+              --title "$TITLE" --body-file "$RUNNER_TEMP/backmerge.md")"
+            echo "$OUT"
+            URL="$(printf '%s\n' "$OUT" | grep -oE 'https://[^ ]+/pull/[0-9]+' | tail -n 1 || true)"
+          fi
+          [ -n "${URL:-}" ] || URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/pulls"
+          echo "- back-merge pull request: ${URL}" >> "$GITHUB_STEP_SUMMARY"

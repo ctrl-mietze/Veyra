@@ -1,0 +1,9 @@
+{
+  "kind": "research-only",
+  "connected": false,
+  "runnablePayloads": false,
+  "repository": "JoinChang/ghostlock-oneplus",
+  "coverage": "OnePlus 6.12-family multi-device GhostLock research",
+  "evidence": "Per-device runtime tables and boot.img/kallsyms adaptation workflow.",
+  "note": "Visible in Payload Sources for research/adaptation. It is not treated as a runnable feed until a Veyra-compatible exact payload manifest exists."
+}

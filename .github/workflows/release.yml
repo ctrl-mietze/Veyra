@@ -1,0 +1,225 @@
+name: Release Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: Release tag to publish, or leave blank to use the latest v* tag
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Release Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
+        with:
+          packages: 'platform-tools platforms;android-37.0 build-tools;36.0.0 cmake;3.22.1'
+          accept-android-sdk-licenses: true
+
+      - name: Setup NDK
+        uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: r28
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Decode signing keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          : "${KEYSTORE_BASE64:?Repository secret KEYSTORE_BASE64 is not set}"
+          : "${KEYSTORE_PASSWORD:?Repository secret KEYSTORE_PASSWORD is not set}"
+          : "${KEY_ALIAS:?Repository secret KEY_ALIAS is not set}"
+          : "${KEY_PASSWORD:?Repository secret KEY_PASSWORD is not set}"
+
+          KEYSTORE_PATH="$RUNNER_TEMP/release.jks"
+          printf '%s' "$KEYSTORE_BASE64" | base64 -d > "$KEYSTORE_PATH"
+
+          {
+            echo "KEYSTORE_FILE=$KEYSTORE_PATH"
+            echo "KEYSTORE_TYPE=PKCS12"
+            echo "KEYSTORE_PASSWORD=$KEYSTORE_PASSWORD"
+            echo "KEY_ALIAS=$KEY_ALIAS"
+            echo "KEY_PASSWORD=$KEY_PASSWORD"
+          } >> "$GITHUB_ENV"
+
+      # Before the tag, deliberately: this runs on the commit that is about to be tagged, and a
+      # failure here leaves nothing behind. The other order leaves a tag with no release on it, which
+      # is a mess to clean up by hand. The same suite gates the CI workflow's pre-releases.
+      - name: Run unit tests
+        run: ./gradlew testDebugUnitTest --no-daemon
+
+      - name: Resolve release tag
+        id: release_tag
+        shell: bash
+        env:
+          INPUT_TAG_NAME: ${{ inputs.tag_name }}
+        run: |
+          set -euo pipefail
+
+          git fetch --tags --force
+          # The base version, not versionName: the built app's version name carries a per-build
+          # suffix, while a release tag is always `v<base>`.
+          VERSION_NAME="$(grep -oE 'appVersionBase[[:space:]]*=[[:space:]]*"[^"]+"' app/build.gradle.kts | head -n 1 | cut -d'"' -f2)"
+          EXPECTED_TAG="v$VERSION_NAME"
+
+          if [ -n "$INPUT_TAG_NAME" ]; then
+            TAG_NAME="$INPUT_TAG_NAME"
+          else
+            TAG_NAME="$EXPECTED_TAG"
+          fi
+
+          if [ -z "$TAG_NAME" ]; then
+            echo "No release tag found." >&2
+            exit 1
+          fi
+
+          if [ "$TAG_NAME" != "$EXPECTED_TAG" ]; then
+            echo "Tag $TAG_NAME does not match app version $VERSION_NAME (expected $EXPECTED_TAG)." >&2
+            exit 1
+          fi
+
+          if ! git rev-parse -q --verify "refs/tags/$TAG_NAME" >/dev/null; then
+            git tag -a "$TAG_NAME" -m "Release $TAG_NAME"
+            git push origin "refs/tags/$TAG_NAME"
+          fi
+
+          TAG_COMMIT="$(git rev-list -n 1 "$TAG_NAME")"
+          PREVIOUS_TAG="$(git tag --list 'v*' --sort=-v:refname | grep -Fxv "$TAG_NAME" | head -n 1 || true)"
+
+          {
+            echo "tag_name=$TAG_NAME"
+            echo "version_name=$VERSION_NAME"
+            echo "tag_commit=$TAG_COMMIT"
+            echo "previous_tag=$PREVIOUS_TAG"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Checkout release tag
+        shell: bash
+        env:
+          TAG_NAME: ${{ steps.release_tag.outputs.tag_name }}
+        run: |
+          set -euo pipefail
+          git checkout --force "$TAG_NAME"
+
+      - name: Build APKs
+        run: ./gradlew assembleDebug assembleRelease --no-daemon
+
+      # Both APKs, not only the release one: the debug buildtype is signed with the same key (see
+      # app/build.gradle.kts), and a release that publishes a debug APK which could not install over
+      # the release APK would be handing out the same broken artifact the CI workflow did.
+      - name: Verify APK signatures
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          BUILD_TOOLS="$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -n 1)"
+          EXPECTED_SHA256="$(keytool -list -v -keystore "$KEYSTORE_FILE" -storepass "$KEYSTORE_PASSWORD" \
+            -alias "$KEY_ALIAS" | grep -m 1 'SHA256:' | awk '{print $2}' | tr -d ':' | tr 'A-F' 'a-f')"
+
+          for APK in app/build/outputs/apk/release/*.apk app/build/outputs/apk/debug/*.apk; do
+            CERT="$("$BUILD_TOOLS/apksigner" verify --print-certs "$APK")"
+            SIGNED_SHA256="$(echo "$CERT" | grep -m 1 'SHA-256 digest' | awk '{print $NF}' | tr 'A-F' 'a-f')"
+            if [ "$SIGNED_SHA256" != "$EXPECTED_SHA256" ]; then
+              echo "::error::$APK is not signed with the repository key (got $SIGNED_SHA256, expected $EXPECTED_SHA256)."
+              exit 1
+            fi
+            echo "$APK: $SIGNED_SHA256"
+          done
+
+      - name: Stage APKs
+        if: success()
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION_NAME="$(grep -oE 'appVersionBase[[:space:]]*=[[:space:]]*"[^"]+"' app/build.gradle.kts | head -n 1 | cut -d'"' -f2)"
+          mkdir -p release-assets
+          cp app/build/outputs/apk/release/*.apk "release-assets/RootMyGalaxyNext-${VERSION_NAME}.apk"
+          cp app/build/outputs/apk/debug/*.apk "release-assets/RootMyGalaxyNext-${VERSION_NAME}-debug.apk"
+
+      - name: Generate release notes
+        shell: bash
+        env:
+          TAG_NAME: ${{ steps.release_tag.outputs.tag_name }}
+          VERSION_NAME: ${{ steps.release_tag.outputs.version_name }}
+          TAG_COMMIT: ${{ steps.release_tag.outputs.tag_commit }}
+          PREVIOUS_TAG: ${{ steps.release_tag.outputs.previous_tag }}
+        run: |
+          set -euo pipefail
+
+          {
+            echo "# Release $TAG_NAME"
+            echo
+            echo "Version: $VERSION_NAME"
+            echo "Commit: $TAG_COMMIT"
+            echo
+            echo "Two APKs: \`RootMyGalaxyNext-${VERSION_NAME}.apk\` is the release build, and"
+            echo "\`RootMyGalaxyNext-${VERSION_NAME}-debug.apk\` is the same code with debugging on. Both are"
+            echo "signed with the repository release key, so either installs over the other and over releases"
+            echo "of this fork that share its package id. This build is its own app"
+            echo "(\`dev.rushiranpise.rmgnext\`), so Root My Galaxy is left alone if it is installed - and so"
+            echo "are this app's own settings, history and superuser grant, which start empty here."
+            echo
+            if [ -n "$PREVIOUS_TAG" ]; then
+              echo "Changes since $PREVIOUS_TAG:"
+              echo
+              git log --format='- %s' "$PREVIOUS_TAG..$TAG_NAME"
+            else
+              echo "First tagged release."
+            fi
+          } > release-notes.md
+
+      - name: Create or update GitHub release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG_NAME: ${{ steps.release_tag.outputs.tag_name }}
+        run: |
+          set -euo pipefail
+
+          if gh release view "$TAG_NAME" >/dev/null 2>&1; then
+            gh release edit "$TAG_NAME" \
+              --title "Release $TAG_NAME" \
+              --notes-file release-notes.md \
+              --latest
+            gh release upload "$TAG_NAME" release-assets/*.apk --clobber
+          else
+            gh release create "$TAG_NAME" release-assets/*.apk \
+              --title "Release $TAG_NAME" \
+              --notes-file release-notes.md \
+              --latest
+          fi

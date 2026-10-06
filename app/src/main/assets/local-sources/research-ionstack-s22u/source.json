@@ -1,0 +1,9 @@
+{
+  "kind": "research-only",
+  "connected": false,
+  "runnablePayloads": false,
+  "repository": "sarabpal-dev/IonStack-S22U",
+  "coverage": "Samsung Android 12 / kernel 5.10 target-generation research",
+  "evidence": "S22-family and related Samsung 5.10 target generation from kallsyms/config/Image.",
+  "note": "Visible in Payload Sources for research/adaptation. It is not treated as a runnable feed until a Veyra-compatible exact payload manifest exists."
+}

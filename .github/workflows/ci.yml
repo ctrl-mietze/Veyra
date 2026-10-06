@@ -1,0 +1,281 @@
+name: CI Build
+
+# The testing branch builds itself: every push to `dev` produces a pre-release with a debug and a
+# release APK. Nothing else builds automatically - `main` is what a stable release is cut from, and
+# that is the `Release Build` workflow, run by hand.
+#
+# `workflow_dispatch` is the escape hatch: it builds and publishes from whichever ref is picked, so
+# a branch that is not `dev` can still be built deliberately without being made to build always.
+on:
+  push:
+    branches:
+      - dev
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  # For the release pull request opened at the end of a `dev` build.
+  pull-requests: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: CI Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
+        with:
+          packages: 'platform-tools platforms;android-37.0 build-tools;36.0.0 cmake;3.22.1'
+          accept-android-sdk-licenses: true
+
+      - name: Setup NDK
+        uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: r28
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Decode signing keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          : "${KEYSTORE_BASE64:?Repository secret KEYSTORE_BASE64 is not set}"
+          : "${KEYSTORE_PASSWORD:?Repository secret KEYSTORE_PASSWORD is not set}"
+          : "${KEY_ALIAS:?Repository secret KEY_ALIAS is not set}"
+          : "${KEY_PASSWORD:?Repository secret KEY_PASSWORD is not set}"
+
+          KEYSTORE_PATH="$RUNNER_TEMP/release.jks"
+          printf '%s' "$KEYSTORE_BASE64" | base64 -d > "$KEYSTORE_PATH"
+
+          {
+            echo "KEYSTORE_FILE=$KEYSTORE_PATH"
+            echo "KEYSTORE_TYPE=PKCS12"
+            echo "KEYSTORE_PASSWORD=$KEYSTORE_PASSWORD"
+            echo "KEY_ALIAS=$KEY_ALIAS"
+            echo "KEY_PASSWORD=$KEY_PASSWORD"
+          } >> "$GITHUB_ENV"
+
+      # Before the APKs, so a failing test reports as a failing test rather than as a build that
+      # stopped somewhere. The release workflow runs the same task for the same reason: a stable
+      # release is not a way past the suite.
+      - name: Run unit tests
+        run: ./gradlew testDebugUnitTest --no-daemon
+
+      - name: Build APKs
+        run: ./gradlew assembleDebug assembleRelease --no-daemon
+
+      - name: Verify release APK signature
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          BUILD_TOOLS="$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -n 1)"
+          APK="$(ls app/build/outputs/apk/release/*.apk | head -n 1)"
+
+          CERT="$("$BUILD_TOOLS/apksigner" verify --print-certs "$APK")"
+          SIGNED_DN="$(echo "$CERT" | grep -m 1 'certificate DN' | cut -d: -f2- | sed 's/^ *//')"
+          SIGNED_SHA256="$(echo "$CERT" | grep -m 1 'SHA-256 digest' | awk '{print $NF}' | tr 'A-F' 'a-f')"
+          EXPECTED_SHA256="$(keytool -list -v -keystore "$KEYSTORE_FILE" -storepass "$KEYSTORE_PASSWORD" \
+            -alias "$KEY_ALIAS" | grep -m 1 'SHA256:' | awk '{print $2}' | tr -d ':' | tr 'A-F' 'a-f')"
+
+          if [ "$SIGNED_SHA256" != "$EXPECTED_SHA256" ]; then
+            echo "::error::Release APK is not signed with the repository key (got $SIGNED_SHA256, expected $EXPECTED_SHA256)."
+            exit 1
+          fi
+
+          {
+            echo "### Release APK signature"
+            echo
+            echo "- DN: \`$SIGNED_DN\`"
+            echo "- SHA-256: \`$SIGNED_SHA256\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload APKs
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-apks
+          path: |
+            app/build/outputs/apk/debug/*.apk
+            app/build/outputs/apk/release/*.apk
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Stage APKs
+        shell: bash
+        run: |
+          set -euo pipefail
+          # The base version, not versionName: the built app adds a per-build suffix to its version
+          # name, while release tags and asset names stay on the base.
+          VERSION_NAME="$(grep -oE 'appVersionBase[[:space:]]*=[[:space:]]*"[^"]+"' app/build.gradle.kts | head -n 1 | cut -d'"' -f2)"
+          if [ -z "$VERSION_NAME" ]; then
+            echo "Could not read appVersionBase from app/build.gradle.kts." >&2
+            exit 1
+          fi
+          # The run number is in the asset name so two CI downloads of the same version differ.
+          mkdir -p ci-release
+          cp app/build/outputs/apk/release/*.apk \
+            "ci-release/RootMyGalaxyNext-${VERSION_NAME}-ci${GITHUB_RUN_NUMBER}.apk"
+          # The debug APK goes out with it, and it is installable over the signed builds because the
+          # debug buildtype is signed with the same key when one is configured (app/build.gradle.kts).
+          cp app/build/outputs/apk/debug/*.apk \
+            "ci-release/RootMyGalaxyNext-${VERSION_NAME}-ci${GITHUB_RUN_NUMBER}-debug.apk"
+
+      - name: Publish pre-release
+        if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/dev'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          VERSION_NAME="$(grep -oE 'appVersionBase[[:space:]]*=[[:space:]]*"[^"]+"' app/build.gradle.kts | head -n 1 | cut -d'"' -f2)"
+          TAG="ci-${VERSION_NAME}-${GITHUB_RUN_NUMBER}"
+          TITLE="CI build ${VERSION_NAME} (${GITHUB_RUN_NUMBER})"
+          APK="ci-release/RootMyGalaxyNext-${VERSION_NAME}-ci${GITHUB_RUN_NUMBER}.apk"
+          DEBUG_APK="ci-release/RootMyGalaxyNext-${VERSION_NAME}-ci${GITHUB_RUN_NUMBER}-debug.apk"
+          SHORT_SHA="$(echo "$GITHUB_SHA" | cut -c1-7)"
+
+          {
+            echo "# ${TITLE}"
+            echo
+            echo "Automated build from \`${GITHUB_REF_NAME}\`."
+            echo
+            echo "- Version: ${VERSION_NAME} (installed builds show \`${VERSION_NAME}+ci.${GITHUB_RUN_NUMBER}\`)"
+            echo "- Commit: [\`${SHORT_SHA}\`](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}) $(git log -1 --format=%s)"
+            echo "- Branch: ${GITHUB_REF_NAME}"
+            echo "- Workflow run: [${GITHUB_RUN_NUMBER}](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})"
+            echo
+            echo "Two APKs: \`RootMyGalaxyNext-${VERSION_NAME}-ci${GITHUB_RUN_NUMBER}.apk\` is the release"
+            echo "build, and \`...-debug.apk\` is the same code with debugging on. Both are signed with"
+            echo "the repository key, so either installs over the other and over CI builds of this fork that"
+            echo "share its package id. This build is its own app (\`dev.rushiranpise.rmgnext\`): it installs"
+            echo "beside Root My Galaxy rather than over it, and starts with no settings, no history and no"
+            echo "superuser grant of its own."
+            echo
+            echo "Tagged releases come from the Release Build workflow, not from here."
+          } > ci-release/notes.md
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release edit "$TAG" \
+              --title "$TITLE" \
+              --notes-file ci-release/notes.md \
+              --prerelease \
+              --latest=false
+            gh release upload "$TAG" "$APK" "$DEBUG_APK" --clobber
+          else
+            gh release create "$TAG" "$APK" "$DEBUG_APK" \
+              --target "$GITHUB_SHA" \
+              --title "$TITLE" \
+              --notes-file ci-release/notes.md \
+              --prerelease \
+              --latest=false
+          fi
+
+      # A pull request, not a merge: `dev` is what gets tested, `main` is what a stable release is cut
+      # from, and moving one to the other stays a decision. This opens or updates that one pull request
+      # once the build and the suite above have gone green - so a `dev` commit that does not build
+      # never reaches review - and never merges it.
+      #
+      # The compare and contents APIs are used rather than git history because the checkout is shallow
+      # and a `git log main..dev` here would be reading a truncated history.
+      - name: Open or update the dev to main pull request
+        if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          # Named rather than inferred, so this step does not depend on the checkout above it to work
+          # out which repository it is talking to.
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          AHEAD="$(gh api "repos/${GITHUB_REPOSITORY}/compare/main...${GITHUB_SHA}" --jq '.ahead_by')"
+          OPEN_PR="$(gh pr list --base main --head dev --state open --json number --jq '.[0].number // empty')"
+          if [ "${AHEAD:-0}" -eq 0 ]; then
+            echo "dev has nothing that main does not already have; no pull request to open."
+            if [ -n "$OPEN_PR" ]; then
+              # A release pull request with nothing in it reads as work waiting to be done, and two
+              # things can empty one between two dev pushes: a back-merge, and a push straight to main.
+              gh pr close "$OPEN_PR" \
+                --comment "dev has nothing that main does not already have, so there is nothing to release here."
+              echo "- closed release pull request #${OPEN_PR}, which had nothing left in it" \
+                >> "$GITHUB_STEP_SUMMARY"
+            fi
+            exit 0
+          fi
+          BEHIND="$(gh api "repos/${GITHUB_REPOSITORY}/compare/main...${GITHUB_SHA}" --jq '.behind_by')"
+
+          VERSION_NAME="$(grep -oE 'appVersionBase[[:space:]]*=[[:space:]]*"[^"]+"' app/build.gradle.kts | head -n 1 | cut -d'"' -f2)"
+          MAIN_VERSION="$(gh api "repos/${GITHUB_REPOSITORY}/contents/app/build.gradle.kts?ref=main" --jq '.content' \
+            | base64 -d | grep -oE 'appVersionBase[[:space:]]*=[[:space:]]*"[^"]+"' | head -n 1 | cut -d'"' -f2)"
+          PRE_RELEASE="ci-${VERSION_NAME}-${GITHUB_RUN_NUMBER}"
+
+          {
+            echo "${AHEAD} commit(s) on \`dev\` are not on \`main\` yet."
+            echo
+            echo "- Tested state: [\`${PRE_RELEASE}\`](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${PRE_RELEASE})"
+            echo "  (both APKs, debug and release)"
+            echo "- Latest commit: [\`$(echo "$GITHUB_SHA" | cut -c1-7)\`](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA})"
+            echo "- Workflow run: [${GITHUB_RUN_NUMBER}](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})"
+            echo
+            if [ "${BEHIND:-0}" -gt 0 ]; then
+              echo "\`main\` is also ${BEHIND} commit(s) ahead of \`dev\`, so this merge is not a"
+              echo "fast-forward."
+              echo
+            fi
+            if [ -z "$MAIN_VERSION" ] || [ "$VERSION_NAME" = "$MAIN_VERSION" ]; then
+              echo "> \`appVersionBase\` is \`${VERSION_NAME}\` on both branches. A stable release from this"
+              echo "> merge would republish the existing \`v${VERSION_NAME}\` tag with a freshly built APK,"
+              echo "> so bump it on \`dev\` first if this is meant to be a new version."
+            else
+              echo "Merging this and dispatching \`Release Build\` from \`main\` produces \`v${VERSION_NAME}\`"
+              echo "(\`main\` is on \`${MAIN_VERSION}\`)."
+            fi
+            echo
+            echo "### Commits"
+            echo
+            gh api "repos/${GITHUB_REPOSITORY}/compare/main...${GITHUB_SHA}" \
+              --jq '.commits[] | "- " + (.commit.message | split("\n")[0])'
+            echo
+            echo "Nothing merges this automatically. \`main\` builds nothing on its own, and a stable"
+            echo "release is the \`Release Build\` workflow run by hand from \`main\`."
+          } > "$RUNNER_TEMP/pr.md"
+
+          TITLE="dev to main: ${VERSION_NAME}, ${AHEAD} commit(s)"
+          PR="$OPEN_PR"
+          if [ -n "$PR" ]; then
+            gh pr edit "$PR" --title "$TITLE" --body-file "$RUNNER_TEMP/pr.md"
+            URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/pull/${PR}"
+            echo "Updated pull request #${PR}: ${URL}"
+          else
+            OUT="$(gh pr create --base main --head dev --title "$TITLE" --body-file "$RUNNER_TEMP/pr.md")"
+            echo "$OUT"
+            URL="$(printf '%s\n' "$OUT" | grep -oE 'https://[^ ]+/pull/[0-9]+' | tail -n 1 || true)"
+          fi
+          [ -n "${URL:-}" ] || URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/pulls"
+
+          {
+            echo "### Release pull request"
+            echo
+            echo "- ${URL}"
+            echo "- ${AHEAD} commit(s) from \`dev\`, version ${VERSION_NAME}"
+          } >> "$GITHUB_STEP_SUMMARY"

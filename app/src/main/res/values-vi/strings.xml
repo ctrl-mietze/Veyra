@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Veyra Root</string>
+    <string name="nav_overview">Trang chủ</string>
+    <string name="nav_history">Lịch sử</string>
+    <string name="nav_settings">Cài đặt</string>
+    <string name="install_confirm_title">Cài đặt KernelSU?</string>
+    <string name="install_confirm_body">Ứng dụng sẽ xác minh hồ sơ hỗ trợ, sau đó tải xuống và chạy exploit cùng payload KernelSU từ GitHub.</string>
+    <string name="action_confirm">Xác nhận</string>
+    <string name="action_cancel">Hủy</string>
+    <string name="action_close">Đóng</string>
+    <string name="action_retry">Thử lại</string>
+    <string name="action_done">Xong</string>
+    <string name="action_back">Quay lại</string>
+    <string name="install_tap_manager">Chạm để cài đặt KernelSU Manager</string>
+    <string name="install_tap_retry">Chạm để thử lại</string>
+    <string name="install_tap_start">Chạm để cài đặt KernelSU</string>
+    <string name="device">Thiết bị</string>
+    <string name="firmware">Firmware</string>
+    <string name="system">Hệ thống</string><string name="kernel">Kernel</string>
+    <string name="system_abi">ABI hệ thống</string>
+    <string name="settings">Cài đặt</string>
+    <string name="version_format">%1$s (%2$d)</string>
+    <string name="language">Ngôn ngữ</string>
+    <string name="language_description">Chọn ngôn ngữ cho ứng dụng</string>
+    <string name="appearance">Giao diện</string>
+    <string name="theme_system">Hệ thống</string>
+    <string name="theme_light">Sáng</string>
+    <string name="theme_dark">Tối</string>
+    <string name="material_color">Chủ đề</string>
+    <string name="material_color_description">Thay đổi giao diện</string>
+    <string name="language_system">Theo hệ thống</string>
+    <string name="color_dynamic">Theo màu hệ thống</string>
+    <string name="color_blue">Xanh dương</string>
+    <string name="color_violet">Tím</string>
+    <string name="color_green">Xanh lá</string>
+    <string name="color_orange">Cam</string>
+    <string name="history_title">Lịch sử chạy</string>
+    <string name="history_empty_title">Chưa có lần chạy nào</string>
+    <string name="history_empty_description">Kết quả cài đặt và nhật ký sẽ xuất hiện ở đây.</string>
+    <string name="history_running">Đang chạy</string>
+    <string name="history_succeeded">Thành công</string>
+    <string name="history_failed">Thất bại</string>
+    <string name="history_detail_title">Chi tiết lần chạy</string>
+    <string name="history_started">Bắt đầu: %1$s</string>
+    <string name="history_completed">Hoàn thành: %1$s</string>
+    <string name="history_log_empty">Chưa có nhật ký nào.</string>
+
+    <string name="install_title">Cài đặt</string>
+    <string name="install_keep_open">Giữ màn hình này mở cho đến khi cài đặt hoàn tất</string>
+    <string name="install_live_progress">Nhật ký</string>
+    <string name="install_preparing">Đang chuẩn bị…</string>
+    <string name="step_support_title">Kiểm tra hỗ trợ</string>
+    <string name="step_support_detail">Xác minh hồ sơ thiết bị và firmware</string>
+    <string name="step_download_title">Tải xuống</string>
+    <string name="step_download_detail">Tải manifest hỗ trợ</string>
+    <string name="step_exploit_title">Khai thác kernel</string>
+    <string name="step_exploit_detail">Giành quyền root khởi tạo</string>
+    <string name="step_ksu_title">Nạp KernelSU</string>
+    <string name="step_ksu_detail">Nạp mô-đun muộn và xác minh kênh điều khiển</string>
+    <string name="phase_checking">Đang kiểm tra thiết bị và firmware được hỗ trợ</string>
+    <string name="phase_ready">Sẵn sàng cài đặt</string>
+    <string name="phase_downloading">Đang tải payload khóa theo commit từ GitHub</string>
+    <string name="phase_exploiting">Việc này có thể mất từ 10 phút trở lên. Thiết bị của bạn có thể nóng hoặc ngừng phản hồi.</string>
+    <string name="phase_loading_ksu">Đang nạp KernelSU với quyền root khởi tạo đã giành được</string>
+    <string name="phase_installed">Đã xác minh mô-đun KernelSU và kênh điều khiển</string>
+    <string name="phase_failed">Xem lại điểm lỗi trong nhật ký bên dưới</string>
+
+    <string name="status_ksu_active">KernelSU đang hoạt động</string>
+    <string name="status_not_installed">Chưa cài đặt</string>
+    <string name="status_support_failed">Kiểm tra hỗ trợ thất bại</string>
+    <string name="status_checking_github">Đang kiểm tra manifest hỗ trợ trên GitHub</string>
+    <string name="status_downloading_payload">Đang tải payload</string>
+    <string name="status_exploit_running">Đang chạy khai thác kernel</string>
+    <string name="status_ksu_loading">Đang nạp chậm KernelSU</string>
+    <string name="status_install_failed">Cài đặt thất bại</string>
+    <string name="log_profile">[+] Hồ sơ hỗ trợ: %1$s</string>
+    <string name="log_download_verified">[+] Đã tải payload xong</string>
+    <string name="log_install_complete">[+] Cài đặt hoàn tất</string>
+    <string name="log_bootstrap_root">[+] Đã giành quyền root khởi tạo</string>
+    <string name="log_ksu_staged">[+] Đã chuẩn bị KernelSU</string>
+    <string name="log_ksu_control_verified">[+] Đã xác minh kênh điều khiển KernelSU (%1$s)</string>
+    <string name="error_ksu_not_ready">KernelSU đã nạp nhưng không có kênh điều khiển nào phản hồi; root chưa dùng được</string>
+    <string name="error_helper_unavailable">Không thể chạy trình trợ giúp khởi tạo</string>
+    <string name="error_exploit_stalled">Nhật ký khai thác không cập nhật trong 90 giây</string>
+    <string name="error_exploit_timeout">Khai thác vượt quá giới hạn 15 phút</string>
+    <string name="error_payload_exit">Lỗi thực thi payload: %1$d%2$s</string>
+    <string name="error_success_marker">Không tìm thấy dấu hiệu thành công của khai thác</string>
+    <string name="error_ksu_stage">Chuẩn bị KernelSU thất bại: %1$s</string>
+    <string name="error_ksu_verify">Nạp chậm KernelSU hoặc xác minh điều khiển thất bại (rc=%1$d): %2$s</string>
+    <string name="error_boot_id">Không thể đọc boot_id hiện tại</string>
+    <string name="error_receipt">Không thể lưu biên nhận xác minh cài đặt</string>
+
+    <string name="artifact_exploit">exploit</string>
+    <string name="artifact_kernelsu">KernelSU</string>
+    <string name="repo_no_profile">Không có payload tương thích nào hỗ trợ mẫu và phiên bản kernel này</string>
+    <string name="repo_downloading">Đang tải %1$s</string>
+    <string name="repo_size_mismatch">Kích thước %1$s không khớp với manifest hỗ trợ</string>
+    <string name="repo_size_exceeded">%1$s vượt quá kích thước khai báo</string>
+    <string name="repo_incomplete">Tải %1$s chưa hoàn tất</string>
+    <string name="repo_finalize_failed">Không thể hoàn tất tệp %1$s</string>
+    <string name="repo_verified">%1$s đã được xác minh</string>
+    <string name="repo_commit_invalid">GitHub trả về commit SHA không hợp lệ</string>
+    <string name="repo_url_invalid">Kho artifact không được phép</string>
+    <string name="repo_response_too_large">Phản hồi vượt quá giới hạn kích thước</string>
+    <string name="repo_api_limited">Đã đạt giới hạn yêu cầu của GitHub; hãy thử lại sau vài phút</string>
+    <string name="open_github">Mở GitHub</string>
+    <string name="github_card_title">Khám phá Root My Galaxy</string>
+    <string name="github_card_description">Xem mã nguồn và hướng dẫn sử dụng.</string>
+    <string name="action_continue">Vẫn tiếp tục</string>
+    <string name="action_next">Tiếp theo</string>
+    <string name="advanced">Nâng cao</string>
+    <string name="advanced_mode">Chế độ nâng cao</string>
+    <string name="advanced_mode_description">Tự chọn payload tương thích với thiết bị khi cài đặt</string>
+    <string name="shizuku_mode">Sử dụng Shizuku</string>
+    <string name="shizuku_mode_description">Dùng Shizuku để chạy payload. Điều này có thể cải thiện độ tin cậy.</string>
+    <string name="shizuku_not_running_title">Shizuku không chạy</string>
+    <string name="shizuku_not_running_body">Khởi động dịch vụ Shizuku bằng adb hoặc root và cấp quyền cho ứng dụng này, rồi bật tùy chọn này.</string>
+    <string name="settings_shizuku_start">Khởi động Shizuku ngay</string>
+    <string name="settings_shizuku_start_summary">Khởi động dịch vụ Shizuku qua KernelSU để ứng dụng này tiếp tục hoạt động mà không cần máy tính</string>
+    <string name="settings_shizuku_boot">Shizuku khi khởi động</string>
+    <string name="settings_shizuku_boot_summary">Tự động khởi động Shizuku sau khi khởi động lại nếu thiết bị đã có root</string>
+    <string name="status_shizuku_starting">Đang khởi động\u2026</string>
+    <string name="status_shizuku_started">Shizuku đang chạy</string>
+    <string name="error_shizuku_start_no_root">Chỉ có thể khởi động Shizuku tại đây trên thiết bị đã có root; hãy chạy cài đặt trước.</string>
+    <string name="notification_channel_shizuku">Khởi động Shizuku</string>
+    <string name="action_download_shizuku">Tải Shizuku</string>
+    <string name="error_shizuku_unavailable">Shizuku không chạy. Trước tiên hãy khởi động Shizuku bằng adb hoặc root.</string>
+    <string name="error_shizuku_permission">Quyền Shizuku chưa được cấp</string>
+    <string name="error_shizuku_stage">Không thể chuẩn bị %1$s qua Shizuku: %2$s</string>
+    <string name="log_shizuku_prepare">[*] Đang chuẩn bị thực thi Shizuku</string>
+    <string name="log_shizuku_permission">[+] Đã cấp quyền Shizuku</string>
+    <string name="repo_profile_missing">Hồ sơ hỗ trợ %1$s không còn khả dụng</string>
+    <string name="select_device_title">Chọn payload</string>
+    <string name="select_device_description">Chọn payload theo mẫu thiết bị và phiên bản kernel.</string>
+    <string name="show_my_device_only">Chỉ hiển thị thiết bị của tôi</string>
+    <string name="no_matching_devices">Không có payload nào khớp với thiết bị và phiên bản kernel này.</string>
+    <string name="device_mismatch_title">Thiết bị không khớp</string>
+    <string name="device_mismatch_body">Điện thoại này là %1$s, nhưng payload đã chọn chỉ hỗ trợ %2$s. Chạy payload có thể làm thiết bị treo hoặc hư hỏng.</string>
+    <string name="kernel_version_mismatch_title">Kernel không khớp</string>
+    <string name="kernel_version_mismatch_body">Điện thoại này dùng kernel %1$s, nhưng payload đã chọn chỉ hỗ trợ %2$s. Các offset có thể không tương thích.</string>
+    <string name="about">Giới thiệu</string>
+    <string name="about_title">Giới thiệu về Root My Galaxy</string>
+    <string name="about_description">Giới thiệu về Root My Galaxy</string>
+    <string name="about_body">Trình cài đặt một chạm sử dụng lỗ hổng kernel để root các thiết bị Samsung Galaxy được hỗ trợ.</string>
+    <string name="history_payload">Payload: %1$s</string>
+    <string name="export_log">Xuất nhật ký</string>
+    <string name="export_log_saved">Đã lưu nhật ký</string>
+    <string name="export_log_failed">Không thể lưu nhật ký</string>
+    <string name="install_tap_open_manager">Chạm để mở KernelSU Manager</string>
+    <string name="kernelsu_card_description">Giải pháp root dựa trên kernel cho Android</string>
+    <string name="history_shizuku_used">Đã dùng Shizuku</string>
+    <string name="history_shizuku_not_used">Không dùng Shizuku</string>
+    <string name="updater_available_title">Có bản cập nhật mới</string>
+    <string name="updater_available_body">Phiên bản %1$s hiện có sẵn</string>
+    <string name="updater_button_download">Tải xuống và cài đặt</string>
+    <string name="updater_downloading">Đang tải xuống…</string>
+    <string name="updater_download_failed">Tải xuống thất bại</string>
+    <string name="updater_check">Kiểm tra cập nhật</string>
+    <string name="updater_checking">Đang kiểm tra cập nhật…</string>
+    <string name="updater_up_to_date">Bạn đang dùng bản mới nhất</string>
+    <string name="updater_failed">Không thể kiểm tra cập nhật</string>
+    <string name="updater_available_body_short">%1$s có sẵn</string>
+    <string name="history_select_all">Chọn tất cả</string>
+    <string name="history_clear_selection">Bỏ chọn</string>
+    <string name="history_delete_selected">Xóa (%1$d)</string>
+    <plurals name="history_delete_selected_title">
+        <item quantity="one">Xóa lần chạy này?</item>
+        <item quantity="other">Xóa %1$d lần chạy?</item>
+    </plurals>
+    <plurals name="history_delete_selected_body">
+        <item quantity="one">Lần chạy này và nhật ký của nó sẽ bị xóa vĩnh viễn.</item>
+        <item quantity="other">Các lần chạy này và nhật ký của chúng sẽ bị xóa vĩnh viễn.</item>
+    </plurals>
+    <string name="history_delete">Xóa</string>
+
+    <!-- Veyra Builder localized UI -->
+    <string name="builder_settings_summary">Họ hạt nhân, cổng tương thích và phạm vi đường cơ sở được trình tạo tải trọng sử dụng.</string>
+    <string name="builder_settings_title">Cài đặt trình tạo</string>
+    <string name="loading_builder_summary">Xây dựng tải trọng cục bộ từ boot.img hoặc gói OTA được hỗ trợ.</string>
+    <string name="loading_builder_title">Đang tải trình tạo</string>
+    <string name="nav_style_glass">Thủy tinh</string>
+    <string name="nav_style_standard">Tiêu chuẩn</string>
+    <string name="nav_style_summary">Sử dụng thanh nổi thông thường của Veyra hoặc biến thể kính mờ.</string>
+    <string name="nav_style_title">Kiểu điều hướng nổi</string>
+    <string name="payload_local_source_none">Không có tải trọng cục bộ nào được chọn</string>
+    <string name="payload_local_source_title">Tải trọng cục bộ</string>
+
+    <!-- Veyra Builder localized UI -->
+    <string name="builder_applied">Đã lưu dưới dạng tải trọng tùy chỉnh: %1$s</string>
+    <string name="builder_applied_state">Đã được ghi vào tải trọng tùy chỉnh</string>
+    <string name="builder_base">Cơ sở liên kết: %1$s</string>
+    <string name="builder_baseline">Đường cơ sở: %1$s</string>
+    <string name="builder_baseline_coverage_summary">Hiển thị các họ hạt nhân và đường cơ sở đã đăng ký mà trình xây dựng hiện có thể khớp.</string>
+    <string name="builder_baseline_coverage_title">Bảo hiểm cơ bản</string>
+    <string name="builder_block_abi">Xung đột ABI hạt nhân</string>
+    <string name="builder_block_baseline">Không có đường cơ sở đã đăng ký cho hạt nhân này</string>
+    <string name="builder_block_other">Quá trình xây dựng chưa hoàn thành</string>
+    <string name="builder_block_unknown_kernel">Không thể xác định được phiên bản hạt nhân</string>
+    <string name="builder_block_vrko">Tải trọng đã chọn không có đường vòng vivo vr.ko</string>
+    <string name="builder_boot_hint">Sử dụng boot.img có phiên bản kernel phù hợp với thiết bị này (lấy nó từ gói chương trình cơ sở chính thức hoặc kết xuất /dev/block/by-name/boot).</string>
+    <string name="builder_boot_image">boot.img</string>
+    <string name="builder_boot_none">Không có tập tin nào được chọn</string>
+    <string name="builder_description">Đọc bảng ký hiệu hạt nhân từ boot.img, giải quyết các điểm bù đắp mà chuỗi khai thác này cần và viết lại thư viện cơ sở đã chọn thành bản dựng phù hợp với hạt nhân của bạn. Nhấn vào "Tải trọng xây dựng" sẽ hỏi nên sử dụng sơ đồ nào trước: sơ đồ phổ thông bao gồm hầu hết các thiết bị, trong khi vivo / iQOO cần bản dựng mang đường vòng chống root vr.ko. Mọi thứ diễn ra trên thiết bị — không có mạng.</string>
+    <string name="builder_detected_kernel">Hạt nhân được phát hiện: %1$s</string>
+    <string name="builder_export_header">Xuất mục tiêu.h</string>
+    <string name="builder_export_so">Xuất .so</string>
+    <string name="builder_heading">Trình tạo tải trọng</string>
+    <string name="builder_ignore_conflicts_summary">Cho phép đầu ra ngay cả khi chuỗi bắt buộc hoặc ABI cơ sở xung đột với hạt nhân được đo. Trình xây dựng ghi lại phần ghi đè.</string>
+    <string name="builder_ignore_conflicts_title">Bỏ qua xung đột (nâng cao)</string>
+    <string name="builder_input_gone">Hình ảnh trích xuất trước đó đã được hệ thống xóa. Vui lòng phân tích lại liên kết.</string>
+    <string name="builder_kernel">Hạt nhân: %1$s (%2$s)</string>
+    <string name="builder_kernel_series_5">Buộc 5.x — beta/thử nghiệm</string>
+    <string name="builder_kernel_series_6">Lực lượng 6.x — tuyến chính</string>
+    <string name="builder_kernel_series_auto">Tự động - phát hiện từ boot.img</string>
+    <string name="builder_kernel_series_title">loạt hạt nhân</string>
+    <string name="builder_loaded">boot.img %1$d KB · thư viện cơ sở %2$d KB</string>
+    <string name="builder_log_title">Nhật ký xây dựng</string>
+    <string name="builder_no_input">Trước tiên hãy chọn boot.img</string>
+    <string name="builder_no_output">Các lỗi đã được giải quyết nhưng thư viện chưa được đóng gói (xem nhật ký)</string>
+    <string name="builder_offsets">Đã giải quyết các vấn đề bù đắp: %1$d / %2$d</string>
+    <string name="builder_open_kernel_settings">Mở cài đặt trình tạo</string>
+    <string name="builder_ota">Phân tích liên kết OTA</string>
+    <string name="builder_ota_bad_url">Chỉ chấp nhận liên kết http/https</string>
+    <string name="builder_ota_close">Đóng</string>
+    <string name="builder_ota_desc">Dán liên kết trực tiếp tới ZIP OTA đầy đủ. Chỉ những phần cần thiết mới được tìm nạp — thư mục trung tâm ZIP, tệp kê khai tải trọng và vài chục MiB mà phân vùng khởi động chiếm giữ — chứ không phải toàn bộ gói (thường là 4–8 GiB).\nMáy chủ phải hỗ trợ các yêu cầu Phạm vi HTTP; nếu không, yêu cầu sẽ bị từ chối thay vì âm thầm tải xuống mọi thứ.</string>
+    <string name="builder_ota_done">Đã trích xuất %1$s (%2$s) - bạn có thể nhấn Build payload ngay bây giờ</string>
+    <string name="builder_ota_hint">Link trực tiếp tới gói đầy đủ (http/https)</string>
+    <string name="builder_ota_run">Phân tích cú pháp</string>
+    <string name="builder_ota_running">Đang phân tích gói đầy đủ…</string>
+    <string name="builder_ota_started">Bắt đầu…</string>
+    <string name="builder_ota_title">Phân tích liên kết OTA</string>
+    <string name="builder_output_ready">Thư viện đóng gói: %1$d KB</string>
+    <string name="builder_output_sha">SHA-256: %1$s</string>
+    <string name="builder_output_size">Kích thước: %1$s</string>
+    <string name="builder_patch_absent">Khóa %1$d không được thư viện này tham chiếu</string>
+    <string name="builder_patch_done">Bản vá: Cần viết lại khóa %1$d · Đã xử lý các trang %2$d</string>
+    <string name="builder_patch_noop">Thư viện này đã khớp với kernel của bạn — bản sao được đóng gói có byte giống hệt với bản được gói.</string>
+    <string name="builder_patch_stats">Các khóa cần viết lại: %1$d · đã xác minh: %2$d</string>
+    <string name="builder_phase_reading">Đang đọc %1$s…</string>
+    <string name="builder_pick_boot">Chọn boot.img</string>
+    <string name="builder_read_failed">Không thể đọc tệp đã chọn</string>
+    <string name="builder_run">Xây dựng tải trọng</string>
+    <string name="builder_running">Xây dựng…</string>
+    <string name="builder_save_download_failed">Không thể ghi vào thư mục Tải xuống</string>
+    <string name="builder_saved_download">Đã lưu vào %1$s</string>
+    <string name="builder_scheme_subtitle">Cả hai chương trình đều có cùng chuỗi CVE-2026-43499 — chúng khác nhau về khả năng thích ứng của nhà cung cấp.</string>
+    <string name="builder_scheme_title">Tải trọng nào để xây dựng?</string>
+    <string name="builder_scheme_universal">Phổ quát</string>
+    <string name="builder_scheme_universal_detail">Hoạt động trên hầu hết các thiết bị GKI 6.6. Không có tính năng bỏ qua chống root của nhà cung cấp, vì vậy đây là mặc định an toàn bên ngoài vivo/iQOO.</string>
+    <string name="builder_scheme_vivo">vivo / iQOO (bỏ qua vr.ko)</string>
+    <string name="builder_scheme_vivo_detail">Thêm tính năng bỏ qua chống root vr.ko. Bắt buộc trên vivo / iQOO, nơi chuỗi phổ quát bị chặn.</string>
+    <string name="builder_section_result">Kết quả</string>
+    <string name="builder_symbols">Ký hiệu: %1$d</string>
+    <string name="builder_test_kernel_confirm_action">Vẫn bật</string>
+    <string name="builder_test_kernel_confirm_body">Hỗ trợ 5.x là phiên bản beta. Các neo bố cục của nó ít được xác minh chặt chẽ hơn so với các đường dẫn 6.x dòng chính. Chỉ kích hoạt nó khi bạn cố tình muốn thử nghiệm bản dựng 5.x.</string>
+    <string name="builder_test_kernel_confirm_title">Bật hỗ trợ kernel 5.x?</string>
+    <string name="builder_variant">Biến thể: %1$s</string>
+    <string name="builder_vr_ko_hint">Cái này trông giống như một thiết bị vivo/iQOO. Nếu hạt nhân mang vr.ko, hãy chuyển sang sơ đồ tải trọng vivo — tải trọng phổ quát không có đường vòng vr.ko và shell gốc sẽ bị hủy bởi thăm dò sys_exit.</string>
+    <string name="builder_vr_ko_ok">hiện tại bỏ qua vr.ko — tải trọng này sẽ xóa các điểm đánh dấu tác vụ trước khi kiểm tra uid W2</string>
+    <string name="custom_import_failed">Nhập không thành công</string>
+    <string name="error_bundled_missing">Thư viện tải trọng tích hợp bị thiếu</string>
+    <string name="offsets_counts">Ký hiệu %1$d · Trường cấu trúc %2$d</string>
+    <string name="offsets_dialog_title">offset.json</string>
+    <string name="offsets_error">Không thể đọc tập tin đó: %1$s</string>
+    <string name="offsets_import">Nhập offsets.json</string>
+    <string name="offsets_import_desc">Tải tệp bù đắp hạt nhân được tạo bởi GhostLock/IonStack</string>
+    <string name="offsets_missing">Thiếu: Ký hiệu %1$d, trường cấu trúc %2$d</string>
+    <string name="offsets_release">Phát hành hạt nhân: %1$s</string>
+    <string name="offsets_unknown">Giữ (các) khóa %1$d không được nhận dạng - an toàn cho chuyến đi khứ hồi</string>
+    <string name="test_kernel_blocked_title">Đã phát hiện hạt nhân 5.x - đã tắt hỗ trợ</string>
+    <string name="test_kernel_switch">Hỗ trợ hạt nhân 5.x (beta)</string>
+    <string name="test_kernel_switch_description">Sử dụng lược đồ 5.x khi phát hiện hạt nhân 5.x (chưa được xác minh).</string>
+
+    <!-- Veyra Builder localized UI -->
+    <string name="builder_base_library">Thư viện cơ sở: %1$s · %2$s</string>
+    <string name="builder_notices">Thông báo</string>
+    <string name="builder_set_as_payload">Sử dụng làm tải trọng tùy chỉnh</string>
+
+    <string name="log_veyra_ksu_temp_root_state">[+] VeyraKSU received the current temp-root boot state</string>
+
+    <string name="veyra_ksu_title">VeyraKSU</string>
+
+    <string name="veyra_ksu_card_summary">KernelSU bridge for boot state, temp-root state and the future V-SPR permission path.</string>
+
+    <string name="veyra_ksu_status_not_installed">Not installed</string>
+
+    <string name="veyra_ksu_status_installed">Installed</string>
+
+    <string name="veyra_ksu_status_active">Active</string>
+
+    <string name="veyra_ksu_status_enabled">Enabled</string>
+
+    <string name="veyra_ksu_status_disabled">Disabled</string>
+
+    <string name="veyra_ksu_subtitle">Persistent Veyra bridge inside KernelSU</string>
+
+    <string name="veyra_ksu_bridge_status">Bridge status</string>
+
+    <string name="veyra_ksu_reading_install">Module</string>
+
+    <string name="veyra_ksu_reading_load">Load state</string>
+
+    <string name="veyra_ksu_reading_stage">Last stage</string>
+
+    <string name="veyra_ksu_reading_boot">Boot ID</string>
+
+    <string name="veyra_ksu_reading_temp_root">Temp root seen</string>
+
+    <string name="veyra_ksu_reading_permission_bridge">Permission bridge</string>
+
+    <string name="veyra_ksu_yes">Yes</string>
+
+    <string name="veyra_ksu_no">No</string>
+
+    <string name="veyra_ksu_permission_bridge_inactive">Prepared · inactive</string>
+
+    <string name="veyra_ksu_install_heading">Install or update VeyraKSU</string>
+
+    <string name="veyra_ksu_install_body">Veyra exports the module, installs it through KernelSU and then reloads the module lifecycle for the current boot. The V-SPR permission bridge stays inactive for now.</string>
+
+    <string name="veyra_ksu_install_failed">KernelSU did not install VeyraKSU.</string>
+
+    <string name="veyra_ksu_installed">VeyraKSU was installed or updated successfully.</string>
+
+    <string name="veyra_ksu_reload_done">KernelSU module lifecycle was refreshed for this boot.</string>
+
+    <string name="veyra_ksu_old_provider_disabled">The previous compatible RMG provider was backed up and disabled after Veyra root was verified.</string>
+
+    <string name="veyra_ksu_old_provider_kept">The previous provider was kept because Veyra could not safely verify and migrate it.</string>
+
+    <string name="veyra_ksu_install_update">Install / Update through KernelSU</string>
+
+    <string name="veyra_ksu_exported">VeyraKSU exported to %1$s</string>
+
+    <string name="veyra_ksu_export">Export a copy to Downloads</string>
+
+    <string name="veyra_ksu_migrate_title">Migrate from previous RMG provider</string>
+
+    <string name="veyra_ksu_migrate_summary">After Veyra root is verified, back up and disable the selected compatible user app. System apps are never touched.</string>
+
+    <string name="veyra_ksu_migrate_pick">Previous root provider</string>
+
+    <string name="veyra_ksu_load_toggle">Load VeyraKSU with KernelSU</string>
+
+    <string name="veyra_ksu_load_toggle_summary">Disabling keeps the module installed but prevents KernelSU from loading it.</string>
+
+    <string name="veyra_ksu_state_changed">VeyraKSU load state was updated.</string>
+
+    <string name="veyra_ksu_action_ok">KernelSU accepted the requested action.</string>
+
+    <string name="veyra_ksu_action_failed">KernelSU could not complete the requested action.</string>
+
+    <string name="veyra_ksu_reload_modules">Reload KernelSU modules</string>
+
+    <string name="veyra_ksu_soft_reboot">KernelSU Soft Reboot</string>
+
+    <string name="veyra_ksu_working">Working…</string>
+
+    <string name="vspr_veyra_ksu_bridge_title">VeyraKSU Bridge</string>
+
+    <string name="vspr_veyra_ksu_bridge_summary">Active privileged provider path for CVeyra Permission Provider. VeyraKSU 2.0.0 backs the root broker and persistent policy state.</string>
+
+    <string name="vspr_veyra_ksu_bridge_installed">Connected · active</string>
+
+    <string name="vspr_veyra_ksu_bridge_prepared">Ready · activation required</string>
+
+    <string name="builder_ota_log_connected">Đã kết nối · kích thước gói %1$s</string>
+
+    <string name="builder_ota_log_raw_payload">Liên kết trỏ trực tiếp tới payload.bin.</string>
+
+    <string name="builder_ota_log_zip_directory">Đang tìm thư mục trung tâm ZIP…</string>
+
+    <string name="builder_ota_log_payload_found">Đã tìm thấy payload.bin trong gói (%1$s).</string>
+
+    <string name="builder_ota_log_direct_boot">Không có payload.bin; tìm thấy trực tiếp %1$s trong gói.</string>
+
+    <string name="builder_ota_log_partitions">Payload có %1$s phân vùng · đang trích xuất %2$s.</string>
+
+    <string name="builder_ota_log_downloading">Đang tải %1$s / %2$s</string>
+
+    <string name="builder_ota_log_restored">Đã khôi phục %1$s → %2$s (%3$s).</string>
+
+    <string name="builder_ota_log_download_entry">Đang tải %1$s (%2$s)…</string>
+
+    <string name="builder_ota_log_extracted">Đã trích xuất %1$s (%2$s).</string>
+
+    <string name="builder_ota_error_range">Máy chủ không hỗ trợ HTTP Range. Veyra sẽ không tải toàn bộ gói nhiều GB một cách không cần thiết.</string>
+
+    <string name="builder_ota_error_connect">Veyra không thể mở liên kết OTA hoặc xác định kích thước tệp.</string>
+
+    <string name="builder_ota_error_xz">OTA dùng bố cục XZ mà trình trích xuất tích hợp không thể giải mã an toàn.</string>
+
+    <string name="builder_ota_error_package">Liên kết không phải định dạng OTA/gói đầy đủ được hỗ trợ hoặc không tìm thấy boot payload cần thiết.</string>
+
+    <string name="builder_ota_error_generic">Không thể phân tích OTA. Chi tiết kỹ thuật đã được lưu trong nhật ký ứng dụng.</string>
+
+    <string name="builder_log_container">Vùng chứa: %1$s · header %2$s · page %3$s · offset kernel %4$s</string>
+
+    <string name="builder_log_kernel_image_decompressed">Ảnh kernel: %1$s byte · đã giải nén</string>
+
+    <string name="builder_log_kernel_image">Ảnh kernel: %1$s byte</string>
+
+    <string name="builder_log_derived_offset">Suy ra offset %1$s → %2$s</string>
+
+    <string name="builder_log_parse_diagnostic">Trình phân tích ảnh báo chẩn đoán về định dạng hoặc bố cục. Chi tiết kỹ thuật đã được lưu vào nhật ký ứng dụng.</string>
+
+    <string name="builder_log_alignment_stopped">Kiểm tra căn chỉnh symbol đã dừng đóng gói để tránh trộn offset của các kernel khác nhau.</string>
+
+    <string name="builder_log_offset_warning">Kiểm tra offset phát hiện điểm không nhất quán; xem cảnh báo đã dịch bên dưới.</string>
+
+    <string name="builder_log_scheme_test">Phát hiện kernel %1$s · dùng sơ đồ beta/thử nghiệm 5.x</string>
+
+    <string name="builder_log_scheme_mainline">Phát hiện kernel %1$s · dùng sơ đồ mainline</string>
+
+    <string name="builder_log_test_kernel_beta">Chế độ beta 5.x đang bật. Veyra phân tích kernel này nhưng không lấy offset từ họ kernel khác.</string>
+
+    <string name="builder_log_no_runnable_baseline">Không có baseline chạy được đã đăng ký an toàn khớp chính xác kernel này.</string>
+
+    <string name="builder_log_analysis_only_safe">Veyra tiếp tục ở chế độ chỉ phân tích và tạo target.h / offsets.json thay vì đoán một .so có thể chạy.</string>
+
+    <string name="builder_block_detail_test_kernel">Đây là kernel thử nghiệm 5.x và hỗ trợ beta đang tắt. Hãy bật hỗ trợ 5.x trong Builder Settings.</string>
+
+    <string name="builder_block_detail_baseline">Không có baseline chạy được đã xác minh cho kernel này. Veyra không thay thế bằng offset của họ kernel khác.</string>
+
+    <string name="builder_block_detail_abi">Baseline đã chọn hoặc ép buộc xung đột với ABI kernel đo được. Việc đóng gói đã dừng để đảm bảo an toàn.</string>
+
+    <string name="builder_block_detail_unknown">Veyra không thể xác định đáng tin cậy phiên bản kernel. Hãy kiểm tra ảnh có thuộc thiết bị đích hay không.</string>
+
+    <string name="builder_block_detail_vrko">Payload vivo/iQOO đã chọn không có phần thích nghi vr.ko cần thiết. Hãy chọn sơ đồ tương thích.</string>
+
+    <string name="builder_block_detail_other">Builder đã dừng do kiểm tra tương thích. Chi tiết kỹ thuật được lưu trong nhật ký ứng dụng.</string>
+
+    <string name="builder_notice_low_symbols">Chỉ giải được %1$d symbol kernel. Hãy kiểm tra ảnh có khớp thiết bị đích hay không.</string>
+
+    <string name="builder_notice_base_mismatch">Địa chỉ link base suy ra không khớp các symbol trong ảnh. Hãy xác minh trước khi dùng.</string>
+
+    <string name="builder_notice_alignment_failed">Tập symbol không khớp hoàn toàn baseline đã chọn; đóng gói đã dừng để đảm bảo an toàn.</string>
+
+    <string name="builder_notice_incomplete_patch">Không thể thay thế mọi offset cần thiết. Không dùng payload cho tới khi dữ liệu thiếu được xử lý.</string>
+
+    <string name="builder_notice_forced_override">Một xung đột tương thích đã bị bỏ qua có chủ ý. Hãy coi bản build này là thử nghiệm.</string>
+
+    <string name="builder_notice_baseline">Registry baseline báo một ghi chú tương thích. Hãy xem Baseline Coverage trước khi dùng.</string>
+
+    <string name="builder_notice_vrko">Thiết bị này có thể cần payload vr.ko dành cho vivo/iQOO.</string>
+
+    <string name="builder_notice_technical">Builder báo thêm một cảnh báo kỹ thuật. Chi tiết upstream được lưu trong nhật ký ứng dụng.</string>
+
+    <string name="builder_error_file_missing">Tệp đầu vào đã chọn không còn khả dụng. Hãy chọn lại.</string>
+
+    <string name="builder_error_io">Builder không thể đọc hoặc ghi một tệp. Kiểm tra quyền truy cập bộ nhớ rồi thử lại.</string>
+
+    <string name="builder_error_generic">Builder dừng với %1$s. Chi tiết kỹ thuật đã được lưu trong nhật ký ứng dụng.</string>
+
+    <string name="readiness_cveyra">CVeyra</string>
+
+    <string name="readiness_cveyra_root">Active · Root</string>
+
+    <string name="readiness_cveyra_adb">Active · Wireless ADB</string>
+
+    <string name="readiness_cveyra_waiting">Enabled · waiting for access</string>
+
+    <string name="readiness_cveyra_not_running">Not running</string>
+
+    <string name="veyra_ksu_status_tagged">Tagged for install</string>
+
+    <string name="veyra_ksu_auto_install_title">Install / Update after Root</string>
+
+    <string name="veyra_ksu_auto_install_summary">Install or refresh VeyraKSU automatically immediately after Veyra loads KernelSU successfully.</string>
+
+    <string name="veyra_ksu_provider_change">KSU Provider Change</string>
+
+    <string name="veyra_ksu_provider_change_needs_root">Veyra needs KernelSU superuser access before the provider can be changed.</string>
+
+    <string name="veyra_ksu_provider_change_ready">Provider changed. The previous app was backed up, disabled and its app data cleared. KernelSU modules were reloaded and Android runtime restart was requested.</string>
+
+    <string name="veyra_ksu_provider_change_ready_no_clear">Provider changed and the previous app was disabled, but Android did not clear its app data. KernelSU modules were reloaded and Android runtime restart was requested.</string>
+
+    <string name="migration_title">Migration</string>
+
+    <string name="migration_card_summary">Move the current temp-root session from another compatible RMG provider to Veyra.</string>
+
+    <string name="migration_subtitle">Transfer the current Root My Galaxy temp-root session to Veyra</string>
+
+    <string name="migration_full_title">Fully Restart Automatic</string>
+
+    <string name="migration_full_summary">Prepare a one-time full reboot. CVeyra and Root on boot are enabled temporarily so Veyra can take over on the next boot.</string>
+
+    <string name="migration_soft_title">Try without Restart / Only soft reboot</string>
+
+    <string name="migration_soft_summary">Use VeyraKSU to migrate the current KernelSU session without a full device reboot where the running KernelSU supports it.</string>
+
+    <string name="migration_open_veyra_ksu">Open VeyraKSU migration</string>
+
+    <string name="migration_root_check_title">KernelSU root permission</string>
+
+    <string name="migration_root_check_summary">First verify that this Veyra installation has an actual KernelSU superuser shell. Provider selection remains locked until this succeeds.</string>
+
+    <string name="migration_root_check_ok">KernelSU root access for Veyra was verified.</string>
+
+    <string name="migration_root_check_failed">KernelSU root access was not granted to Veyra. Approve Veyra Root in your KernelSU manager and try again.</string>
+
+    <string name="migration_root_checked">Root verified</string>
+
+    <string name="migration_root_check">Check root access</string>
+
+    <string name="migration_provider_title">Previous root provider</string>
+
+    <string name="migration_no_provider">No compatible Root My Galaxy user app was found.</string>
+
+    <string name="migration_check_patch">Check and Patch</string>
+
+    <string name="migration_prepared">Migration from %1$s is prepared. The temporary boot settings are armed once; start the migration from Home when you are ready.</string>
+
+    <string name="migration_prepare_failed">Migration preparation failed.</string>
+
+    <string name="migration_ready_title">Migration prepared</string>
+
+    <string name="migration_ready_body">CVeyra, CVeyra on boot, KernelSU loading and Root on boot are temporarily armed. Start the migration once from Home.</string>
+
+    <string name="migration_working">Preparing migration…</string>
+
+    <string name="migration_unknown_provider">previous root provider</string>
+
+    <string name="migration_home_title">Migration ready</string>
+
+    <string name="migration_home_provider">From %1$s</string>
+
+    <string name="migration_home_body">Starting now performs one normal reboot. On the next boot Veyra runs the cached root flow with CVeyra support, installs/updates VeyraKSU, then backs up and disables the previous provider.</string>
+
+    <string name="migration_home_start">Start migration and reboot</string>
+
+    <string name="migration_cancel">Cancel migration</string>
+
+    <string name="migration_reboot_failed">The reboot request was refused. The migration remains prepared so you can try again.</string>
+
+    <string name="migration_root_required">Veyra does not currently have KernelSU superuser access.</string>
+
+    <string name="migration_ksu_not_active">KernelSU is not active in the current boot.</string>
+
+    <string name="log_veyra_ksu_auto_installed">[+] VeyraKSU installed or updated automatically after root</string>
+
+    <string name="log_veyra_ksu_auto_loaded">[+] VeyraKSU module lifecycle applied in the current boot</string>
+
+    <string name="log_veyra_ksu_auto_failed">[!] VeyraKSU automatic installation failed: %1$s</string>
+
+    <string name="log_migration_old_provider_disabled">[+] Previous root provider disabled and app state cleared: %1$s</string>
+
+    <string name="log_migration_old_provider_cleanup_failed">[!] Previous root provider could not be fully cleaned up: %1$s</string>
+
+    <string name="log_migration_completed">[+] Veyra root migration completed and temporary migration settings restored</string>
+
+    <string name="log_migration_failed_cleanup">[!] Veyra owns the new root session, but the previous provider could not be fully disabled/cleared. Temporary migration settings were restored.</string>
+
+    <string name="migration_cveyra_pair_required">This cached root flow needs a shell helper after reboot. Pair CVeyra with Wireless ADB first so the migration can continue without Shizuku.</string>
+
+    <string name="vspr_info_version">Veyra System Permission Provider · Access 2.0.0</string>
+    <string name="vspr_info_provider_body_v2">CVeyra giữ mỗi ứng dụng ở UID Android bình thường và trung gian các thao tác đặc quyền qua một lớp chính sách hiển thị theo từng ứng dụng. Khi CVeyra Access hoạt động, broker được cưỡng chế qua VeyraKSU và backend root của Veyra.</string>
+    <string name="vspr_info_activation_title">Kích hoạt quyền CVeyra</string>
+    <string name="vspr_info_activation_body">Việc kích hoạt cần VeyraKSU 2.0.0 và quyền Superuser KernelSU cho Veyra. Trạng thái cấp quyền ứng dụng KernelSU hiện tại được sao lưu trước khi bật Permission Manager đầy đủ.</string>
+    <string name="vspr_info_permissions_title">Quản lý quyền</string>
+    <string name="vspr_info_permissions_body">Offline giữ quy tắc nhưng không quản lý ứng dụng. Self cho phép bạn tự chọn ứng dụng. Auto dành cho bộ máy chính sách trong tương lai và hiện chưa bật. Các đặc quyền chi tiết vẫn nằm trong Grant CVeyra Access.</string>
+    <string name="vspr_info_ksu_title">KernelSU và di chuyển</string>
+    <string name="vspr_info_ksu_body_v2">Các quyền KernelSU trực tiếp cũ vẫn do KernelSU quản lý và được sao lưu trước khi chấp nhận CVeyra Access. Veyra không tự âm thầm xóa chúng; hãy thêm các ứng dụng đó vào CVeyra khi muốn di chuyển việc quản lý.</string>
+    <string name="vspr_info_modules_title">App Module Loader</string>
+    <string name="vspr_info_modules_body">Mô-đun CVeyra có thể tạm thời thay đổi các cài đặt thật như Trợ năng, Tùy chọn nhà phát triển, gỡ lỗi USB hoặc DNS riêng tư. Giá trị trước đó được lưu và khôi phục chính xác khi tắt mô-đun.</string>
+    <string name="vspr_info_firewall_title">CVeyra Firewall</string>
+    <string name="vspr_info_firewall_body">Firewall kết hợp cổng mạng theo gói của Android với lớp quy tắc UID IPv4/IPv6 tồn tại qua root. Veyra chỉ nhớ các ứng dụng do mình quản lý và áp dụng lại quy tắc sau khi mô-đun VeyraKSU khởi động.</string>
+    <string name="vspr_info_read_action">Tôi đã đọc thông tin này</string>
+
+    <string name="vspr_provider_info_summary">Permission Provider 2.0.0 · kích hoạt, chính sách theo ứng dụng, di chuyển KernelSU, mô-đun và Firewall</string>
+</resources>

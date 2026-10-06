@@ -1,0 +1,1049 @@
+{
+  "schemaVersion": 3,
+  "payloads": [
+    {
+      "payloadId": "mustang-CP2A.260705.006",
+      "displayName": "Pixel mustang \u00b7 CP2A.260705.006",
+      "models": [
+        "mustang"
+      ],
+      "devices": [
+        "mustang"
+      ],
+      "buildIds": [
+        "CP2A.260705.006"
+      ],
+      "kernelVersions": [
+        "6.6.118-android15-8"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.6.118-android15-8"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android15-6.6",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/mustang-CP2A.260705.006.so",
+        "size": 83552,
+        "sha256": "fbdbed0a3e93f3e36d9262b62c0284ae42acbc181417436b20f9298ffa3ad099"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "frankel-CP2A.260705.006",
+      "displayName": "Pixel frankel \u00b7 CP2A.260705.006",
+      "models": [
+        "frankel"
+      ],
+      "devices": [
+        "frankel"
+      ],
+      "buildIds": [
+        "CP2A.260705.006"
+      ],
+      "kernelVersions": [
+        "6.6.118-android15-8"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.6.118-android15-8"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android15-6.6",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/frankel-CP2A.260705.006.so",
+        "size": 118544,
+        "sha256": "9052e47b5b3bda2db6acb92590a6b2f0e5d462e0421d1bfc7d7e4d7da38704a8"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "rango-CP2A.260705.006",
+      "displayName": "Pixel rango \u00b7 CP2A.260705.006",
+      "models": [
+        "rango"
+      ],
+      "devices": [
+        "rango"
+      ],
+      "buildIds": [
+        "CP2A.260705.006"
+      ],
+      "kernelVersions": [
+        "6.6.118-android15-8"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.6.118-android15-8"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android15-6.6",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/rango-CP2A.260705.006.so",
+        "size": 82976,
+        "sha256": "09c340d163afe1c7ef0e8b57da2d123f445eaf6aa4dda8387fbeca71a4ad6a98"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "blazer-CP2A.260705.006",
+      "displayName": "Pixel blazer \u00b7 CP2A.260705.006",
+      "models": [
+        "blazer"
+      ],
+      "devices": [
+        "blazer"
+      ],
+      "buildIds": [
+        "CP2A.260705.006"
+      ],
+      "kernelVersions": [
+        "6.6.118-android15-8"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.6.118-android15-8"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android15-6.6",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/blazer-CP2A.260705.006.so",
+        "size": 82976,
+        "sha256": "c659561ad500bbd746f22e0ed1e116686a19fe30d8a4b2d07a28accd3dbe8ab0"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "lynx-CP2A.260705.006",
+      "displayName": "Pixel lynx \u00b7 CP2A.260705.006",
+      "models": [
+        "lynx"
+      ],
+      "devices": [
+        "lynx"
+      ],
+      "buildIds": [
+        "CP2A.260705.006"
+      ],
+      "kernelVersions": [
+        "6.1.157-android14-11"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.1.157-android14-11"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android14-6.1",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/lynx-CP2A.260705.006.so",
+        "size": 128600,
+        "sha256": "6d76d20c0235178d27a30517f778a228c7b4dd13c54cc58781cd0c2b49d0857a"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "panther-CP2A.260705.006",
+      "displayName": "Pixel panther \u00b7 CP2A.260705.006",
+      "models": [
+        "panther"
+      ],
+      "devices": [
+        "panther"
+      ],
+      "buildIds": [
+        "CP2A.260705.006"
+      ],
+      "kernelVersions": [
+        "6.1.157-android14-11"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.1.157-android14-11"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android14-6.1",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/panther-CP2A.260705.006.so",
+        "size": 128600,
+        "sha256": "b0d47e35e25846e63a534f6c2c6af0c88fb2ffffcf27550be09528393facae91"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "panther-BP2A.250705.008",
+      "displayName": "Pixel panther \u00b7 BP2A.250705.008",
+      "models": [
+        "panther"
+      ],
+      "devices": [
+        "panther"
+      ],
+      "buildIds": [
+        "BP2A.250705.008"
+      ],
+      "kernelVersions": [
+        "6.1.124-android14-11"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.1.124-android14-11"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android14-6.1",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/panther-BP2A.250705.008.so",
+        "size": 128824,
+        "sha256": "e3df38d2a9c843649003b554c017d7f118e6062b4011130163325fb558af1b4f"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "husky-CP2A.260705.006",
+      "displayName": "Pixel husky \u00b7 CP2A.260705.006",
+      "models": [
+        "husky"
+      ],
+      "devices": [
+        "husky"
+      ],
+      "buildIds": [
+        "CP2A.260705.006"
+      ],
+      "kernelVersions": [
+        "6.1.157-android14-11"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.1.157-android14-11"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android14-6.1",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/husky-CP2A.260705.006.so",
+        "size": 128600,
+        "sha256": "8ec2aa03ee1c10e419a0c7daeffba62bac854257db5ce0f4f887010b9261c5d9"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "shiba-CP2A.260705.006",
+      "displayName": "Pixel shiba \u00b7 CP2A.260705.006",
+      "models": [
+        "shiba"
+      ],
+      "devices": [
+        "shiba"
+      ],
+      "buildIds": [
+        "CP2A.260705.006"
+      ],
+      "kernelVersions": [
+        "6.1.157-android14-11"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.1.157-android14-11"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android14-6.1",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/shiba-CP2A.260705.006.so",
+        "size": 128600,
+        "sha256": "f7f19cad7ed301c233b1cd0de00e35d765d9935d230f9da51b9d9fbaf92b8fa1"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "cheetah-CP2A.260705.006",
+      "displayName": "Pixel cheetah \u00b7 CP2A.260705.006",
+      "models": [
+        "cheetah"
+      ],
+      "devices": [
+        "cheetah"
+      ],
+      "buildIds": [
+        "CP2A.260705.006"
+      ],
+      "kernelVersions": [
+        "6.1.157-android14-11"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.1.157-android14-11"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android14-6.1",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/cheetah-CP2A.260705.006.so",
+        "size": 128600,
+        "sha256": "0ad04b8fdd88a451f10b0671e1bc454816ed5d4314983e563bcc04c011f706df"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "comet-CP2A.260705.006",
+      "displayName": "Pixel comet \u00b7 CP2A.260705.006",
+      "models": [
+        "comet"
+      ],
+      "devices": [
+        "comet"
+      ],
+      "buildIds": [
+        "CP2A.260705.006"
+      ],
+      "kernelVersions": [
+        "6.1.157-android14-11"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.1.157-android14-11"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android14-6.1",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/comet-CP2A.260705.006.so",
+        "size": 128600,
+        "sha256": "d42f00aff0d8f60fbf9a01175b6485c282336774e975dcd52d3d591351ae1f8c"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "tegu-CP2A.260705.006",
+      "displayName": "Pixel tegu \u00b7 CP2A.260705.006",
+      "models": [
+        "tegu"
+      ],
+      "devices": [
+        "tegu"
+      ],
+      "buildIds": [
+        "CP2A.260705.006"
+      ],
+      "kernelVersions": [
+        "6.1.157-android14-11"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.1.157-android14-11"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android14-6.1",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/tegu-CP2A.260705.006.so",
+        "size": 92736,
+        "sha256": "1bc50989654802541f88ab23fa2b19bc43542dd07563d07d64ee2668e694265e"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "caiman-CP2A.260705.006",
+      "displayName": "Pixel caiman \u00b7 CP2A.260705.006",
+      "models": [
+        "caiman"
+      ],
+      "devices": [
+        "caiman"
+      ],
+      "buildIds": [
+        "CP2A.260705.006"
+      ],
+      "kernelVersions": [
+        "6.1.157-android14-11"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.1.157-android14-11"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android14-6.1",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/caiman-CP2A.260705.006.so",
+        "size": 128824,
+        "sha256": "5032b91dd1336ff0418888e98996d86017356d5ccd28ecff56c0e1202e3c7409"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "bluejay-CP1A.260405.005.so",
+      "displayName": "Pixel bluejay \u00b7 CP1A.260405.005",
+      "models": [
+        "bluejay"
+      ],
+      "devices": [
+        "bluejay"
+      ],
+      "buildIds": [
+        "CP1A.260405.005"
+      ],
+      "kernelVersions": [
+        "6.1.145-android14-11"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.1.145-android14-11"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android14-6.1",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/bluejay-CP1A.260405.005.so",
+        "size": 128600,
+        "sha256": "878bb27d5c6bff466b8c97b1eff402380d8b9ac24436eedb8ce8d4267588d209"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "bluejay-CP2A.260705.006",
+      "displayName": "Pixel bluejay \u00b7 CP2A.260705.006",
+      "models": [
+        "bluejay"
+      ],
+      "devices": [
+        "bluejay"
+      ],
+      "buildIds": [
+        "CP2A.260705.006"
+      ],
+      "kernelVersions": [
+        "6.1.157-android14-11"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.1.157-android14-11"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android14-6.1",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/bluejay-CP2A.260705.006.so",
+        "size": 128600,
+        "sha256": "81ff9e8c915044f02264e7cec0fd1a7bd564867a00aa827540a79aae5d5d8794"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "oriole-CP2A.260705.006",
+      "displayName": "Pixel oriole \u00b7 CP2A.260705.006",
+      "models": [
+        "oriole"
+      ],
+      "devices": [
+        "oriole"
+      ],
+      "buildIds": [
+        "CP2A.260705.006"
+      ],
+      "kernelVersions": [
+        "6.1.157-android14-11"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.1.157-android14-11"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android14-6.1",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/oriole-CP2A.260705.006.so",
+        "size": 92440,
+        "sha256": "46ed1e49ccbbae2529404876428b1d19501570b5cedfa32bfdf5ce066a989e40"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "raven-CP2A.260705.006",
+      "displayName": "Pixel raven \u00b7 CP2A.260705.006",
+      "models": [
+        "raven"
+      ],
+      "devices": [
+        "raven"
+      ],
+      "buildIds": [
+        "CP2A.260705.006"
+      ],
+      "kernelVersions": [
+        "6.1.157-android14-11"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.1.157-android14-11"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android14-6.1",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/raven-CP2A.260705.006.so",
+        "size": 128824,
+        "sha256": "ab56cbb831cb2dc8305ffd4739aa86388180a8918ac22d1e1780c577d051477e"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "akita-CP2A.260805.005",
+      "displayName": "Pixel akita \u00b7 CP2A.260805.005",
+      "models": [
+        "akita"
+      ],
+      "devices": [
+        "akita"
+      ],
+      "buildIds": [
+        "CP2A.260805.005"
+      ],
+      "kernelVersions": [
+        "6.1.157-android14-11"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.1.157-android14-11"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android14-6.1",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/akita-CP2A.260805.005.so",
+        "size": 92928,
+        "sha256": "7ede4853ee73f2f7cfba24dae5b8c13dc19c197a3afab070820ae6eae1fad356"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "tokay-CP2A.260705.006",
+      "displayName": "Pixel tokay \u00b7 CP2A.260705.006",
+      "models": [
+        "tokay"
+      ],
+      "devices": [
+        "tokay"
+      ],
+      "buildIds": [
+        "CP2A.260705.006"
+      ],
+      "kernelVersions": [
+        "6.1.157-android14-11"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.1.157-android14-11"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android14-6.1",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/tokay-CP2A.260705.006.so",
+        "size": 128824,
+        "sha256": "fccc392264439314f607b65cd8168be4b52c5a5babec8fd7ce24c83e007c059a"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "komodo-CP2A.260705.006",
+      "displayName": "Pixel komodo \u00b7 CP2A.260705.006",
+      "models": [
+        "komodo"
+      ],
+      "devices": [
+        "komodo"
+      ],
+      "buildIds": [
+        "CP2A.260705.006"
+      ],
+      "kernelVersions": [
+        "6.1.157-android14-11"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.1.157-android14-11"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android14-6.1",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/komodo-CP2A.260705.006.so",
+        "size": 128824,
+        "sha256": "87e958f435f9ed992bbb6c72066227fb36fcddfbb1a8e626a2511961800cc276"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "stallion-CP2A.260805.005",
+      "displayName": "Pixel stallion \u00b7 CP2A.260805.005",
+      "models": [
+        "stallion"
+      ],
+      "devices": [
+        "stallion"
+      ],
+      "buildIds": [
+        "CP2A.260805.005"
+      ],
+      "kernelVersions": [
+        "6.1.157-android14-11"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.1.157-android14-11"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android14-6.1",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/stallion-CP2A.260805.005.so",
+        "size": 128824,
+        "sha256": "85fe9739aaafbe3fdfe9d71444dfe00d0c5d3f02c103ab6d17f9da1cb3671b9a"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "tangorpro-BP1A.250405.007",
+      "displayName": "Pixel tangorpro \u00b7 BP1A.250405.007",
+      "models": [
+        "tangorpro"
+      ],
+      "devices": [
+        "tangorpro"
+      ],
+      "buildIds": [
+        "BP1A.250405.007"
+      ],
+      "kernelVersions": [
+        "6.1.99-android14-11"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.1.99-android14-11"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android14-6.1",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/tangorpro-BP1A.250405.007.so",
+        "size": 128824,
+        "sha256": "a9e974bb6b80ef471584ca4aeb8bd333236e0a4b65b0c9368445828942fd0f39"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "tangorpro-CP2A.260705.006",
+      "displayName": "Pixel tangorpro \u00b7 CP2A.260705.006",
+      "models": [
+        "tangorpro"
+      ],
+      "devices": [
+        "tangorpro"
+      ],
+      "buildIds": [
+        "CP2A.260705.006"
+      ],
+      "kernelVersions": [
+        "6.1.157-android14-11"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.1.157-android14-11"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android14-6.1",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/tangorpro-CP2A.260705.006.so",
+        "size": 128824,
+        "sha256": "49fedabf57a63d11466cd44fb3eba59f50dc13b7e50711cbee5b6faf81251bae"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "felix-CP2A.260605.012",
+      "displayName": "Pixel felix \u00b7 CP2A.260605.012",
+      "models": [
+        "felix"
+      ],
+      "devices": [
+        "felix"
+      ],
+      "buildIds": [
+        "CP2A.260605.012"
+      ],
+      "kernelVersions": [
+        "6.1.157-android14-11"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.1.157-android14-11"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android14-6.1",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/felix-CP2A.260605.012.so",
+        "size": 128824,
+        "sha256": "1540bda01249bd4f6c52dd3ddc43444c1fc0152ba753daf4bed29f822205625d"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "tokay-AD1A.240905.004",
+      "displayName": "Pixel tokay \u00b7 AD1A.240905.004",
+      "models": [
+        "tokay"
+      ],
+      "devices": [
+        "tokay"
+      ],
+      "buildIds": [
+        "AD1A.240905.004"
+      ],
+      "kernelVersions": [
+        "6.1.75-android14-11"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.1.75-android14-11"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android14-6.1",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/tokay-AD1A.240905.004.so",
+        "size": 128824,
+        "sha256": "c5272c5b5794781d54a21855dd5eb90c7792595d514f09dc8c84e6fa3650771e"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "grizzly-CD1A.260618.001.C2",
+      "displayName": "Pixel grizzly \u00b7 CD1A.260618.001.C2",
+      "models": [
+        "grizzly"
+      ],
+      "devices": [
+        "grizzly"
+      ],
+      "buildIds": [
+        "CD1A.260618.001.C2"
+      ],
+      "kernelVersions": [
+        "6.12.69-android16-6"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.12.69-android16-6"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android16-6.12",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/grizzly-CD1A.260618.001.C2.so",
+        "size": 141600,
+        "sha256": "a8eb8ea380d1748f62fa1cc12e30117eaaf5310dc5dfb761a48adcf5fc4f1899"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "cubs-CD1A.260618.001.C2",
+      "displayName": "Pixel cubs \u00b7 CD1A.260618.001.C2",
+      "models": [
+        "cubs"
+      ],
+      "devices": [
+        "cubs"
+      ],
+      "buildIds": [
+        "CD1A.260618.001.C2"
+      ],
+      "kernelVersions": [
+        "6.12.69-android16-6"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.12.69-android16-6"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android16-6.12",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/cubs-CD1A.260618.001.C2.so",
+        "size": 141600,
+        "sha256": "1ed0b0909c52bc45398a4bd8c326c046fd3adbfd2328738cd614873f2cd59976"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "kodiak-CD1A.260618.001.C2",
+      "displayName": "Pixel kodiak \u00b7 CD1A.260618.001.C2",
+      "models": [
+        "kodiak"
+      ],
+      "devices": [
+        "kodiak"
+      ],
+      "buildIds": [
+        "CD1A.260618.001.C2"
+      ],
+      "kernelVersions": [
+        "6.12.69-android16-6"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.12.69-android16-6"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android16-6.12",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/kodiak-CD1A.260618.001.C2.so",
+        "size": 141600,
+        "sha256": "8cf274f90f5275f99978a1c7d17278be933ec16a18e3bd460f5d08c3926fc26a"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    },
+    {
+      "payloadId": "yogi-CD1A.260618.001.C3",
+      "displayName": "Pixel yogi \u00b7 CD1A.260618.001.C3",
+      "models": [
+        "yogi"
+      ],
+      "devices": [
+        "yogi"
+      ],
+      "buildIds": [
+        "CD1A.260618.001.C3"
+      ],
+      "kernelVersions": [
+        "6.12.69-android16-6"
+      ],
+      "exactMatch": {
+        "kernelRelease": "6.12.69-android16-6"
+      },
+      "flavor": "resukisu",
+      "kernelKmi": "android16-6.12",
+      "exploit": {
+        "url": "asset://local-sources/pixel/exploits/yogi-CD1A.260618.001.C3.so",
+        "size": 141600,
+        "sha256": "bbe74a56989f4f30ff7650889948287cd19d931f23c9eca4430becfae04f3518"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/pixel/ksud/ksud",
+        "size": 5014968,
+        "sha256": "9847c5660ab96c9a2c212fa3fa4adb3bb636c56f33be80458c3ce1c04404ec81"
+      },
+      "rootHelper": {
+        "url": "asset://local-sources/pixel/helper/libcve43499root-pixel.so",
+        "size": 19888,
+        "sha256": "1cfb8d89e4228aaea1963793011a99bca937f467c2b2e6300501ecab39a6da0d"
+      }
+    }
+  ]
+}

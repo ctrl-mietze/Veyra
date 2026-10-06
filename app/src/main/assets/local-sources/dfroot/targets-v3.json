@@ -1,0 +1,257 @@
+{
+  "schemaVersion": 3,
+  "payloads": [
+    {
+      "payloadId": "df-5.10-classic",
+      "displayName": "DFRoot kernel 5.10 \u00b7 classic",
+      "models": [
+        "*"
+      ],
+      "kernelVersions": [
+        "5.10"
+      ],
+      "flavor": "kernelsu",
+      "exploit": {
+        "url": "asset://local-sources/dfroot/libdfexp.so",
+        "size": 96128,
+        "sha256": "22247b4f9f1c9b81d47ebe103d4813f801902f9138e32a667e241d16fc531b7f"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/dfroot/ksud-new-classic",
+        "size": 6024848,
+        "sha256": "aaea3e37e6d43825b216d65777ef313a60be43f893b6a17b03e90c3b261fc0f2"
+      }
+    },
+    {
+      "payloadId": "df-5.10-next",
+      "displayName": "DFRoot kernel 5.10 \u00b7 next",
+      "models": [
+        "*"
+      ],
+      "kernelVersions": [
+        "5.10"
+      ],
+      "flavor": "kernelsu-next",
+      "exploit": {
+        "url": "asset://local-sources/dfroot/libdfexpnext.so",
+        "size": 96120,
+        "sha256": "3d94ed544273e510b2359f1589d82c317d3dd74f2bb944d74fa6f3d60dfbcd0b"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/dfroot/ksud-new-next",
+        "size": 5518552,
+        "sha256": "acd345bbbb16823d2a8de7b38990d1d64da8709b5dca646d235fd26936c743f6"
+      }
+    },
+    {
+      "payloadId": "df-5.15-classic",
+      "displayName": "DFRoot kernel 5.15 \u00b7 classic",
+      "models": [
+        "*"
+      ],
+      "kernelVersions": [
+        "5.15"
+      ],
+      "flavor": "kernelsu",
+      "exploit": {
+        "url": "asset://local-sources/dfroot/libdfexp.so",
+        "size": 96128,
+        "sha256": "22247b4f9f1c9b81d47ebe103d4813f801902f9138e32a667e241d16fc531b7f"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/dfroot/ksud-new-classic",
+        "size": 6024848,
+        "sha256": "aaea3e37e6d43825b216d65777ef313a60be43f893b6a17b03e90c3b261fc0f2"
+      }
+    },
+    {
+      "payloadId": "df-5.15-next",
+      "displayName": "DFRoot kernel 5.15 \u00b7 next",
+      "models": [
+        "*"
+      ],
+      "kernelVersions": [
+        "5.15"
+      ],
+      "flavor": "kernelsu-next",
+      "exploit": {
+        "url": "asset://local-sources/dfroot/libdfexpnext.so",
+        "size": 96120,
+        "sha256": "3d94ed544273e510b2359f1589d82c317d3dd74f2bb944d74fa6f3d60dfbcd0b"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/dfroot/ksud-new-next",
+        "size": 5518552,
+        "sha256": "acd345bbbb16823d2a8de7b38990d1d64da8709b5dca646d235fd26936c743f6"
+      }
+    },
+    {
+      "payloadId": "df-6.1-classic",
+      "displayName": "DFRoot kernel 6.1 \u00b7 classic",
+      "models": [
+        "*"
+      ],
+      "kernelVersions": [
+        "6.1"
+      ],
+      "flavor": "kernelsu",
+      "exploit": {
+        "url": "asset://local-sources/dfroot/libdfexp.so",
+        "size": 96128,
+        "sha256": "22247b4f9f1c9b81d47ebe103d4813f801902f9138e32a667e241d16fc531b7f"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/dfroot/ksud-new-classic",
+        "size": 6024848,
+        "sha256": "aaea3e37e6d43825b216d65777ef313a60be43f893b6a17b03e90c3b261fc0f2"
+      }
+    },
+    {
+      "payloadId": "df-6.1-next",
+      "displayName": "DFRoot kernel 6.1 \u00b7 next",
+      "models": [
+        "*"
+      ],
+      "kernelVersions": [
+        "6.1"
+      ],
+      "flavor": "kernelsu-next",
+      "exploit": {
+        "url": "asset://local-sources/dfroot/libdfexpnext.so",
+        "size": 96120,
+        "sha256": "3d94ed544273e510b2359f1589d82c317d3dd74f2bb944d74fa6f3d60dfbcd0b"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/dfroot/ksud-new-next",
+        "size": 5518552,
+        "sha256": "acd345bbbb16823d2a8de7b38990d1d64da8709b5dca646d235fd26936c743f6"
+      }
+    },
+    {
+      "payloadId": "df-6.6-classic",
+      "displayName": "DFRoot kernel 6.6 \u00b7 classic",
+      "models": [
+        "*"
+      ],
+      "kernelVersions": [
+        "6.6"
+      ],
+      "flavor": "kernelsu",
+      "exploit": {
+        "url": "asset://local-sources/dfroot/libdfexp.so",
+        "size": 96128,
+        "sha256": "22247b4f9f1c9b81d47ebe103d4813f801902f9138e32a667e241d16fc531b7f"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/dfroot/ksud-new-classic",
+        "size": 6024848,
+        "sha256": "aaea3e37e6d43825b216d65777ef313a60be43f893b6a17b03e90c3b261fc0f2"
+      }
+    },
+    {
+      "payloadId": "df-6.6-next",
+      "displayName": "DFRoot kernel 6.6 \u00b7 next",
+      "models": [
+        "*"
+      ],
+      "kernelVersions": [
+        "6.6"
+      ],
+      "flavor": "kernelsu-next",
+      "exploit": {
+        "url": "asset://local-sources/dfroot/libdfexpnext.so",
+        "size": 96120,
+        "sha256": "3d94ed544273e510b2359f1589d82c317d3dd74f2bb944d74fa6f3d60dfbcd0b"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/dfroot/ksud-new-next",
+        "size": 5518552,
+        "sha256": "acd345bbbb16823d2a8de7b38990d1d64da8709b5dca646d235fd26936c743f6"
+      }
+    },
+    {
+      "payloadId": "df-6.12-classic",
+      "displayName": "DFRoot kernel 6.12 \u00b7 classic",
+      "models": [
+        "*"
+      ],
+      "kernelVersions": [
+        "6.12"
+      ],
+      "flavor": "kernelsu",
+      "exploit": {
+        "url": "asset://local-sources/dfroot/libdfexp.so",
+        "size": 96128,
+        "sha256": "22247b4f9f1c9b81d47ebe103d4813f801902f9138e32a667e241d16fc531b7f"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/dfroot/ksud-new-classic",
+        "size": 6024848,
+        "sha256": "aaea3e37e6d43825b216d65777ef313a60be43f893b6a17b03e90c3b261fc0f2"
+      }
+    },
+    {
+      "payloadId": "df-6.12-next",
+      "displayName": "DFRoot kernel 6.12 \u00b7 next",
+      "models": [
+        "*"
+      ],
+      "kernelVersions": [
+        "6.12"
+      ],
+      "flavor": "kernelsu-next",
+      "exploit": {
+        "url": "asset://local-sources/dfroot/libdfexpnext.so",
+        "size": 96120,
+        "sha256": "3d94ed544273e510b2359f1589d82c317d3dd74f2bb944d74fa6f3d60dfbcd0b"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/dfroot/ksud-new-next",
+        "size": 5518552,
+        "sha256": "acd345bbbb16823d2a8de7b38990d1d64da8709b5dca646d235fd26936c743f6"
+      }
+    },
+    {
+      "payloadId": "df-6.18-classic",
+      "displayName": "DFRoot kernel 6.18 \u00b7 classic",
+      "models": [
+        "*"
+      ],
+      "kernelVersions": [
+        "6.18"
+      ],
+      "flavor": "kernelsu",
+      "exploit": {
+        "url": "asset://local-sources/dfroot/libdfexp.so",
+        "size": 96128,
+        "sha256": "22247b4f9f1c9b81d47ebe103d4813f801902f9138e32a667e241d16fc531b7f"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/dfroot/ksud-new-classic",
+        "size": 6024848,
+        "sha256": "aaea3e37e6d43825b216d65777ef313a60be43f893b6a17b03e90c3b261fc0f2"
+      }
+    },
+    {
+      "payloadId": "df-6.18-next",
+      "displayName": "DFRoot kernel 6.18 \u00b7 next",
+      "models": [
+        "*"
+      ],
+      "kernelVersions": [
+        "6.18"
+      ],
+      "flavor": "kernelsu-next",
+      "exploit": {
+        "url": "asset://local-sources/dfroot/libdfexpnext.so",
+        "size": 96120,
+        "sha256": "3d94ed544273e510b2359f1589d82c317d3dd74f2bb944d74fa6f3d60dfbcd0b"
+      },
+      "kernelsu": {
+        "url": "asset://local-sources/dfroot/ksud-new-next",
+        "size": 5518552,
+        "sha256": "acd345bbbb16823d2a8de7b38990d1d64da8709b5dca646d235fd26936c743f6"
+      }
+    }
+  ]
+}

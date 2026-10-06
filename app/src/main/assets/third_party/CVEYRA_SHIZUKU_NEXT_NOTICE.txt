@@ -1,0 +1,12 @@
+CVeyra / Shizuku-Next attribution
+
+Parts of CVeyra's privacy-module behavior, package networking control research, and ADB start-flow design were adapted from:
+
+Shizuku-Next
+Repository: https://github.com/rushiranpise/Shizuku-Next
+Reference release: v14.0.13-next
+License: GNU General Public License v3.0
+
+Veyra does not copy Shizuku-Next's visual design. CVeyra uses its own UI, privilege model, VeyraKSU integration, backup/migration flow, firewall persistence layer, and permission-provider architecture.
+
+This notice is bundled with Veyra source/assets to preserve attribution for the referenced GPL-licensed work.

@@ -1,0 +1,1518 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Veyra Root</string>
+    <string name="nav_overview">Home</string>
+    <string name="nav_history">History</string>
+    <string name="nav_logs">Logs</string>
+    <string name="nav_settings">Settings</string>
+    <string name="install_confirm_title">Install KernelSU?</string>
+    <string name="install_confirm_body">The app will check your device, then download and run the exploit and KernelSU payload from GitHub.</string>
+    <string name="action_confirm">Confirm</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_close">Close</string>
+    <string name="action_retry">Retry</string>
+    <string name="action_done">Done</string>
+    <string name="action_back">Back</string>
+    <string name="action_back_to_top">Back to top</string>
+    <string name="install_tap_manager">Tap to install KernelSU Manager</string>
+    <string name="install_tap_open_manager">Tap to open KernelSU Manager</string>
+    <string name="install_tap_retry">Tap to retry</string>
+    <string name="install_tap_start">Tap to install KernelSU</string>
+    <string name="device">Device</string>
+    <string name="kernelsu_card_title">KernelSU</string>
+    <string name="kernelsu_card_description">A kernel-based root solution for Android</string>
+    <string name="firmware">Firmware</string>
+    <string name="system">System</string>
+    <string name="kernel">Kernel</string>
+    <string name="system_abi">System ABI</string>
+    <string name="settings">Settings</string>
+    <string name="version_format">%1$s (%2$d)</string>
+    <string name="language">Language</string>
+    <string name="language_description">Choose the language</string>
+    <string name="appearance">Appearance</string>
+    <string name="settings_section_payloads">Payload Management</string>
+    <string name="settings_section_run">Run Management</string>
+    <string name="settings_section_shizuku">Shizuku Management</string>
+    <string name="settings_section_cveyra">CVeyra Management</string>
+    <string name="settings_section_adb_manager">ADB Manager</string>
+    <string name="cveyra_use_title">Use CVeyra</string>
+    <string name="cveyra_use_summary">Starts CVeyra\'s persistent shell broker. Wireless ADB is used to bootstrap the shell identity, then CVeyra keeps its own authenticated local broker outside the app process. Root remains optional through the separate Root switch.</string>
+    <string name="cveyra_root_title">Start CVeyra as Root</string>
+    <string name="cveyra_root_summary">Use the root broker whenever a root backend is available.</string>
+    <string name="cveyra_root_active">Root broker available</string>
+    <string name="cveyra_root_menu_title">CVeyra Root</string>
+    <string name="cveyra_root_menu_body">CVeyra Root does not root the phone again. It asks the already active root manager to authorize Veyra Root, then uses that grant for CVeyra’s privileged broker. The persistent ADB broker stays available as the non-root fallback.</string>
+    <string name="cveyra_root_menu_status">Current execution path</string>
+    <string name="cveyra_root_menu_note">KernelSU may show a grant prompt. Approve Veyra Root there. You can open the manager below before trying again.</string>
+    <string name="cveyra_root_menu_requesting">Requesting Root access…</string>
+    <string name="cveyra_root_menu_request">Request Root access</string>
+    <string name="cveyra_root_menu_open_manager">Open KernelSU Manager</string>
+    <string name="cveyra_root_menu_use_adb">Keep persistent ADB fallback</string>
+    <string name="cveyra_root_menu_granted">Root access granted. CVeyra is using its privileged backend.</string>
+    <string name="cveyra_root_menu_failed">KernelSU has not granted Veyra Root yet. Approve it in the manager and try again.</string>
+    <string name="cveyra_promote_title">Restart CVeyra as Root after successful boot</string>
+    <string name="cveyra_promote_summary">After boot completes, CVeyra switches to its privileged execution path when root is available.</string>
+    <string name="cveyra_token_title">CVeyra start token</string>
+    <string name="cveyra_token_summary_off">Only needed for external start requests. The token is generated locally.</string>
+    <string name="cveyra_token_summary_on">External start requests can use the locally generated token.</string>
+    <string name="cveyra_token_copy_title">Copy CVeyra start token</string>
+    <string name="cveyra_token_copy_summary">Copy the current token or generate a new one.</string>
+    <string name="cveyra_boot_title">Start CVeyra on boot</string>
+    <string name="cveyra_boot_summary">Starts CVeyra after Android boots. If root already exists, the root broker can be activated immediately.</string>
+    <string name="cveyra_grant_title">Grant CVeyra Access</string>
+    <string name="cveyra_grant_summary">V-SPR permission management preview</string>
+    <string name="cveyra_grant_value">Preview</string>
+    <string name="cveyra_token_copied">CVeyra token copied</string>
+    <string name="cveyra_token_rotated">New CVeyra token generated</string>
+    <string name="cveyra_token_regenerate">Regenerate</string>
+    <string name="cveyra_setup_title">CVeyra needs access</string>
+    <string name="cveyra_setup_body">CVeyra is enabled, but no execution path is available yet. Grant Veyra Root access through your root manager or pair Wireless ADB.</string>
+    <string name="cveyra_setup_root">Grant via root manager</string>
+    <string name="cveyra_setup_wireless">Pair Wireless ADB</string>
+    <string name="cveyra_setup_open_wireless">Open Wireless ADB settings</string>
+    <string name="cveyra_setup_root_failed">Root access was not granted. Approve Veyra Root in your root manager, or use Wireless ADB instead.</string>
+    <string name="cveyra_setup_pair_started">Pairing started. Open Android’s pairing-code screen; the notification will reappear for code entry.</string>
+    <string name="cveyra_backend_root">Root broker active</string>
+    <string name="cveyra_backend_adb">Persistent ADB shell broker active</string>
+    <string name="cveyra_backend_none">Waiting for Root or Wireless ADB</string>
+    <string name="adb_legacy_title">ADB TCP Legacy Connection</string>
+    <string name="adb_legacy_summary">Configure adbd to listen on a classic TCP port when root is available.</string>
+    <string name="adb_legacy_port">TCP port</string>
+    <string name="adb_legacy_enable">Enable</string>
+    <string name="adb_legacy_disable">Disable</string>
+    <string name="adb_legacy_root_required">Root access is required to change adbd TCP mode.</string>
+    <string name="adb_legacy_enabled">ADB TCP enabled on port %1$d.</string>
+    <string name="adb_legacy_disabled">ADB TCP Legacy disabled.</string>
+    <string name="vspr_title">Grant CVeyra Access</string>
+    <string name="vspr_provider_title">CVeyra Permission Provider</string>
+    <string name="vspr_provider_subtitle">Veyra System Permission Provider · V-SPR</string>
+    <string name="vspr_provider_info">CVeyra Provider</string>
+    <string name="vspr_provider_info_summary">Permission Provider 2.0.0 · activation, per-app policy, KernelSU migration, modules and firewall</string>
+    <string name="vspr_apps_title">Apps</string>
+    <string name="vspr_apps_summary">Per-app privileges managed by V-SPR</string>
+    <string name="vspr_loading">Reading installed apps and direct KernelSU grants…</string>
+    <string name="vspr_no_apps">No eligible apps found.</string>
+    <string name="vspr_direct_root_hidden">%1$d apps with direct KernelSU root are hidden from V-SPR.</string>
+    <string name="vspr_supersu">SuperSU (UID 0)</string>
+    <string name="vspr_adb">ADB</string>
+    <string name="vspr_shizuku">Shizuku</string>
+    <string name="vspr_adveyra">ADVeyra</string>
+    <string name="vspr_system">System (UID 1000)</string>
+    <string name="vspr_disabled_by_provider">Disabled in provider</string>
+    <string name="vspr_info_title">V-SPR</string>
+    <string name="vspr_info_close">Back</string>
+    <string name="vspr_preview_notice">CVeyra Access is live: supported provider changes are enforced immediately and only persisted after the device confirms them.</string>
+    <string name="vspr_show_system_apps">Show system apps</string>
+    <string name="vspr_show_system_apps_summary">Hidden by default. System apps with an existing CVeyra rule remain visible.</string>
+    <string name="device_information">Device information</string>
+    <string name="veyra_link_unavailable">Veyra project page is not available yet.</string>
+    <string name="settings_section_root">Root Management</string>
+    <string name="settings_section_system">System Management</string>
+    <string name="settings_section_expand">Expand section</string>
+    <string name="settings_section_collapse">Collapse section</string>
+    <string name="residue_card_title">Residue</string>
+    <string name="residue_card_summary">Files in the shared temp directory</string>
+    <string name="residue_reading">Reading…</string>
+    <string name="residue_clean">Clean</string>
+    <string name="residue_blind">Error</string>
+    <string name="residue_dialog_title">Shared temp directory</string>
+    <string name="residue_dialog_help">Cannot read /data/local/tmp.</string>
+    <string name="residue_dialog_checked">Checked %1$d paths; %2$d could not be read.</string>
+    <string name="residue_clean_by_name">Clean</string>
+    <string name="residue_nothing_staged">Clean</string>
+    <string name="residue_clear">Delete All</string>
+    <string name="residue_delete_row">Delete %1$s</string>
+    <string name="residue_delete_title">Delete %1$s?</string>
+    <string name="residue_delete_mine">This file was created by the app</string>
+    <string name="residue_delete_other">This file was not created by the app</string>
+    <string name="residue_delete_done">Deleted %1$s.</string>
+    <string name="residue_delete_left">%1$s left.</string>
+    <string name="residue_delete_refused">The shell refused %1$s: %2$s</string>
+    <string name="residue_log_delete">Staging: deleted %1$s from /data/local/tmp</string>
+    <string name="residue_clear_title">Clear the temp directory?</string>
+    <string name="residue_clear_body">This deletes every entry in /data/local/tmp, including %1$d files</string>
+    <string name="residue_clear_confirm">Delete</string>
+    <string name="residue_clear_done">Deleted %1$d entr(ies).</string>
+    <string name="residue_clear_left">%1$d could not be deleted; they are still listed above.</string>
+    <string name="residue_clear_refused">The shell refused some of them: %1$s</string>
+    <string name="residue_clear_no_shell">Nothing was deleted because no shell was available. Clearing this directory requires root or Shizuku because it is owned by the shell user.</string>
+    <string name="residue_clear_skipped">Nothing was deleted: a run is in flight in another process, and the payload is executed from this directory.</string>
+    <string name="residue_log_clear">Staging: cleared /data/local/tmp through a shell: removed %1$d entr(ies), %2$d could not be removed</string>
+    <string name="residue_log_clear_none">Staging: asked for /data/local/tmp to be cleared and no shell answered</string>
+    <string name="residue_log_clear_skipped">Staging: asked for /data/local/tmp to be cleared and stood down, a run is in flight in another process</string>
+    <string name="residue_clean_listed_body">The directory is empty. None of the %1$d paths used by the app are present, and there are no other entries.</string>
+    <string name="residue_clean_by_name_body">No shell was available, so only the %1$d paths used by the app could be checked by name. None of them is on the device.</string>
+    <string name="residue_unlisted_body">The directory could not be listed because a shell is required. Only the paths shown above could be checked, so other entries may still be present.</string>
+    <string name="residue_section_staged">Staged by this app</string>
+    <string name="residue_section_others">Also in the directory</string>
+    <string name="residue_others_body">These files are in /data/local/tmp but were not created by the app. They are shown because a detector can see them too. The app will not delete them.</string>
+    <string name="residue_role_other">not staged by this app</string>
+    <string name="residue_size_folder">folder</string>
+    <string name="residue_size_unreadable">not readable</string>
+
+    <string name="residue_blind_body">The app cannot read /data/local/tmp</string>
+    <string name="residue_row_detail">%1$s · %2$s · %3$s</string>
+    <string name="residue_copy">Copy list</string>
+    <string name="staging_sweep_clean">Staging: removed %1$d staged file(s) from /data/local/tmp</string>
+    <string name="staging_sweep_left">Staging: removed %1$d staged file(s); Failed: %2$s</string>
+    <string name="staging_sweep_refused">Staging: tried to remove %1$d staged file(s) and the shell refused some: %2$s</string>
+    <string name="staging_sweep_skipped">Staging: not swept</string>
+    <string name="staging_sweep_no_shell">Staging: not swept, no shell answered - what earlier runs left is still in /data/local/tmp</string>
+    <string name="staging_sweep_other_install">Staging: left alone for the other Root My Galaxy install, which uses the same names: %1$s</string>
+    <string name="residue_role_daemon">KernelSU daemon</string>
+    <string name="residue_role_helper">root helper</string>
+    <string name="residue_role_payload">exploit payload</string>
+    <string name="residue_role_script">repair script</string>
+    <string name="residue_role_log">script log</string>
+    <string name="residue_role_marker">marker</string>
+    <string name="residue_role_socket">socket</string>
+    <string name="residue_log_clean_listed">Staging: %2$s was listed and holds none of the %1$d paths this app writes, and nothing else either</string>
+    <string name="residue_log_clean_by_name">Staging: no shell answered, so %2$s could only be checked by name: none of the %1$d paths this app writes is on the device</string>
+    <string name="residue_log_present">Staging: %1$d file(s), %2$s left in /data/local/tmp: %3$s</string>
+    <string name="residue_log_others">Staging: %1$d entr(ies) in /data/local/tmp that this app did not stage: %2$s</string>
+    <string name="residue_log_staged_and_others">Staging: %1$d file(s), %2$s left in /data/local/tmp: %3$s \u00b7 also %4$d not staged by this app: %5$s</string>
+    <string name="residue_log_blind">Staging: %1$s could not be read from this app\'s own context, so what is there is unknown</string>
+    <string name="settings_payload_mode">Payload Mode</string>
+    <string name="settings_payload_mode_online">Online</string>
+    <string name="settings_payload_mode_offline">Cached</string>
+    <string name="settings_payload_mode_summary_online">Downloads new payload. Network connection is required</string>
+    <string name="settings_payload_mode_summary_offline">Use Cached Payload. No network connection is required.</string>
+    <string name="action_stop_run">Stop</string>
+    <!--
+        A run that was not started because the device is already on one. The three lines are the card, the
+        reason on it and the log: nothing was attempted, so there is no stage to report and no log to keep,
+        and the reason has to carry the whole of what to do about it.
+    -->
+    <string name="status_run_in_flight">Another run is in flight</string>
+    <string name="install_run_in_flight">This device is already running an install, so this one was not started. Wait for that run to finish, or restart the phone to take over from it.</string>
+    <string name="log_run_in_flight">[!] Not started: another run already has this device.</string>
+    <string name="status_run_stopped">Stopped</string>
+    <string name="phase_stopped">The run stopped at the stage shown above. Stopping does not undo changes that have already been made to the device.</string>
+    <string name="log_run_stopped">[*] Stopped during the %1$s stage. Anything already started on the device will keep running. The next run will check whether it is still active.</string>
+    <string name="log_run_interrupted">[*] Run cancelled during the %1$s stage</string>
+    <string name="retry_choice_title">Retry</string>
+    <string name="retry_after_reboot">Restart and retry</string>
+    <string name="retry_option_reboot_detail">Best odds. A clean boot, and the install retries by itself afterwards</string>
+    <string name="retry_now">Retry now</string>
+    <string name="retry_option_now_detail">Not recommended</string>
+    <string name="retry_wait">Wait, then retry</string>
+    <string name="retry_option_wait_detail">Wait for 1 min then Retry</string>
+    <!-- Short, because it now sits in the run's floating bar beside the two answers it counts down to; the
+         explanation of what the wait buys stays in the dialog that offers it (retry_option_wait_detail). -->
+    <string name="retry_waiting_body">Retrying in %1$d s</string>
+    <string name="retry_waiting_start">Retry now</string>
+    <string name="retry_waiting_cancel">Stop waiting</string>
+    <string name="log_pipe_budget">[!] The payload was refused the pipe pages its race needs (%1$s). That budget is per boot and this one has spent it, so restart before another attempt.</string>
+    <string name="error_pipe_budget_spent">This boot has already spent the pipe page budget the exploit needs, so another attempt may fail the same way. Restart the phone, then run again.</string>
+    <string name="install_pipe_budget_spent">The pipe page budget the exploit needs is spent for this boot. A restart refills it; waiting does not, and every attempt until then fails the same way.</string>
+    <string name="retry_pipe_budget_hint">Retrying here is not offered: this boot\'s pipe page budget is spent, and only a restart refills it.</string>
+    <string name="failure_pipe_budget">The kernel refused the payload the pipe pages it needs. That budget is spent for this boot, so every attempt from here fails the same way until the phone restarts.</string>
+    <string name="log_manager_refreshed">[*] Stopped %1$s, which was open across the load, so it reads the module that was just loaded</string>
+    <string name="log_payload_may_still_run">[!] The payload could not be confirmed stopped and may still be running. Restart the phone before another attempt.</string>
+    <string name="install_payload_may_still_run">The payload could not be confirmed as stopped, so it may still be running. Restart the phone before trying again. Running a second payload while the first is still active can lock up the phone.</string>
+    <string name="retry_single_payload_hint">Retrying is not available because the last payload may still be running. Starting another one while it is active can lock up the phone.</string>
+    <string name="retry_armed_title">Retry scheduled</string>
+    <string name="retry_armed_body">The app could not restart the phone because neither root nor CVeyra is available. Restart the phone yourself. The installation will start automatically after boot.</string>
+    <string name="install_load_modules">Restart userspace to load modules</string>
+    <string name="settings_cached_payload">Cached</string>
+    <string name="settings_cached_payload_none">Unavailable</string>
+    <string name="settings_cached_payload_summary">Payload saved for offline runs</string>
+    <string name="cached_payload_title">Cached payload</string>
+    <string name="cached_payload_device">Device</string>
+    <string name="cached_payload_profile">Target</string>
+    <string name="cached_payload_exploit_sha">Exploit SHA-256</string>
+    <string name="cached_payload_kernelsu_sha">KernelSU SHA-256</string>
+    <string name="cached_payload_note">Cached only after a successful KernelSU installation. Each file is verified again before it is used.</string>
+    <string name="cached_payload_no_digest">Unknown</string>
+    <string name="cached_payload_forget">Remove cache</string>
+    <string name="status_loading_cached">Loading cached payload</string>
+    <string name="log_payload_cached">[*] Using the cached payload: %1$s</string>
+    <string name="log_retry_attempted">[*] Retrying the payload the last attempt used: %1$s</string>
+    <string name="log_attempted_record_failed">[!] Could not record this payload for a retry: %1$s</string>
+    <string name="log_payload_cached_now">[+] Cached for offline use: %1$s</string>
+    <string name="log_payload_cache_failed">[!] Could not cache this payload for offline use: %1$s</string>
+    <string name="log_payload_origin">[*] payload origin=%1$s</string>
+    <string name="run_plan_payload_mode">Payload Mode</string>
+    <string name="offline_cache_empty">Not available.</string>
+    <string name="offline_cached_artifact_invalid">The cached %1$s does not match</string>
+    <string name="autoroot_stabilizing">Waiting for the device to settle</string>
+    <string name="autoroot_run_in_flight">Stood down: another run was already in flight, so this boot was left to it.</string>
+    <string name="autoroot_starting">Starting installation</string>
+    <string name="autoroot_prior_install_required">Root on boot requires cached payload.</string>
+    <string name="autoroot_failed">Installation failed: %1$s</string>
+    <string name="autoroot_failed_at">Installation failed at %1$s: %2$s</string>
+    <string name="autoroot_succeeded">Root Succeeded</string>
+    <string name="autoroot_succeeded_without_shell">Root Succeeded. Shizuku was not running, but this payload does not need a shell.</string>
+    <string name="autoroot_boot_changed">The kernel changed before installation started</string>
+    <string name="autoroot_timed_out">The operation did not finish in time</string>
+    <string name="autoroot_shizuku_waiting">Waiting for Shizuku to start: %1$s</string>
+    <string name="autoroot_shizuku_waiting_for_network">Waiting for Wi-Fi, which starting Shizuku needs: %1$s</string>
+    <string name="autoroot_shizuku_unavailable">Shizuku is not ready and did not start within %1$s. Start it again, or run this installation without Shizuku.</string>
+    <string name="autoroot_shizuku_needs_network">Shizuku could not start because it needs wireless debugging, which Android keeps unavailable when the phone is not connected to Wi-Fi. Connect to Wi-Fi and start Shizuku, or run this installation without it.</string>
+    <string name="autoroot_shizuku_unstartable">Use Shizuku is enabled, but the app cannot start it because there is no root access, wireless debugging pairing, or start token. Run this installation without Shizuku, or turn off Root on boot.</string>
+    <string name="autoroot_answer_retry_shizuku">Start Shizuku</string>
+    <string name="autoroot_answer_standard">Run without Shizuku</string>
+    <string name="autoroot_skip_retry">Skip retry</string>
+    <string name="autoroot_skip_install">Skip install</string>
+    <string name="autoroot_channel_name">Root on boot</string>
+    <string name="autoroot_channel_description">Runs the installation with cached payload after reboot.</string>
+    <string name="settings_section_wireless_adb">Wireless ADB Management</string>
+    <string name="error_shell_transport_shizuku_silent">This payload must run from a shell. Shizuku is enabled but not responding, and no wireless pairing is saved. Start Shizuku or pair the device under Settings → Wireless ADB.</string>
+    <string name="error_shell_transport_shizuku_off">This payload must run from a shell. Shizuku is disabled and no wireless pairing is saved. Enable Shizuku or pair the device under Settings → Wireless ADB.</string>
+    <string name="log_transport_local_adb">[*] Transport: this device\'s ADB shell over wireless debugging</string>
+    <string name="log_transport_shizuku">[*] Transport: Shizuku</string>
+    <string name="log_transport_app">[*] Transport: app process</string>
+    <string name="settings_wireless_adb">Wireless ADB</string>
+    <string name="settings_wireless_adb_summary">Pair this phone for wireless debugging so runs can use a shell without a computer or root.</string>
+    <string name="settings_wireless_adb_none">Not paired</string>
+    <string name="settings_wireless_adb_unverified">Paired</string>
+    <string name="settings_wireless_adb_valid">Working</string>
+    <string name="settings_wireless_adb_rejected">Unpaired</string>
+    <string name="settings_wireless_adb_port_missing">Port not found</string>
+    <string name="settings_wireless_adb_no_permission">Permission required</string>
+    <string name="settings_wireless_adb_failed">Connection failed</string>
+    <string name="wireless_adb_permission_detail">Wireless debugging is off and the app cannot enable it by itself. Grant the required permission with `%1$s`, install with `adb install -g`, or use root if available.</string>
+    <string name="wireless_adb_pair">Pair with pairing code</string>
+    <string name="wireless_adb_pair_again">Pair again</string>
+    <string name="wireless_adb_test">Test</string>
+    <string name="wireless_adb_forget">Remove pairing</string>
+    <string name="wireless_adb_fingerprint">Key fingerprint</string>
+    <string name="wireless_adb_dialog_title">Wireless ADB</string>
+    <string name="wireless_adb_pair_help">Get the six-digit code from Android: Developer options → Wireless debugging → Pair device with pairing code. Tap Pair below, then enter the code in the notification.</string>
+    <string name="wireless_adb_forget_done">This app\'s wireless debugging pairing was removed. Use Pair again to create a new one.</string>
+    <string name="adb_pair_open_developer_options">Open Developer options</string>
+    <string name="developer_options_unavailable">Could not open Developer options. Open it manually from Settings.</string>
+    <string name="adb_pair_channel_name">Wireless ADB pairing</string>
+    <string name="adb_pair_searching">Waiting for the pairing service. Open Developer options → Wireless debugging → Pair device with pairing code.</string>
+    <string name="adb_pair_service_found">Pairing service found</string>
+    <string name="adb_pair_enter_code">Enter the six-digit code shown in Developer options</string>
+    <string name="adb_pair_code_hint">Pairing code</string>
+    <string name="adb_pair_button">Pair</string>
+    <string name="adb_pair_working">Pairing…</string>
+    <string name="adb_pair_success_title">Paired</string>
+    <string name="adb_pair_success_text">This device now accepts the app\'s ADB key. Wireless debugging has been turned off again.</string>
+    <string name="adb_pair_success_shizuku">Paired. Starting Shizuku with the new transport.</string>
+    <string name="adb_pair_failed_title">Pairing failed</string>
+    <string name="adb_pair_cannot_connect">The pairing service refused the connection. Make sure the pairing dialog is open and the code is still valid.</string>
+    <string name="adb_pair_wrong_code">The code was rejected. Pairing codes expire quickly, so reopen the dialog and use the new code.</string>
+    <string name="adb_pair_unknown_error">Pairing stopped without an error message.</string>
+    <string name="adb_pair_notification_permission_required">Notifications are required to enter the pairing code, so pairing could not start.</string>
+    <string name="settings_shizuku_token">Shizuku start token</string>
+    <string name="settings_shizuku_token_summary">Only needed without root or a saved wireless debugging pairing, and only with Shizuku builds that support start requests.</string>
+    <string name="settings_shizuku_token_value_set">Set</string>
+    <string name="settings_shizuku_token_value_unset">Not set</string>
+    <string name="shizuku_start_attempt_log">Attempt details</string>
+    <string name="shizuku_token_dialog_title">Shizuku start token</string>
+    <string name="shizuku_token_dialog_label">Token</string>
+    <string name="shizuku_token_dialog_help">Paste the token provided by your Shizuku build.</string>
+    <string name="settings_autoroot_settle">Root on boot Delay</string>
+    <string name="settings_autoroot_settle_summary">How long Root on boot waits after reboot before starting.</string>
+    <string name="settings_boot_settle">Boot settle time</string>
+    <string name="settings_boot_settle_summary">How long a new run waits after a reboot before starting.</string>
+    <string name="status_boot_settle">Waiting for the device to settle: %1$s</string>
+    <string name="phase_settling">Waiting for the device to settle before the exploit begins.</string>
+    <string name="action_run_now">Run now anyway</string>
+    <string name="log_boot_settle">[*] Boot settle: %1$s remaining before the exploit starts.</string>
+    <string name="log_boot_settled">[+] Boot settled after %1$s</string>
+    <string name="log_boot_settle_skipped">[!] Boot settle skipped: starting now</string>
+    <string name="run_plan_boot_settle">Boot settle</string>
+    <string name="theme_system">System</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_white_dark">White Dark</string>
+    <string name="theme_white_purple">Veyra White</string>
+    <string name="theme_dark_purple">Dark Purple</string>
+    <string name="theme_oled">OLED Mode</string>
+    <string name="theme_oled_purple">Veyra Dark</string>
+    <string name="theme_green">Green</string>
+    <string name="theme_violet">Violet</string>
+    <string name="theme_orange">Orange</string>
+    <string name="theme_aurora">Veyra Aurora</string>
+    <string name="theme_graphite">Veyra Graphite</string>
+    <string name="theme_midnight">Veyra Midnight</string>
+    <string name="settings_layout_folder">Switch to folder design</string>
+    <string name="settings_layout_pages">Switch to page design</string>
+    <string name="settings_layout_folder_summary">Use collapsible settings folders and remember every open or closed folder.</string>
+    <string name="settings_layout_pages_summary">Open every settings category on its own page.</string>
+    <string name="settings_section_open">Open section</string>
+    <string name="material_color">Theme</string>
+    <string name="material_color_description">Choose the complete app design</string>
+    <string name="color_title">Accent color</string>
+    <string name="color_description">Choose the accent used by compatible themes</string>
+    <string name="language_system">Follow system</string>
+    <string name="language_korean" translatable="false">한국어</string>
+    <string name="language_english" translatable="false">English</string>
+    <string name="language_german" translatable="false">Deutsch</string>
+    <string name="language_japanese" translatable="false">日本語</string>
+    <string name="language_chinese" translatable="false">简体中文</string>
+    <string name="language_chinese_traditional" translatable="false">繁體中文</string>
+    <string name="language_turkish" translatable="false">Türkçe</string>
+    <string name="language_brazillian_portuguese" translatable="false">Português Brasileiro</string>
+    <string name="language_russian" translatable="false">Русский</string>
+    <string name="language_vietnamese" translatable="false">Tiếng Việt</string>
+    <string name="language_uzbek" translatable="false">O\'zbek</string>
+    <string name="color_dynamic">System default</string>
+    <string name="color_blue">Blue</string>
+    <string name="color_violet">Violet</string>
+    <string name="color_green">Green</string>
+    <string name="color_orange">Orange</string>
+    <string name="history_title">Run history</string>
+    <!--
+        The Logs tab. History is what a run did; this is what the app did around it, which is the
+        thing to read first when something did not work.
+    -->
+    <string name="logs_title">App log</string>
+    <string name="logs_newest_first">Newest first</string>
+    <string name="logs_copy">Copy log</string>
+    <string name="logs_clear">Clear log</string>
+    <string name="logs_clear_title">Clear the app log?</string>
+    <string name="logs_clear_body">Runs in History are not affected.</string>
+    <string name="logs_filter_all">All</string>
+    <string name="logs_filter_info">Info</string>
+    <string name="logs_filter_error">Errors</string>
+    <string name="logs_search">Filter by text</string>
+    <string name="logs_count_window">Newest %1$d, %2$d older not shown</string>
+    <string name="logs_empty_title">Nothing logged yet</string>
+    <string name="logs_empty_body">Lines appear as soon as the app does something, such as starting Shizuku, fetching the payload catalog, downloading a manager, or running an installation. A run\'s payload output is shown in History.</string>
+    <string name="logs_filter_clear">Clear filters</string>
+    <string name="logs_empty_filtered_title">No matches</string>
+    <string name="logs_empty_filtered_body">Lower the level filter or clear the text filter to see more of the log.</string>
+    <plurals name="logs_count">
+        <item quantity="one">%1$d line</item>
+        <item quantity="other">%1$d lines</item>
+    </plurals>
+    <string name="history_empty_title">No runs yet</string>
+    <string name="history_empty_description">The first installation saves its result and log here. Start a new run from Home.</string>
+    <string name="history_empty_action">Go to Home</string>
+    <string name="history_running">Running</string>
+    <string name="history_succeeded">Succeeded</string>
+    <string name="history_root_only">Root only</string>
+    <string name="history_failed">Failed</string>
+    <string name="history_stopped">Stopped</string>
+    <string name="history_detail_title">Run details</string>
+    <string name="history_run_not_here">That run is not in the history any more.</string>
+    <string name="history_started">Started: %1$s</string>
+    <string name="history_completed">Completed: %1$s</string>
+    <string name="history_log_empty">No log output.</string>
+    <string name="history_payload">Payload: %1$s</string>
+    <string name="history_source">Source: %1$s</string>
+    <string name="history_source_commit">Source: %1$s @ %2$s</string>
+    <string name="history_shizuku_used">Shizuku: used</string>
+    <string name="history_shizuku_not_used">Shizuku: not used</string>
+    <string name="export_log">Export log</string>
+    <string name="export_log_saved">Log saved</string>
+    <string name="export_log_failed">Could not save log</string>
+    <string name="export_logs_saved">%1$d run logs saved</string>
+    <string name="export_logs_failed">Could not save the selected logs</string>
+    <string name="history_export_selected">Export (%1$d)</string>
+    <string name="action_copy_log">Copy log</string>
+    <string name="log_copied">Log copied to clipboard</string>
+    <string name="about">About</string>
+    <string name="about_title">About Veyra Root</string>
+    <string name="about_description">Info Root My Galaxy Next</string>
+    <string name="about_body">Root supported Samsung Galaxy phones using a kernel exploit.</string>
+
+    <string name="install_title">Install</string>
+    <string name="install_keep_open">Keep this screen open until installation finishes.</string>
+    <string name="install_log_jump_to_end">Newest</string>
+    <string name="install_live_progress">Logs</string>
+    <string name="install_preparing">Preparing…</string>
+    <string name="step_support_title">Support check</string>
+    <string name="step_support_detail">Check the device and firmware profile</string>
+    <string name="step_download_title">Download</string>
+    <string name="step_download_detail">Load the support manifest</string>
+    <string name="step_exploit_title">Kernel exploit</string>
+    <string name="step_exploit_detail">Obtain temporary root</string>
+    <string name="step_ksu_title">Load KernelSU</string>
+    <string name="step_ksu_detail">Load KernelSU and verify the control channel</string>
+    <string name="phase_checking">Checking device and firmware support</string>
+    <string name="phase_ready">Ready to install</string>
+    <string name="phase_downloading">Downloading verified payloads from GitHub</string>
+    <string name="phase_exploiting">This may take 10 minutes or more. The device may get hot or temporarily stop responding.</string>
+    <string name="phase_loading_ksu">Loading KernelSU with the acquired root access</string>
+    <string name="phase_installed">KernelSU and its control channel were verified</string>
+    <string name="phase_root_only">Root obtained, but KernelSU was not loaded</string>
+    <string name="phase_failed">Check the log below for the failure point</string>
+
+    <string name="status_ksu_active">KernelSU active</string>
+    <string name="status_root_active">Root active</string>
+    <string name="status_jailbraked">[Jailbraked]</string>
+    <string name="status_root_only">Root acquired. KernelSU was not loaded because it is disabled in Settings.</string>
+    <string name="status_not_installed">Not installed</string>
+    <!-- The install card's title before anything has been read. It is the state's own message rather than the
+         card's, so a phase with nothing to say cannot leave the button blank. -->
+    <string name="status_checking_device">Checking this device…</string>
+    <string name="status_support_failed">Support check failed</string>
+    <string name="status_cache_missing">No cached payload</string>
+    <string name="status_checking_github">Checking GitHub support manifest</string>
+    <string name="status_downloading_payload">Downloading payloads</string>
+    <string name="notification_channel_boot">Boot installation</string>
+    <string name="notification_channel_shizuku">Shizuku startup</string>
+    <string name="notification_boot_waiting_network">Waiting for network</string>
+    <string name="notification_boot_offline">No network after boot; root was not re-established</string>
+    <string name="status_exploit_running">Running kernel exploit</string>
+    <string name="status_ksu_loading">Loading KernelSU</string>
+    <string name="status_install_failed">Installation failed</string>
+    <string name="log_profile">[+] Support profile: %1$s</string>
+    <string name="log_payload_source">[+] Payload source: %1$s</string>
+    <string name="log_download_verified">[+] Payload download complete</string>
+    <string name="log_install_complete">[+] Installation complete</string>
+    <string name="log_root_only_complete">[+] Run complete: root acquired; KernelSU was not loaded</string>
+    <string name="log_postroot_permission_failed">[!] Secure settings permission was not granted: %1$s</string>
+    <string name="log_grant_already">[*] Secure settings permission is already granted</string>
+    <string name="log_grant_granted">[+] Secure settings permission granted through %1$s; wireless debugging can now be enabled without a cable.</string>
+    <string name="log_grant_failed">[!] Secure settings permission was not granted through %1$s: %2$s</string>
+    <string name="log_grant_no_transport">[!] Secure settings permission was not granted: no root or CVeyra execution path is available.</string>
+    <string name="grant_transport_root">Root</string>
+    <string name="grant_transport_cveyra">CVeyra</string>
+    <string name="grant_transport_local_adb">the device\'s own ADB shell</string>
+    <string name="grant_silent_refusal">the command exited with %1$d, but permission was not granted</string>
+    <string name="grant_already_message">The secure-settings permission is already granted.</string>
+    <string name="grant_done_message">Granted through %1$s. Wireless debugging can now be enabled without a cable.</string>
+    <string name="grant_refused_message">%1$s could not grant the permission: %2$s</string>
+    <string name="grant_no_transport_message">No available transport can grant this permission. Enable CVeyra through Root or pair Wireless ADB first. You can also grant it from a computer with `adb shell pm grant %1$s android.permission.WRITE_SECURE_SETTINGS`.</string>
+    <string name="grant_action">Grant secure settings permission</string>
+    <string name="wireless_adb_permission_note">Veyra does not have WRITE_SECURE_SETTINGS yet, so it cannot enable wireless debugging by itself. Grant it through root or complete a wireless-debugging pairing.</string>
+    <string name="log_bootstrap_root">[+] Bootstrap root acquired</string>
+    <string name="log_ro_blocks_successful">[+] Set %1$d partitions to read-only</string>
+    <string name="log_ro_blocks_failed">[!] Could not set partitions to read-only</string>
+    <string name="log_ro_blocks_script_missing">[!] Read-only partition script is missing from this build</string>
+    <string name="log_ksu_modules_disabled_off">[*] Disable KSU modules is off</string>
+    <string name="log_ksu_loading_off">[*] KernelSU loading is disabled in Settings, so no modules were staged or loaded. The run ends after root is acquired.</string>
+    <string name="log_ksu_modules_moved">[*] KernelSU modules moved to %1$s for loading</string>
+    <string name="log_ksu_modules_restored">[+] KernelSU modules restored</string>
+    <string name="log_ksu_modules_restore_skipped">[*] Nothing to restore; the module directory is already in place.</string>
+    <string name="log_ksu_modules_backup_present">[!] A backup from an earlier run is still at %1$s; the modules were left in place.</string>
+    <string name="log_ksu_modules_absent">[*] Nothing to move from %1$s</string>
+    <string name="log_ksu_modules_move_failed">[!] KernelSU modules could not be moved (%1$s)</string>
+    <string name="log_ksu_modules_restore_failed">[!] KernelSU modules are still at %1$s. Move them back to %2$s (%3$s).</string>
+    <string name="log_ksu_staged">[+] KernelSU staging complete</string>
+    <string name="log_ksu_staged_early">[+] KernelSU daemon staged before the payload. It must already be in place for KernelSU to load after bootstrap root.</string>
+    <string name="log_local_adb_shell_ready">[+] Local ADB shell transport ready: u:r:shell:s0</string>
+    <string name="log_restart_after_root">[*] Restarting userspace so KernelSU can load the modules.</string>
+    <string name="log_restart_after_root_accepted">[+] KernelSU accepted the soft reboot; modules are being applied.</string>
+    <string name="log_restart_after_root_refused">[!] Root succeeded, but KernelSU rejected the soft reboot: %1$s</string>
+    <string name="settings_restart_after_root">Auto Soft reboot</string>
+    <string name="settings_restart_after_root_summary">Soft reboot device after root is acquired</string>
+    <string name="autoroot_apply_modules">Apply modules</string>
+    <string name="autoroot_retry_title">Retry install</string>
+    <string name="retry_armed_pending_title">Restart-and-retry is scheduled</string>
+    <string name="retry_armed_pending_body">The installation scheduled before the restart has not run yet. Start it now or cancel it.</string>
+    <string name="retry_armed_next_boot_title">Retry scheduled for next restart</string>
+    <string name="retry_armed_next_boot_body">The next restart will run the installation once, even if Root on boot is off. Cancel it if you no longer want to retry.</string>
+    <string name="retry_armed_start">Start now</string>
+    <string name="retry_armed_payload">Retry will run: %1$s</string>
+    <string name="retry_armed_payload_from">From %1$s</string>
+    <string name="retry_armed_payload_from_at">From %1$s at %2$s</string>
+    <string name="retry_armed_payload_none">No payload was recorded for this retry, so the restart will use the cached payload.</string>
+    <string name="retry_armed_cancel">Cancel</string>
+    <string name="log_ksu_staged_late_only">[*] No shell transport was available to stage KernelSU before the exploit. The payload has no daemon to load, so KernelSU will be staged afterward.</string>
+    <string name="log_ksu_stage_skipped_active">[*] KernelSU is already active. Refreshing the staged daemon was not possible (%1$s), so Veyra keeps the verified live KernelSU state instead of loading it again.</string>
+    <string name="log_ksu_control_verified">[+] KernelSU control channel verified (%1$s)</string>
+    <string name="log_payload_sigkill_recovered">[+] Payload exited after the late kernel stage, but KernelSU is already active (%1$s). Continuing with the verified root state.</string>
+    <string name="log_ksu_control_verified_despite">[+] KernelSU is loaded even though the late-load helper returned %1$d; the load counts because %2$s.</string>
+    <string name="log_ksu_control_readings">[*] Control channel readings: %1$s</string>
+    <string name="error_ksu_not_ready">The KernelSU load finished, but nothing can reach it: the kernel lists no kernelsu module and no control channel answered. Root is not usable yet.</string>
+    <string name="error_ksu_unconfirmed">The KernelSU load finished, but nothing here could check it: reading the kernel module list needs a shell, and every other check needs root this device has not granted. Open the KernelSU manager to see whether it loaded.</string>
+    <string name="error_helper_unavailable">The bootstrap helper is not executable</string>
+    <string name="error_exploit_stalled">The exploit log has not changed for %1$d seconds</string>
+    <string name="error_exploit_timeout">The exploit exceeded the %1$d-minute limit</string>
+    <string name="stage_transport">Starting transport</string>
+    <string name="stage_target">Resolving payload for this device</string>
+    <string name="stage_download">Downloading payloads</string>
+    <string name="stage_exploit">Running kernel exploit</string>
+    <string name="stage_kernel_su">Loading KernelSU</string>
+    <string name="stage_verify">Verifying KernelSU control channel</string>
+    <string name="status_stage_failed">Failed at: %1$s</string>
+    <string name="failure_stage">Stage</string>
+    <string name="failure_reason">Reason</string>
+    <string name="failure_evidence">Last payload output</string>
+    <string name="history_failure">Failed at %1$s: %2$s</string>
+    <string name="history_filter_all">All</string>
+    <string name="history_filter_count">Showing %1$d of %2$d runs</string>
+    <string name="history_empty_filtered_title">No runs match</string>
+    <string name="history_empty_filtered_body">No run in the history ended this way. Pick All to see the rest.</string>
+    <string name="history_filter_clear">Show all runs</string>
+    <plurals name="history_run_count">
+        <item quantity="one">%1$d run</item>
+        <item quantity="other">%1$d runs</item>
+    </plurals>
+    <string name="error_payload_exit">Payload execution failed with code %1$d%2$s</string>
+    <string name="error_success_marker">Exploit success markers were not found</string>
+    <string name="error_local_adb_shell">The device\'s ADB shell is not available: %1$s</string>
+    <string name="error_ksu_stage">KernelSU staging failed: %1$s</string>
+    <string name="error_ksu_verify">KernelSU load or control-channel verification failed (rc=%1$d): %2$s</string>
+    <string name="error_helper_timeout">KernelSU helper did not exit within 120 seconds%1$s</string>
+    <string name="error_boot_id">Unable to read the current boot_id</string>
+    <string name="error_receipt">Unable to save the installation verification receipt</string>
+
+    <string name="artifact_exploit">exploit</string>
+    <string name="artifact_root_helper">root helper</string>
+    <string name="artifact_kernelsu">KernelSU</string>
+    <!-- The daemon's own label, which differs between the two flavours it can come from. -->
+    <string name="artifact_daemon">%1$s daemon</string>
+    <!--
+        One line each, deliberately. The selected flavour rides in the card's value column, which
+        leaves this description about nineteen characters before it wraps - measured on the phone, not
+        guessed - so anything longer breaks with a word orphaned on the second line.
+    -->
+    <string name="flavor_kernelsu_summary">Official KernelSU by Weishu.</string>
+    <string name="flavor_kernelsu_next_summary">KernelSU-Next by Rifsxd.</string>
+    <string name="flavor_resukisu_summary">ReSukiSU (SukiSU-Ultra fork).</string>
+    <string name="repo_no_profile">No payload in the catalog matches %1$s</string>
+    <string name="repo_no_profile_closest">Closest: %1$s</string>
+    <string name="repo_no_profile_other_kernel">%1$s covers %2$s</string>
+    <string name="repo_no_profile_other_model">%1$s covers this kernel version on other models</string>
+    <string name="repo_no_profile_none">None of the enabled sources has an entry for this model or kernel.</string>
+    <string name="repo_no_source_enabled">No payload sources are enabled</string>
+    <string name="repo_source_failed">%1$s: %2$s</string>
+    <string name="repo_source_missing">Payload source %1$s is no longer configured</string>
+    <string name="repo_downloading">Downloading %1$s</string>
+    <string name="repo_size_mismatch">%1$s size does not match the support manifest</string>
+    <string name="repo_size_exceeded">%1$s exceeds the declared size</string>
+    <string name="repo_incomplete">%1$s download is incomplete</string>
+    <string name="repo_hash_mismatch">%1$s does not match the SHA-256 declared by the source</string>
+    <string name="repo_finalize_failed">Could not finalize the %1$s file</string>
+    <string name="repo_verified">%1$s verified</string>
+    <string name="repo_commit_invalid">GitHub returned an invalid commit SHA</string>
+    <string name="repo_url_invalid">The artifact repository is not allowed</string>
+    <string name="repo_response_too_large">The response was too large</string>
+    <string name="repo_api_limited">GitHub rate limit reached; try again in a few minutes</string>
+    <string name="open_github">Open GitHub</string>
+    <string name="github_card_title">Explore Veyra</string>
+    <string name="github_card_description">Veyra project page and documentation.</string>
+    <string name="action_continue">Continue anyway</string>
+    <string name="action_next">Next</string>
+    <string name="advanced">Advanced</string>
+    <string name="advanced_mode">Advanced mode</string>
+    <string name="advanced_mode_description">Choose a payload manually during installation.</string>
+    <string name="disable_ksu_modules">Disable KSU modules</string>
+    <string name="disable_ksu_modules_description">Temporarily disable modules while KernelSU loads</string>
+    <string name="disable_ksu_modules_needs_load">Only applies when KernelSU is loaded</string>
+    <string name="partition_read_only">Protect image partitions</string>
+    <!--
+        What a failure this protection caused says. The switch is named from its own label rather than
+        from a copy of the words, so a rename can never leave this pointing at a setting that is gone.
+        Says "image partitions", not "read-only file system": the kernel's own wording belongs in the
+        log, and repeating it here would read as the device's complaint rather than as this app's switch.
+    -->
+    <string name="read_only_wall_notice">The image partitions are read-only, so the write was refused. This is controlled by the %1$s setting.</string>
+    <string name="action_open_setting">Open setting</string>
+    <string name="log_read_only_wall">[!] A write was refused because the image partitions are read-only. This is controlled by the Protect image partitions setting.</string>
+    <string name="partition_read_only_description">Keeps the image partitions read-only after root. Prevents accidental writes, but blocks flashing images from the phone and KernelSU installs that patch boot.</string>
+    <string name="run_plan_partition_read_only">Image partitions</string>
+    <string name="run_plan_partition_read_only_on">Read-only after bootstrap root; cleared on reboot</string>
+    <string name="run_plan_partition_read_only_off">Left writable</string>
+    <string name="payload_sources">Payload Sources</string>
+    <string name="payload_sources_description">Manage the payload repositories.</string>
+    <string name="payload_sources_title">Payload sources</string>
+    <string name="payload_sources_summary">%1$d of %2$d enabled</string>
+    <string name="payload_sources_empty">No sources yet. Add a repository or restore the default source.</string>
+    <string name="payload_sources_failed">Some sources could not be loaded</string>
+    <string name="payload_repository_label">Owner/Repository</string>
+    <string name="payload_repository_hint">Used to fetch the support manifest and payload files.</string>
+    <string name="payload_branch">Branch, tag, or commit</string>
+    <string name="payload_branch_hint">Branches and tags are read fresh on each run. A full commit SHA pins the source to a specific revision.</string>
+    <string name="payload_source_pin">Pin to this commit</string>
+    <string name="payload_pin_title">Pin %1$s to a revision</string>
+    <string name="payload_pin_pinned_at">Pinned at %1$s</string>
+    <string name="payload_pin_follow_summary">Not pinned. Each run uses the revision currently pointed to by the branch.</string>
+    <string name="payload_pin_recent">Revisions</string>
+    <string name="payload_pin_current">current</string>
+    <string name="payload_pin_manual">Branch, tag, or commit</string>
+    <string name="payload_pin_manual_hint">A tag is resolved to the commit it currently points to.</string>
+    <string name="payload_pin_apply">Pin</string>
+    <string name="payload_pin_follow_action">Follow the branch</string>
+    <string name="payload_pin_resolve">Resolve</string>
+    <string name="payload_pin_serves_at">What revision %1$s serves</string>
+    <string name="payload_pin_serves_branch">What the %1$s branch serves now</string>
+    <string name="payload_pin_reading">Reading the payload served by this revision…</string>
+    <string name="payload_pin_read_failed">Could not read this revision: %1$s</string>
+    <string name="payload_pin_pinned">pinned</string>
+    <string name="payload_pin_list_failed">Could not list revisions: %1$s</string>
+    <string name="payload_source_unpin">Follow the branch again</string>
+    <string name="payload_source_pin_failed">Could not resolve this reference: %1$s</string>
+    <string name="payload_source_add">Add a source</string>
+    <string name="payload_source_add_action">Add</string>
+    <string name="payload_source_default">Restore default</string>
+    <string name="payload_source_duplicate">That source is already added</string>
+    <string name="payload_source_remove">Remove source</string>
+    <string name="payload_source_check">Check source coverage</string>
+    <string name="payload_source_checking">Checking source…</string>
+    <string name="payload_source_check_failed">Could not read this source: %1$s</string>
+    <string name="payload_source_verified">Verified at %1$s</string>
+    <string name="payload_source_coverage_payloads">Payloads: %1$d</string>
+    <string name="payload_source_coverage_models">Models: %1$s</string>
+    <string name="payload_source_coverage_kernels">Kernels: %1$s</string>
+    <string name="payload_source_device_match">Matches this device: %1$s</string>
+    <string name="payload_source_device_match_more">Matches this device: %1$s (+%2$d more)</string>
+    <string name="payload_source_device_none">No payload for this device (%1$s)</string>
+    <string name="action_save">Save</string>
+    <string name="run_plan">Run plan</string>
+    <string name="run_plan_description">Current plan for next run.</string>
+    <string name="run_plan_title">Run plan</string>
+    <string name="run_plan_device">Device</string>
+    <string name="run_plan_target">Target</string>
+    <string name="run_plan_session">Session</string>
+    <string name="run_plan_source">Source</string>
+    <string name="run_plan_source_none">Not recorded</string>
+    <string name="run_plan_offline_no_cache">Offline mode has no cached payload. Complete an online installation first.</string>
+    <string name="run_plan_transport">Transport</string>
+    <string name="run_plan_transport_shizuku">Shizuku: payload and helper staged in /data/local/tmp</string>
+    <string name="run_plan_transport_direct">Direct: helper runs from app storage</string>
+    <string name="run_plan_fresh_yes">Fresh P0 session: one attempt using the payload\'s pacing; no cached offset.</string>
+    <string name="run_plan_fresh_no">Cached session: up to 24 attempts, reusing this boot\'s offset when available.</string>
+    <string name="run_plan_variables">Payload variables</string>
+    <string name="run_plan_variables_none">No other variables are set for this run</string>
+    <string name="run_plan_shizuku_arguments">Added by Shizuku transport</string>
+    <string name="run_plan_cached_offset">Cached P0 offset for this boot</string>
+    <string name="run_plan_cached_offset_none">None; the leak has not been won on this boot</string>
+    <string name="run_plan_limits">App time limits</string>
+    <string name="run_plan_stall">No output before the run is treated as stalled</string>
+    <string name="run_plan_stall_none">Not applied to a fresh session</string>
+    <string name="run_plan_total">Whole run</string>
+    <string name="run_plan_helper">Single helper command</string>
+    <string name="settings_run_limits">Run limits</string>
+    <string name="settings_run_limits_summary">Time limits applied to each run</string>
+    <string name="run_limits_title">Run limits</string>
+    <string name="run_limits_total">Whole run</string>
+    <string name="run_limits_total_note">Maximum time allowed for one run. Fresh-session profiles never go below the app\'s one-hour minimum because they control their own pacing.</string>
+    <string name="run_limits_stall">No output before the payload is considered stalled</string>
+    <string name="run_limits_stall_note">How long the payload can produce no output before the app treats it as stalled. Some payloads intentionally stay quiet, so a short limit can stop a healthy run. The default matches the whole-run limit, and fresh-session profiles ignore it.</string>
+    <string name="run_limits_reset">Reset to defaults</string>
+    <string name="run_limits_reset_done">Run limits and the payload override are back to their defaults</string>
+    <string name="run_limits_helper">One helper command</string>
+    <string name="run_limits_helper_note">How long a single helper command may run. This is mainly for internal use and rarely determines why a run stops.</string>
+    <string name="run_limits_payload_note">The payload profile decides how many attempts it gets, how long each may take, and how it looks for the slide. Leave the override off unless you are testing a device the profile was not written for.</string>
+    <string name="run_limits_override">Override the payload</string>
+    <string name="run_limits_override_note">Uses the app\'s numbers for attempts, per-attempt timeout, and slide route instead of the profile\'s. Useful for testing a build the feed does not support yet, and it can make a working target fail. The run plan says which side each of the three came from. A fresh-session profile still gets one attempt, whatever is set here.</string>
+    <string name="run_limits_override_attempts">Attempts</string>
+    <string name="run_limits_override_timeout">Per-attempt timeout</string>
+    <string name="run_limits_override_route">Slide route</string>
+    <string name="run_limits_route_default">Payload\'s own</string>
+    <string name="run_limits_route_auto">auto</string>
+    <string name="run_limits_route_tracefs">tracefs</string>
+    <string name="run_limits_route_legacy">p0 (legacy)</string>
+    <string name="log_run_ceilings">[*] Run limits: %1$s total, %2$s of silence before the run is treated as stalled, %3$s per helper command</string>
+    <string name="log_run_ceilings_fresh">[*] Run limits: %1$s total, no stall limit (a fresh session scans silently), %3$s per helper command</string>
+    <string name="run_plan_variables_note">Set by the payload profile, not by this app</string>
+    <string name="run_plan_variables_note_overridden">Your override in Run limits is in force for at least one of these; each row below says which side chose it</string>
+    <string name="run_plan_attempts">Attempts</string>
+    <string name="run_plan_attempt_timeout">Per-attempt timeout</string>
+    <string name="run_plan_slide_route">Slide route</string>
+    <string name="run_plan_value_not_applied">Not applied</string>
+    <string name="run_plan_value_payload_default">Payload decides</string>
+    <string name="run_plan_from_payload">From the payload profile</string>
+    <string name="run_plan_from_app">From your override in Run limits</string>
+    <string name="run_plan_from_fresh_session">Fresh session: the payload gets one attempt and its own timing</string>
+    <string name="run_plan_limits_note">App setting; change it under Run limits</string>
+    <string name="run_plan_footnote">The payload\'s own limits can end an attempt first. These are only the app-level limits; reaching one fails the run.</string>
+    <string name="run_plan_catalog_loading">Loading catalog…</string>
+    <string name="run_plan_catalog_empty">No sources are enabled</string>
+    <string name="run_plan_no_target">No profile in the catalog matches this device</string>
+    <string name="run_plan_unresolved">Not resolved</string>
+    <string name="local_payload">Local Payload</string>
+    <string name="local_payload_description">Use an exploit file stored on this device.</string>
+    <string name="local_payload_description_set">Runs use the imported exploit instead of the downloaded file.</string>
+    <string name="local_payload_none">Not set</string>
+    <string name="local_payload_title">Local payload</string>
+    <string name="local_payload_summary_none">No payload imported. Runs will download the exploit from your configured sources.</string>
+    <string name="local_payload_summary_set">Runs use %1$s. KernelSU is still downloaded from the source matched to this phone.</string>
+    <string name="local_payload_choose">Choose .so file</string>
+    <string name="local_payload_replace">Replace file</string>
+    <string name="local_payload_remove">Remove payload</string>
+    <string name="local_payload_not_so">Select a .so file</string>
+    <string name="local_payload_not_elf">The selected file is not a valid ELF binary</string>
+    <string name="local_payload_too_large">The selected file is larger than 16 MiB</string>
+    <string name="local_payload_read_failed">Could not read the selected file</string>
+    <string name="local_payload_missing">The imported payload is no longer in app storage. Import it again.</string>
+    <string name="repo_using_local_payload">Using local payload: %1$s</string>
+    <string name="shizuku_mode">Use Shizuku</string>
+    <string name="shizuku_mode_description">Run the payload through Shizuku. This may be more reliable.</string>
+    <string name="shizuku_mode_without_permission">Enabled, but this app does not have permission to use Shizuku. Runs will use another transport until permission is granted.</string>
+    <string name="shizuku_mode_not_running">Enabled, but Shizuku is not running.</string>
+    <string name="settings_recovery">Recovery Management</string>
+    <string name="recovery_confirm_restart_zygote">Restart the Android runtime?</string>
+    <string name="recovery_confirm_soft_reboot">Let KernelSU restart userspace?</string>
+    <string name="recovery_confirm_reboot_unroot">Turn off Root on boot and restart the phone?</string>
+    <string name="recovery_confirm_reload_modules">Run KernelSU\'s module setup again?</string>
+    <string name="recovery_action_reload_modules">Reload modules</string>
+    <string name="recovery_reload_modules">Reload modules</string>
+    <string name="recovery_reload_modules_summary">Run KernelSU\'s module setup again through the installed daemon.</string>
+    <string name="recovery_modules_reloaded">Module lifecycle applied again.</string>
+    <string name="recovery_action_restart_zygote">Restart Zygote</string>
+    <string name="recovery_action_soft_reboot">Soft reboot</string>
+    <string name="recovery_action_reboot_unroot">Reboot and unroot</string>
+    <string name="recovery_restart_zygote">Restart Zygote</string>
+    <string name="recovery_restart_zygote_summary">Restart the Android runtime so mounted modules can load their framework hooks.</string>
+    <string name="recovery_soft_reboot">Soft reboot</string>
+    <string name="recovery_soft_reboot_summary">This helps KSU modules to load properly.</string>
+    <string name="recovery_reboot_unroot">Reboot and unroot</string>
+    <string name="recovery_reboot_unroot_summary">Turn off Root on boot, then restart.</string>
+    <string name="recovery_root_required">KernelSU is not loaded in this boot, so root is not available for this action. Load KernelSU first, or run the installation again.</string>
+    <string name="reboot_sheet_title">Restart the phone</string>
+    <!-- The launcher's short label for the restart shortcut: what fits beside an icon, where the sheet's own
+         title is what the long label and the sheet itself are for. -->
+    <string name="shortcut_restart_short">Restart</string>
+    <!-- The soft restart shortcut's long label. Not a row's second line any more - the sheet's rows carry their
+         names alone - but the launcher still has to explain the shortcut somewhere, and it has no row to read
+         that from. -->
+    <string name="shortcut_soft_restart_long">Restarts Android userspace only.</string>
+    <string name="reboot_status_checking">Checking what this device will allow…</string>
+    <string name="reboot_status_root">Root is available</string>
+    <string name="reboot_status_cveyra">CVeyra is available. It can reboot the phone; privileged soft restart still requires root.</string>
+    <string name="reboot_status_none">Neither root nor CVeyra is available</string>
+    <string name="reboot_need_root">Root is required. Only the KernelSU daemon can restart userspace without a full reboot.</string>
+    <string name="reboot_need_shell">There is no root or CVeyra execution path.</string>
+    <string name="reboot_refused">The phone would not take the request.</string>
+    <string name="reboot_target_reboot">Reboot</string>
+    <string name="reboot_target_soft_restart">Soft restart</string>
+    <string name="reboot_target_recovery">Reboot to Recovery</string>
+    <string name="reboot_target_bootloader">Reboot to Bootloader</string>
+    <string name="reboot_target_download">Reboot to Download</string>
+    <string name="reboot_target_edl">Reboot to EDL</string>
+    <string name="reboot_confirm_title">Leave Android?</string>
+    <string name="reboot_confirm_body">The phone will restart into %1$s and will not return to this screen on its own.
+
+Hold Power and Volume Down together for 7 seconds to restart it from there.</string>
+    <string name="recovery_shell_unavailable">KernelSU is running, but Veyra does not have a root broker yet. Grant Veyra Root superuser access in KernelSU or enable CVeyra as Root, then try again.</string>
+    <string name="recovery_shizuku_needs_root">CVeyra is available, but this action requires a root broker. Enable CVeyra as Root after KernelSU is available, or run the installation again.</string>
+    <string name="recovery_scheduled">Scheduled. The Android runtime will restart shortly.</string>
+    <string name="recovery_reboot_scheduled">Scheduled. The phone will restart without root.</string>
+    <string name="recovery_needs_kernel_su">Needs KernelSU</string>
+    <string name="framework_restart_title">Framework restart</string>
+    <string name="framework_restart_came_back">The Android runtime restarted and came back after about %1$d s with a new framework (Zygote %2$s, system_server %3$s).</string>
+    <string name="framework_restart_not_restarted">The Android runtime did not restart: Zygote is still pid %1$s after %2$d s, so init never replaced it. Nothing was reloaded.</string>
+    <string name="framework_restart_framework_missing">Zygote was replaced, but the framework did not come back within %1$d s. The phone needs a reboot before anything else can run.</string>
+    <string name="framework_restart_boot_changed">The phone restarted while this was being checked, so there is nothing to report about that restart.</string>
+    <string name="framework_restart_unreadable">The restart was asked for, but its result could not be read back here, so nothing is claimed about what it did.</string>
+    <string name="framework_restart_module_code_mapped">Module code is mapped into the new framework, so the modules that inject into it are loading in it.</string>
+    <string name="framework_restart_module_code_absent">No module code is mapped into the new framework, so it came back without the modules that inject into it.</string>
+    <string name="framework_restart_module_code_unreadable">Whether module code is mapped into the new framework could not be read on this device.</string>
+    <string name="framework_restart_module_services_missing">These modules\' services are not running: %1$s.</string>
+    <string name="log_framework_restart_report">[+] Framework restart: %1$s</string>
+    <string name="settings_shizuku_start">Start Shizuku now</string>
+    <string name="settings_shizuku_start_summary">Start Shizuku with root, or through wireless debugging when root is not available.</string>
+    <string name="settings_shizuku_allow">Allow this app in Shizuku</string>
+    <string name="settings_shizuku_allow_summary">Shizuku is running, but this app still needs permission to use it.</string>
+    <string name="settings_shizuku_running">Shizuku is running</string>
+    <string name="settings_shizuku_running_summary">Shizuku is running and this app already has permission to use it.</string>
+    <string name="readiness">Status</string>
+    <string name="readiness_kernelsu">KernelSU</string>
+    <string name="readiness_shizuku">Shizuku</string>
+    <string name="readiness_manager_row">%1$s manager</string>
+    <string name="readiness_installed">Installed</string>
+    <string name="readiness_not_installed">Not installed</string>
+    <string name="readiness_ksu_active">Active</string>
+    <string name="readiness_ksu_not_loaded">Not Active</string>
+    <string name="readiness_ksu_unreadable">Unknown</string>
+    <string name="readiness_shizuku_not_running">Not running</string>
+    <string name="settings_shizuku_state_running">Running</string>
+    <string name="settings_shizuku_state_needs_permission">Needs permission</string>
+    <string name="settings_shizuku_boot">Auto start Shizuku on boot</string>
+    <string name="settings_shizuku_boot_summary">Start Shizuku after each reboot using root, wireless debugging, or the start token.</string>
+    <string name="status_shizuku_starting">Starting…</string>
+    <string name="status_shizuku_started">Shizuku is running</string>
+    <string name="error_shizuku_start_no_root">Cannot start Shizuku here. This phone has no root, wireless debugging pairing, or start token.</string>
+    <string name="error_no_root_shell">No root shell is available yet</string>
+    <string name="settings_ksu_flavor">KernelSU flavour</string>
+    <string name="settings_ksu_flavor_dialog_title">KernelSU flavour</string>
+    <string name="settings_ksu_flavor_pending">Restart to apply · this boot loaded %1$s</string>
+    <string name="settings_manager">Manager</string>
+    <string name="settings_manager_summary">Install %1$s</string>
+    <string name="settings_manager_summary_installed">Current version installed</string>
+    <string name="settings_manager_summary_named">%1$s is installed</string>
+    <string name="settings_manager_summary_unreadable">Installed; version could not be read</string>
+    <string name="settings_manager_version">Manager version control</string>
+    <string name="settings_manager_version_summary">Choose the manager version to install</string>
+    <string name="settings_manager_version_summary_payload">Matches the KernelSU your payload loads</string>
+    <string name="settings_manager_version_drift_ahead">This boot runs %1$s; the payload loads %2$s, which lands after the next run</string>
+    <string name="settings_manager_version_drift_behind">This boot runs %1$s already, newer than the %2$s this payload loads</string>
+    <string name="settings_manager_version_keep_boot">Keep %1$s</string>
+    <string name="target_loads_kernelsu">Loads %1$s %2$s</string>
+    <string name="target_loads_kernelsu_unknown">Loads %1$s (version not declared)</string>
+    <string name="settings_versions">Running</string>
+    <string name="settings_versions_summary">Installed on this device</string>
+    <string name="settings_versions_summary_mismatch">Mismatch</string>
+    <string name="settings_versions_manager">Manager</string>
+    <string name="settings_versions_kernel">KernelSU</string>
+    <string name="settings_versions_absent">Not installed</string>
+    <string name="settings_versions_unread">Unavailable</string>
+    <string name="settings_versions_mismatch_mark">Mismatch</string>
+    <string name="settings_manager_install_running">Install %1$s</string>
+    <string name="settings_manager_running_version">This phone runs %1$s %2$s</string>
+    <string name="settings_manager_running_use">Use %1$s</string>
+    <string name="settings_manager_dialog_title">Manager version</string>
+    <string name="settings_manager_dialog_help">Recommended %1$s Manager is %2$s.</string>
+    <string name="settings_manager_versions_heading">Available versions</string>
+    <string name="settings_manager_versions_loading">Reading the published versions…</string>
+    <string name="settings_manager_versions_failed">Could not read the versions: %1$s. Enter one manually below instead.</string>
+    <string name="settings_manager_versions_default">Recommended</string>
+    <string name="settings_manager_version_hint">Example 3.4.0</string>
+    <string name="settings_manager_version_looking">Looking for %1$s %2$s…</string>
+    <string name="settings_manager_version_missing">No APK found in %1$s %2$s</string>
+    <string name="settings_manager_version_reset">Restore (%1$s)</string>
+    <string name="settings_manager_registration">Manager registration</string>
+    <string name="settings_manager_registration_summary">Gives the kernel the signing key of the installed manager</string>
+    <string name="settings_manager_registration_no_manager">No manager installed</string>
+    <string name="settings_manager_registration_unset">No key registered</string>
+    <string name="settings_manager_registration_unreadable">Could not read what the kernel holds</string>
+    <string name="settings_manager_registration_done">Registered with the kernel (%1$s)</string>
+    <string name="settings_manager_registration_already">The kernel already held this key (%1$s)</string>
+    <string name="settings_manager_registration_no_shell">No root shell, so nothing was registered</string>
+    <string name="settings_manager_registration_refused">Refused: %1$s</string>
+    <string name="settings_manager_registration_not_held">Accepted, but the kernel reports a different key</string>
+    <string name="run_flavor_conflict">%1$s is already loaded in this boot, so %2$s cannot be loaded. Restart the phone, then run this payload.</string>
+    <string name="run_flavor_conflict_restart">Restart now</string>
+    <string name="run_flavor_conflict_dismiss">Not now</string>
+    <string name="run_kernel_version_match">[*] This build\'s kernel release (%1$s) is not listed. The entry covers kernel version %2$s, which matches a regional variant of this firmware.</string>
+    <string name="run_flavor_label">KernelSU flavour: %1$s</string>
+    <string name="settings_ksu_load">Install KernelSU</string>
+    <string name="settings_ksu_load_summary">Installs KernelSU after root is obtained.</string>
+    <string name="settings_boot_root">Root on boot</string>
+    <string name="settings_boot_root_summary">Run the installation again after reboot when root is not active.</string>
+    <string name="settings_boot_root_needs_load">Root on boot needs Install KernelSU to be on.</string>
+    <string name="settings_battery">Battery usage</string>
+    <string name="settings_battery_summary_restricted">Android is restricting this app, so runs with the screen off may be delayed or lose network access.</string>
+    <string name="settings_battery_summary_allowed">Unrestricted. Runs keep network access while the screen is off.</string>
+    <string name="settings_battery_allow">Allow</string>
+    <string name="settings_battery_allowed">Allowed</string>
+    <string name="shizuku_not_running_title">Shizuku is not running</string>
+    <string name="shizuku_not_running_body">Start Shizuku with ADB or root, grant this app permission, then enable this option.</string>
+    <string name="action_download_shizuku">Download Shizuku</string>
+    <string name="error_shizuku_unavailable">Shizuku is not running. Start it with ADB or root first.</string>
+    <!--
+        The question a run asks instead of failing when Use Shizuku is on and Shizuku is down. The
+        second sentence is the honest half: the app's own process is not a shell, so a target that asks
+        for one still needs a shell to run without Shizuku, and a saved pairing is the only other one.
+    -->
+    <string name="status_shizuku_hold">Shizuku is not running</string>
+    <string name="shizuku_hold_body">This run is set to use Shizuku. Start it to continue through Shizuku, or continue without it. A target that needs a shell can only run without Shizuku when a wireless pairing is saved.</string>
+    <string name="action_run_without_shizuku">Run without Shizuku</string>
+    <string name="error_shizuku_permission">Shizuku permission was not granted</string>
+    <string name="error_shizuku_stage">Unable to stage %1$s through Shizuku: %2$s</string>
+    <string name="log_shizuku_prepare">[*] Preparing Shizuku execution</string>
+    <string name="log_shizuku_permission">[+] Shizuku permission granted</string>
+    <string name="repo_profile_missing">Support profile %1$s is no longer available</string>
+    <string name="select_device_title">Choose a payload</string>
+    <string name="select_device_description">Select a payload by device model and kernel version.</string>
+    <string name="kernel_match_exact">Exact kernel release match</string>
+    <string name="kernel_match_version">Kernel version match only (%1$s)</string>
+    <string name="kernel_match_none">Kernel release not listed</string>
+    <string name="action_undo">Undo</string>
+    <string name="run_notification_title">Install running</string>
+    <string name="run_notification_channel_name">Root run</string>
+    <string name="run_notification_channel_description">Shows what a running installation is doing, with actions to stop it or copy the log.</string>
+    <string name="run_guard_notification">Root run is protected while Veyra supervises the kernel operation.</string>
+    <string name="cveyra_runtime_notification">Preparing the persistent CVeyra shell broker…</string>
+    <string name="run_notification_stopping">Stopping…</string>
+    <string name="run_notification_log_copied">Log copied to the clipboard</string>
+    <string name="target_search">Search device, model or kernel</string>
+    <string name="no_matching_devices_query">Nothing matches "%1$s"</string>
+    <string name="target_show_everything">Search every device</string>
+    <string name="show_my_device_only">Show only my device</string>
+    <string name="no_matching_devices">No payload matches this model and kernel version.</string>
+    <string name="device_mismatch_title">Device mismatch</string>
+    <string name="device_mismatch_body">This phone is %1$s, but the selected payload supports %2$s. Running it may crash or damage the device.</string>
+    <string name="kernel_version_mismatch_title">Kernel version mismatch</string>
+    <string name="kernel_version_mismatch_body">This phone uses kernel %1$s, but the selected payload supports %2$s. The offsets may be incompatible.</string>
+    <string name="updater_available_title">An update is available</string>
+    <string name="updater_available_body">Version %1$s is available</string>
+    <string name="updater_available_body_short">%1$s is available</string>
+    <string name="updater_button_download">Download &amp; Install</string>
+    <string name="updater_downloading">Downloading…</string>
+    <string name="updater_run_in_progress_title">A run is in progress</string>
+    <string name="updater_run_in_progress">A run is already in progress. The app will not start another download or installation until it finishes. Check again when the run is complete.</string>
+    <string name="updater_download_failed">Download failed</string>
+    <string name="updater_check">Check for updates</string>
+    <string name="updater_checking">Checking for updates…</string>
+    <string name="updater_up_to_date">You\'re up to date</string>
+    <string name="updater_failed">Could not check for updates</string>
+    <string name="history_delete">Delete</string>
+    <string name="history_select_all">Select all</string>
+    <string name="history_clear_selection">Clear selection</string>
+    <string name="history_delete_selected">Delete (%1$d)</string>
+    <plurals name="history_deleted">
+        <item quantity="one">Run deleted</item>
+        <item quantity="other">%1$d runs deleted</item>
+    </plurals>
+    <plurals name="history_delete_selected_title">
+        <item quantity="one">Delete this run?</item>
+        <item quantity="other">Delete %1$d runs?</item>
+    </plurals>
+    <plurals name="history_delete_selected_body">
+        <item quantity="one">This run and its log will be permanently removed.</item>
+        <item quantity="other">These runs and their logs will be permanently removed.</item>
+    </plurals>
+
+    <!-- KSuRoot 4.1.0 builder integration (Apache-2.0) -->
+    <string name="custom_import_failed">Import failed</string>
+    <string name="error_bundled_missing">Built-in payload library is missing</string>
+    <string name="builder_heading">Payload builder</string>
+    <string name="builder_description">Reads the kernel symbol table out of a boot.img, resolves the offsets this exploit chain needs, and rewrites the chosen base library into a build that matches your kernel. Tapping "Build payload" asks which scheme to use first: the universal one covers most devices, while vivo / iQOO needs the build carrying the vr.ko anti-root bypass. Everything happens on-device — no network.</string>
+    <string name="builder_section_input">Input</string>
+    <string name="builder_section_result">Result</string>
+    <string name="builder_section_output">Output</string>
+    <string name="builder_boot_image">boot.img</string>
+    <string name="offsets_import">Import offsets.json</string>
+    <string name="offsets_import_desc">Load a kernel offsets file produced by GhostLock / IonStack</string>
+    <string name="offsets_dialog_title">offsets.json</string>
+    <string name="offsets_release">Kernel release: %1$s</string>
+    <string name="offsets_counts">%1$d symbols · %2$d struct fields</string>
+    <string name="offsets_missing">Missing: %1$d symbols, %2$d struct fields</string>
+    <string name="offsets_unknown">Kept %1$d unrecognised key(s) — round-trip safe</string>
+    <string name="offsets_error">Could not read that file: %1$s</string>
+    <string name="builder_boot_none">No file selected</string>
+    <string name="builder_pick_boot">Choose boot.img</string>
+    <string name="builder_boot_hint">Use a boot.img whose kernel version matches this device (take it from the official firmware package, or dump /dev/block/by-name/boot).</string>
+    <string name="builder_run">Build payload</string>
+    <string name="builder_running">Building…</string>
+    <string name="builder_log_title">Build log</string>
+    <string name="builder_phase_reading">Reading %1$s …</string>
+    <string name="builder_loaded">boot.img %1$d KB · base library %2$d KB</string>
+    <string name="builder_read_failed">Could not read the selected file</string>
+    <string name="builder_no_input">Choose a boot.img first</string>
+    <string name="builder_ota">Parse OTA link</string>
+    <string name="builder_ota_title">Parse OTA link</string>
+    <string name="builder_ota_desc">Paste a direct link to a full OTA ZIP. Only the parts that are needed are fetched — the ZIP central directory, the payload manifest, and the few tens of MiB the boot partition occupies — not the whole package (usually 4–8 GiB).\nThe server must support HTTP Range requests; if it does not, the request is refused rather than silently downloading everything.</string>
+    <string name="builder_ota_hint">Direct link to the full package (http / https)</string>
+    <string name="builder_ota_run">Parse</string>
+    <string name="builder_ota_close">Close</string>
+    <string name="builder_ota_running">Parsing the full package…</string>
+    <string name="builder_ota_started">Starting…</string>
+    <string name="builder_ota_done">Extracted %1$s (%2$s) — you can press Build payload now</string>
+    <string name="builder_ota_bad_url">Only http / https links are accepted</string>
+    <string name="builder_input_gone">The image extracted earlier was cleared by the system. Please parse the link again.</string>
+    <string name="builder_no_output">Offsets were resolved but the library was not packed (see the log)</string>
+    <string name="builder_kernel">Kernel: %1$s (%2$s)</string>
+    <string name="builder_base">Link base: %1$s</string>
+    <string name="builder_symbols">Symbols: %1$d</string>
+    <string name="builder_offsets">Offsets resolved: %1$d / %2$d</string>
+    <string name="builder_baseline">Baseline: %1$s</string>
+    <string name="builder_variant">Variant: %1$s</string>
+    <string name="builder_patch_stats">Keys needing rewrite: %1$d · verified: %2$d</string>
+    <string name="builder_patch_noop">This library already matches your kernel — the packed copy is byte-identical to the bundled one.</string>
+    <string name="builder_patch_absent">%1$d keys are not referenced by this library</string>
+    <string name="builder_patch_done">Patch: %1$d keys need rewriting · %2$d sites handled</string>
+    <string name="builder_output_ready">Packed library: %1$d KB</string>
+    <string name="builder_output_size">Size: %1$s</string>
+    <string name="builder_output_sha">SHA-256: %1$s</string>
+    <string name="builder_set_as_payload">Use as custom payload</string>
+    <string name="builder_export_so">Export .so</string>
+    <string name="builder_export_header">Export target.h</string>
+    <string name="builder_applied">Saved as custom payload: %1$s</string>
+    <string name="builder_notices">Notices</string>
+    <string name="builder_export_done">Saved</string>
+    <string name="builder_export_failed">Export failed</string>
+    <string name="builder_scheme_title">Which payload to build?</string>
+    <string name="builder_scheme_subtitle">Both schemes are the same CVE-2026-43499 chain — they differ in vendor adaptation.</string>
+    <string name="builder_scheme_universal">Universal</string>
+    <string name="builder_scheme_universal_detail">Works on most GKI 6.6 devices. No vendor anti-root bypass, so it is the safe default outside vivo/iQOO.</string>
+    <string name="builder_scheme_vivo">vivo / iQOO (vr.ko bypass)</string>
+    <string name="builder_scheme_vivo_detail">Adds the vr.ko anti-root bypass. Required on vivo / iQOO, where the universal chain is blocked.</string>
+    <string name="builder_scheme_recommended">Recommended</string>
+    <string name="builder_saved_download">Saved to %1$s</string>
+    <string name="builder_save_download_failed">Could not write to the Download folder</string>
+    <string name="builder_base_library">Base library: %1$s · %2$s</string>
+    <string name="builder_applied_state">Already written into the custom payload</string>
+    <string name="test_kernel_switch">5.x kernel support</string>
+    <string name="test_kernel_switch_description">Unverified: enables the dedicated Legacy 5.4 / 5.10 / 5.15 analysis and build path. Runnable output still requires a matching baseline.</string>
+    <string name="test_kernel_blocked_title">5.x kernel detected - support is off</string>
+    <string name="builder_detected_kernel">Detected kernel: %1$s</string>
+    <string name="builder_vr_ko_ok">vr.ko bypass present — this payload clears the task markers before the W2 uid check</string>
+    <string name="builder_vr_ko_hint">This looks like a vivo/iQOO device. If the kernel carries vr.ko, switch to the vivo payload scheme — a universal payload has no vr.ko bypass and the root shell will be killed by the sys_exit probe.</string>
+    <string name="loading_builder_title">Loading Builder</string>
+    <string name="loading_builder_summary">Build a local payload from boot.img or a supported OTA package.</string>
+    <string name="builder_settings_title">Builder Settings</string>
+    <string name="builder_settings_summary">Kernel families, compatibility gates and baseline coverage used by the payload builder.</string>
+    <string name="builder_open_kernel_settings">Open Builder Settings</string>
+    <string name="builder_block_baseline">No registered baseline for this kernel</string>
+    <string name="builder_block_abi">Kernel ABI conflict</string>
+    <string name="builder_block_unknown_kernel">Kernel version could not be identified</string>
+    <string name="builder_block_vrko">The selected payload has no vivo vr.ko bypass</string>
+    <string name="builder_block_other">Build did not complete</string>
+    <string name="builder_kernel_series_title">Kernel series</string>
+    <string name="builder_kernel_series_auto">Automatic — detect from boot.img</string>
+    <string name="builder_kernel_series_4">Force 4.x — unstable</string>
+    <string name="builder_kernel_series_5">Force 5.x — Legacy</string>
+    <string name="builder_kernel_series_6">Force 6.x — mainline</string>
+    <string name="builder_ignore_conflicts_title">Ignore conflicts (advanced)</string>
+    <string name="builder_ignore_conflicts_summary">Allow output even when the forced series or baseline ABI conflicts with the measured kernel. The builder logs the override.</string>
+    <string name="builder_baseline_coverage_title">Baseline coverage</string>
+    <string name="builder_baseline_coverage_summary">Show which kernel families and registered baselines the builder can currently match.</string>
+    <string name="builder_test_kernel_confirm_title">Enable 5.x kernel support?</string>
+    <string name="builder_test_kernel_confirm_body">5.x uses its own Legacy layout and analysis path for 5.4 / 5.10 / 5.15. The mode is unverified on devices without an exact registered baseline; Veyra will not silently substitute 6.x offsets.</string>
+    <string name="builder_test_kernel_confirm_action">Enable 5.x</string>
+    <string name="payload_local_source_title">Local payload</string>
+    <string name="payload_local_source_summary">Builder/imported payload used locally by Veyra.</string>
+    <string name="payload_local_source_none">No local payload selected</string>
+    <string name="page_transition_sound_title">Page transition sound</string>
+    <string name="page_transition_sound_summary">Play a short Veyra sound when switching between Home, History, Logs and Settings.</string>
+    <string name="page_transition_sound_without_ringer_title">Play without ringtone</string>
+    <string name="page_transition_sound_without_ringer_summary">Also play the transition sound while the phone is on silent or vibrate.</string>
+    <string name="nav_style_title">Floating navigation style</string>
+    <string name="nav_style_summary">Use Veyra’s normal floating bar or a translucent glass variant.</string>
+    <string name="nav_style_standard">Standard</string>
+    <string name="nav_style_glass">Glass</string>
+    <string name="temp_root_adopt_title">Steal Temp Root</string>
+    <string name="temp_root_adopt_subtitle">Adopt the already running KernelSU session into Veyra without a full reboot.</string>
+    <string name="temp_root_adopt_card_summary">Verify a compatible Root My Galaxy user app, back it up, verify Veyra’s own KernelSU access and optionally disable the old app.</string>
+    <string name="temp_root_candidate_heading">Compatible Root My Galaxy apps</string>
+    <string name="temp_root_candidate_rules">Only user apps with Root My Galaxy/native payload markers are shown. System apps are never selectable.</string>
+    <string name="temp_root_scanning">Checking installed user apps…</string>
+    <string name="temp_root_none_found">No compatible Root My Galaxy user app was found.</string>
+    <string name="temp_root_disable_source">Disable source app after adoption</string>
+    <string name="temp_root_disable_source_summary">Keeps the APK backed up but prevents the old app from running until you enable it again.</string>
+    <string name="temp_root_adopt_action">Adopt current KernelSU session</string>
+    <string name="temp_root_reload_modules">Reload KernelSU modules</string>
+    <string name="temp_root_backup_saved">Original APK backup: %1$s</string>
+    <string name="temp_root_action_accepted">The requested KernelSU userspace action was accepted.</string>
+    <string name="temp_root_action_refused">The requested action was refused.</string>
+    <string name="temp_root_working">Working…</string>
+    <string name="override_instance_title">Override Instance</string>
+    <string name="override_instance_subtitle">Prepare a verified RMG user-app instance for a Veyra-compatible replacement.</string>
+    <string name="override_instance_card_summary">Back up and inspect an RMG instance. Android’s package/signature rules are kept intact.</string>
+    <string name="override_instance_guard_title">Package identity check</string>
+    <string name="override_instance_pick_first">Select a compatible user app first.</string>
+    <string name="override_instance_backup">Back up selected app</string>
+    <string name="override_instance_backup_ready">Original APK saved at %1$s. A replacement build must use the same package identity and an accepted signing lineage before Android can install it as an update.</string>
+    <string name="veyra_rooter_title">VeyraRooter</string>
+    <string name="veyra_rooter_subtitle">Stable helper module for KernelSU late-load and soft-reboot workflows.</string>
+    <string name="veyra_rooter_card_summary">Export a KernelSU module that helps refresh the current session. It does not silently copy app Superuser permissions.</string>
+    <string name="veyra_rooter_body">VeyraRooter is a temporary KernelSU helper. It can be exported to Downloads, installed through KernelSU, and used with module reload or KernelSU soft reboot. Once Veyra has verified its own direct root path, the helper marks itself unnecessary.</string>
+    <string name="veyra_rooter_export">Export VeyraRooter to Downloads</string>
+    <string name="veyra_rooter_exported">VeyraRooter exported to %1$s</string>
+    <string name="veyra_rooter_install">Install through KernelSU</string>
+    <string name="veyra_rooter_installed">KernelSU accepted the VeyraRooter module.</string>
+    <string name="veyra_rooter_install_failed">KernelSU did not install VeyraRooter.</string>
+    <string name="veyra_rooter_soft_reboot">KernelSU Soft Reboot</string>
+    <string name="builder_export_offsets">Export offsets.json</string>
+    <string name="builder_analysis_only_title">Analysis complete – no runnable base library</string>
+    <string name="builder_analysis_only_body">Veyra resolved this kernel as far as the image allows and generated target.h plus offsets.json, but it will not produce a runnable payload by borrowing a base library from another kernel family. Add an exact compatible baseline to enable .so output.</string>
+    <string name="builder_coverage_registered">%1$s · %2$s: %3$d registered (%4$d measured / %5$d unverified)</string>
+    <string name="builder_coverage_missing">%1$s · %2$s: no runnable baseline registered</string>
+    <string name="builder_coverage_test">Legacy / Unverified %1$s: %2$d registered entries</string>
+    <string name="builder_coverage_feasibility">Known layouts %1$d/%3$d · measured landing points %2$d/%3$d</string>
+    <string name="builder_coverage_upstream">Upstream exact-kernel catalog: %1$d declared · %2$d imported</string>
+
+    <string name="builder_log_container">Container: %1$s · header %2$s · page %3$s · kernel offset %4$s</string>
+
+    <string name="builder_log_kernel_image_decompressed">Kernel image: %1$s bytes · decompressed</string>
+
+    <string name="builder_log_kernel_image">Kernel image: %1$s bytes</string>
+
+    <string name="builder_log_derived_offset">Derived offset %1$s → %2$s</string>
+
+    <string name="builder_log_parse_diagnostic">The image parser reported a format or layout diagnostic. The technical detail was saved to the app log.</string>
+
+    <string name="builder_log_alignment_stopped">Symbol alignment stopped packing to avoid mixing offsets from different kernels.</string>
+
+    <string name="builder_log_offset_warning">An offset check reported an inconsistency; see the localized notice below.</string>
+
+    <string name="builder_log_scheme_test">Kernel %1$s detected · using the 5.x Legacy (Unverified) path</string>
+
+    <string name="builder_log_scheme_mainline">Kernel %1$s detected · using the mainline scheme</string>
+
+    <string name="builder_log_test_kernel_beta">5.x Legacy (Unverified) is enabled. Veyra analyzes this kernel with its own family rules and never borrows 6.x offsets.</string>
+
+    <string name="builder_log_no_runnable_baseline">No safely registered runnable baseline matches this exact kernel.</string>
+
+    <string name="builder_log_analysis_only_safe">Veyra continues in analysis-only mode and generates target.h / offsets.json instead of guessing a runnable .so.</string>
+
+    <string name="builder_block_detail_test_kernel">This is a 5.x Legacy kernel and Unverified support is disabled. Enable 5.x kernel support in Builder Settings to continue.</string>
+
+    <string name="builder_block_detail_baseline">No verified runnable baseline matches this kernel. Veyra will not substitute offsets from another kernel family.</string>
+
+    <string name="builder_block_detail_abi">The selected or forced baseline conflicts with the measured kernel ABI. Packing was stopped to avoid an unsafe payload.</string>
+
+    <string name="builder_block_detail_unknown">Veyra could not identify the kernel release reliably. Check that the selected image belongs to the target device.</string>
+
+    <string name="builder_block_detail_vrko">The selected vivo/iQOO payload does not contain the required vr.ko adaptation. Choose a compatible payload scheme.</string>
+
+    <string name="builder_block_detail_other">The builder stopped because a compatibility check failed. Technical details were saved to the app log.</string>
+
+    <string name="builder_notice_low_symbols">Only %1$d kernel symbols were resolved. Verify that the selected image matches the target device.</string>
+
+    <string name="builder_notice_base_mismatch">The inferred kernel link base differs from the image symbols. Validate the result before using it.</string>
+
+    <string name="builder_notice_alignment_failed">The symbol set does not fully align with the selected baseline; packing was stopped for safety.</string>
+
+    <string name="builder_notice_incomplete_patch">Not every required offset could be replaced. Do not use the generated payload until the missing data is resolved.</string>
+
+    <string name="builder_notice_forced_override">A compatibility conflict was explicitly overridden. Treat this build as experimental.</string>
+
+    <string name="builder_notice_baseline">The baseline registry reported a compatibility note for this kernel. Review Baseline Coverage before using the payload.</string>
+
+    <string name="builder_notice_vrko">This device may require the vivo/iQOO vr.ko-adapted payload.</string>
+
+    <string name="builder_notice_technical">The builder reported an additional technical warning. The untranslated upstream detail was stored in the app log.</string>
+
+    <string name="builder_error_file_missing">The selected builder input is no longer available. Select the file again.</string>
+
+    <string name="builder_error_io">The builder could not read or write one of its files. Check storage access and try again.</string>
+
+    <string name="builder_error_generic">The builder stopped with %1$s. Technical details were saved to the app log.</string>
+    <string name="builder_error_architecture">Magic Builder could not identify the kernel architecture from this image. The ARM64 header and ELF identity are checked before heuristic instruction scanning now; technical details were saved to the app log.</string>
+    <string name="builder_error_kallsyms">The kernel image was identified, but its kallsyms table could not be decoded. Magic Builder kept the exact device/kernel evidence so the support bundle can be used instead of guessing offsets.</string>
+
+    <string name="log_veyra_ksu_temp_root_state">[+] VeyraKSU received the current temp-root boot state</string>
+
+    <string name="veyra_ksu_title">VeyraKSU</string>
+
+    <string name="veyra_ksu_card_summary">KernelSU bridge for boot state, temp-root state and the future V-SPR permission path.</string>
+
+    <string name="veyra_ksu_status_not_installed">Not installed</string>
+
+    <string name="veyra_ksu_status_installed">Installed</string>
+
+    <string name="veyra_ksu_status_active">Active</string>
+
+    <string name="veyra_ksu_status_enabled">Enabled</string>
+
+    <string name="veyra_ksu_status_disabled">Disabled</string>
+
+    <string name="veyra_ksu_subtitle">Persistent Veyra bridge inside KernelSU</string>
+
+    <string name="veyra_ksu_bridge_status">Bridge status</string>
+
+    <string name="veyra_ksu_reading_install">Module</string>
+
+    <string name="veyra_ksu_reading_load">Load state</string>
+
+    <string name="veyra_ksu_reading_stage">Last stage</string>
+
+    <string name="veyra_ksu_reading_boot">Boot ID</string>
+
+    <string name="veyra_ksu_reading_temp_root">Temp root seen</string>
+
+    <string name="veyra_ksu_reading_permission_bridge">Permission bridge</string>
+
+    <string name="veyra_ksu_yes">Yes</string>
+
+    <string name="veyra_ksu_no">No</string>
+
+    <string name="veyra_ksu_permission_bridge_inactive">Prepared · inactive</string>
+
+    <string name="veyra_ksu_install_heading">Install or update VeyraKSU</string>
+
+    <string name="veyra_ksu_install_body">Veyra exports the module, installs it through KernelSU and then reloads the module lifecycle for the current boot. The V-SPR permission bridge stays inactive for now.</string>
+
+    <string name="veyra_ksu_install_failed">KernelSU did not install VeyraKSU.</string>
+
+    <string name="veyra_ksu_installed">VeyraKSU was installed or updated successfully.</string>
+
+    <string name="veyra_ksu_reload_done">KernelSU module lifecycle was refreshed for this boot.</string>
+
+    <string name="veyra_ksu_old_provider_disabled">The previous compatible RMG provider was backed up and disabled after Veyra root was verified.</string>
+
+    <string name="veyra_ksu_old_provider_kept">The previous provider was kept because Veyra could not safely verify and migrate it.</string>
+
+    <string name="veyra_ksu_install_update">Install / Update through KernelSU</string>
+
+    <string name="veyra_ksu_exported">VeyraKSU exported to %1$s</string>
+
+    <string name="veyra_ksu_export">Export a copy to Downloads</string>
+
+    <string name="veyra_ksu_migrate_title">Migrate from previous RMG provider</string>
+
+    <string name="veyra_ksu_migrate_summary">After Veyra root is verified, back up and disable the selected compatible user app. System apps are never touched.</string>
+
+    <string name="veyra_ksu_migrate_pick">Previous root provider</string>
+
+    <string name="veyra_ksu_load_toggle">Load VeyraKSU with KernelSU</string>
+
+    <string name="veyra_ksu_load_toggle_summary">Disabling keeps the module installed but prevents KernelSU from loading it.</string>
+
+    <string name="veyra_ksu_state_changed">VeyraKSU load state was updated.</string>
+
+    <string name="veyra_ksu_action_ok">KernelSU accepted the requested action.</string>
+
+    <string name="veyra_ksu_action_failed">KernelSU could not complete the requested action.</string>
+
+    <string name="veyra_ksu_reload_modules">Reload KernelSU modules</string>
+
+    <string name="veyra_ksu_soft_reboot">KernelSU Soft Reboot</string>
+
+    <string name="veyra_ksu_working">Working…</string>
+
+    <string name="vspr_veyra_ksu_bridge_title">VeyraKSU Bridge</string>
+
+    <string name="vspr_veyra_ksu_bridge_summary">Active privileged provider path for CVeyra Permission Provider. VeyraKSU 2.0.0 backs the root broker and persistent policy state.</string>
+
+    <string name="vspr_veyra_ksu_bridge_installed">Connected · active</string>
+
+    <string name="vspr_veyra_ksu_bridge_prepared">Ready · activation required</string>
+
+    <string name="builder_ota_log_connected">Connected · package size %1$s</string>
+
+    <string name="builder_ota_log_raw_payload">The link points directly to payload.bin.</string>
+
+    <string name="builder_ota_log_zip_directory">Locating the ZIP central directory…</string>
+
+    <string name="builder_ota_log_payload_found">Found payload.bin in the package (%1$s).</string>
+
+    <string name="builder_ota_log_direct_boot">No payload.bin; found %1$s directly in the package.</string>
+
+    <string name="builder_ota_log_partitions">Payload contains %1$s partitions · extracting %2$s.</string>
+
+    <string name="builder_ota_log_downloading">Downloading %1$s / %2$s</string>
+
+    <string name="builder_ota_log_restored">Restored %1$s → %2$s (%3$s).</string>
+
+    <string name="builder_ota_log_download_entry">Downloading %1$s (%2$s)…</string>
+
+    <string name="builder_ota_log_extracted">Extracted %1$s (%2$s).</string>
+
+    <string name="builder_ota_error_range">This server does not support HTTP Range requests. Veyra will not download the complete multi-gigabyte package.</string>
+
+    <string name="builder_ota_error_connect">Veyra could not open the OTA link or determine its file size.</string>
+
+    <string name="builder_ota_error_xz">The OTA uses an XZ layout that the built-in extractor cannot decode safely.</string>
+
+    <string name="builder_ota_error_package">The link is not a supported full OTA/package layout or the required boot payload could not be found.</string>
+
+    <string name="builder_ota_error_generic">The OTA could not be parsed. Technical details were saved to the app log.</string>
+
+    <string name="readiness_cveyra">CVeyra</string>
+
+    <string name="readiness_cveyra_root">Active · Root</string>
+
+    <string name="readiness_cveyra_adb">Active · Persistent ADB shell</string>
+
+    <string name="readiness_cveyra_waiting">Enabled · waiting for access</string>
+
+    <string name="readiness_cveyra_not_running">Not running</string>
+
+    <string name="veyra_ksu_status_tagged">Tagged for install</string>
+
+    <string name="veyra_ksu_auto_install_title">Install / Update after Root</string>
+
+    <string name="veyra_ksu_auto_install_summary">Install or refresh VeyraKSU automatically immediately after Veyra loads KernelSU successfully.</string>
+
+    <string name="veyra_ksu_provider_change">KSU Provider Change</string>
+
+    <string name="veyra_ksu_provider_change_needs_root">Veyra needs KernelSU superuser access before the provider can be changed.</string>
+
+    <string name="veyra_ksu_provider_change_ready">Provider changed. The previous app was backed up, disabled and its app data cleared. KernelSU modules were reloaded and Android runtime restart was requested.</string>
+
+    <string name="veyra_ksu_provider_change_ready_no_clear">Provider changed and the previous app was disabled, but Android did not clear its app data. KernelSU modules were reloaded and Android runtime restart was requested.</string>
+
+    <string name="migration_title">Migration</string>
+
+    <string name="migration_card_summary">Move the current temp-root session from another compatible RMG provider to Veyra.</string>
+
+    <string name="migration_subtitle">Transfer the current Root My Galaxy temp-root session to Veyra</string>
+
+    <string name="migration_full_title">Fully Restart Automatic</string>
+
+    <string name="migration_full_summary">Prepare a one-time full reboot. CVeyra and Root on boot are enabled temporarily so Veyra can take over on the next boot.</string>
+
+    <string name="migration_soft_title">Try without Restart / Only soft reboot</string>
+
+    <string name="migration_soft_summary">Use VeyraKSU to migrate the current KernelSU session without a full device reboot where the running KernelSU supports it.</string>
+
+    <string name="migration_open_veyra_ksu">Open VeyraKSU migration</string>
+
+    <string name="migration_root_check_title">KernelSU root permission</string>
+
+    <string name="migration_root_check_summary">First verify that this Veyra installation has an actual KernelSU superuser shell. Provider selection remains locked until this succeeds.</string>
+
+    <string name="migration_root_check_ok">KernelSU root access for Veyra was verified.</string>
+
+    <string name="migration_root_check_failed">KernelSU root access was not granted to Veyra. Approve Veyra Root in your KernelSU manager and try again.</string>
+
+    <string name="migration_root_checked">Root verified</string>
+
+    <string name="migration_root_check">Check root access</string>
+
+    <string name="migration_provider_title">Previous root provider</string>
+
+    <string name="migration_no_provider">No compatible Root My Galaxy user app was found.</string>
+
+    <string name="migration_check_patch">Check and Patch</string>
+
+    <string name="migration_prepared">Migration from %1$s is prepared. The temporary boot settings are armed once; start the migration from Home when you are ready.</string>
+
+    <string name="migration_prepare_failed">Migration preparation failed.</string>
+
+    <string name="migration_ready_title">Migration prepared</string>
+
+    <string name="migration_ready_body">CVeyra, CVeyra on boot, KernelSU loading and Root on boot are temporarily armed. Start the migration once from Home.</string>
+
+    <string name="migration_working">Preparing migration…</string>
+
+    <string name="migration_unknown_provider">previous root provider</string>
+
+    <string name="migration_home_title">Migration ready</string>
+
+    <string name="migration_home_provider">From %1$s</string>
+
+    <string name="migration_home_body">Starting now performs one normal reboot. On the next boot Veyra runs the cached root flow with CVeyra support, installs/updates VeyraKSU, then backs up and disables the previous provider.</string>
+
+    <string name="migration_home_start">Start migration and reboot</string>
+
+    <string name="migration_cancel">Cancel migration</string>
+
+    <string name="migration_reboot_failed">The reboot request was refused. The migration remains prepared so you can try again.</string>
+
+    <string name="migration_root_required">Veyra does not currently have KernelSU superuser access.</string>
+
+    <string name="migration_ksu_not_active">KernelSU is not active in the current boot.</string>
+
+    <string name="log_veyra_ksu_auto_installed">[+] VeyraKSU installed or updated automatically after root</string>
+
+    <string name="log_veyra_ksu_auto_loaded">[+] VeyraKSU module lifecycle applied in the current boot</string>
+
+    <string name="log_veyra_ksu_auto_failed">[!] VeyraKSU automatic installation failed: %1$s</string>
+
+    <string name="log_migration_old_provider_disabled">[+] Previous root provider disabled and app state cleared: %1$s</string>
+
+    <string name="log_migration_old_provider_cleanup_failed">[!] Previous root provider could not be fully cleaned up: %1$s</string>
+
+    <string name="log_migration_completed">[+] Veyra root migration completed and temporary migration settings restored</string>
+
+    <string name="log_migration_failed_cleanup">[!] Veyra owns the new root session, but the previous provider could not be fully disabled/cleared. Temporary migration settings were restored.</string>
+
+    <string name="migration_cveyra_pair_required">This cached root flow needs a shell helper after reboot. Pair CVeyra with Wireless ADB first so the migration can continue without Shizuku.</string>
+    <string name="magic_builder_title">Magic Builder</string>
+    <string name="magic_builder_card_summary">OEM-aware automatic builder: capture through CVeyra Root or the Storage Proxy, verify the exact kernel, build only against compatible baselines, export to Downloads and register the result under Local Payload.</string>
+    <string name="magic_builder_subtitle">Automatic live-device payload builder</string>
+    <string name="magic_builder_device">Detected device</string>
+    <string name="magic_builder_backend">CVeyra: %1$s</string>
+    <string name="magic_builder_oem_title">%1$s implementation</string>
+    <string name="magic_builder_oem_body">Magic Builder detected the %1$s route. It keeps exact live-kernel validation, OEM-aware capture and strict baseline gates. A runnable payload is produced only when the selected base library is compatible; otherwise Magic Builder exports analysis/support data instead of mixing OEM or kernel offsets.</string>
+    <string name="magic_builder_oem_log">[Magic Builder] OEM route selected: %1$s</string>
+    <string name="magic_builder_nothing_title">Nothing exact-device profile</string>
+    <string name="magic_builder_nothing_profile">%1$s · %2$s · %3$s</string>
+    <string name="magic_builder_nothing_kernel_known">Live kernel family: %1$s · known stock family: %2$s. The exact live release remains authoritative.</string>
+    <string name="magic_builder_nothing_kernel_live">Live kernel family: %1$s. This model is learned from the exact running device instead of assuming a stock family.</string>
+    <string name="magic_builder_nothing_unknown_profile">Nothing device detected, but this model is not in the built-in profile table yet. Magic Builder stays in exact-device mode.</string>
+    <string name="magic_builder_nothing_exact_build">Exact build: %1$s</string>
+    <string name="magic_builder_nothing_ab_policy">A/B-safe: reads the active slot only. Magic Builder never changes slots and never flashes a partition.</string>
+    <string name="magic_builder_proxy_no_exact_boot">No stored boot image matched the exact running kernel %1$s.</string>
+    <string name="magic_builder_samsung_title">Samsung / One UI implementation</string>
+    <string name="magic_builder_samsung_body">Magic Builder detected a Samsung device. It uses the Samsung GKI path only: exact live-kernel validation, Universal/Samsung-compatible baselines, CVeyra Root or Storage Proxy capture, then the support-bundle fallback. The vivo/iQOO vr.ko path is never tried on Samsung.</string>
+    <string name="magic_builder_samsung_log">[Magic Builder] Samsung / One UI route selected; vivo/iQOO vr.ko retries are disabled.</string>
+    <string name="magic_builder_vivo_log">[Magic Builder] vivo/iQOO route selected; vr.ko is preferred before the universal fallback.</string>
+    <string name="magic_builder_generic_log">[Magic Builder] Generic OEM route selected; vendor-specific vr.ko retries are disabled.</string>
+    <string name="magic_builder_oem_scheme_blocked">Magic Builder rejected a payload strategy that does not belong to this device manufacturer.</string>
+    <string name="magic_builder_proxy_title">Privileged Storage Proxy</string>
+    <string name="magic_builder_proxy_body">Root broker is not active. Magic Builder is using the authenticated CVeyra ADB identity to stream shell-readable boot images from restricted storage. Raw boot block devices still require real root.</string>
+    <string name="magic_builder_proxy_unavailable">CVeyra ADB is selected, but the authenticated storage proxy is not ready.</string>
+    <string name="magic_builder_proxy_no_boot">Privileged Storage Proxy is active, but no readable boot image was found. Put boot.img in Downloads, the Veyra external files folder, or /data/local/tmp; alternatively enable CVeyra Root for direct live-partition capture.</string>
+    <string name="magic_builder_proxy_pull_failed">Privileged Storage Proxy found boot image candidates, but none could be streamed into the builder.</string>
+    <string name="magic_builder_missing_title">Magic Builder needs a privileged capture path</string>
+    <string name="magic_builder_missing_root">Enable CVeyra Root so Veyra can read the active boot partition itself. If that is unavailable, open Loading Builder and provide a boot image manually.</string>
+    <string name="magic_builder_open_cveyra">Configure CVeyra Root</string>
+    <string name="magic_builder_add_manually">Open Loading Builder</string>
+    <string name="magic_builder_what_it_does">One-tap build</string>
+    <string name="magic_builder_what_it_does_body">Reads or imports the current boot image through CVeyra Root or the Privileged Storage Proxy, checks the full kernel release against the running device, selects an OEM-safe strategy, builds only with a compatible baseline, saves a copy to Downloads and registers it under Local Payload. Magic Builder does not automatically select the new Local Payload for the next root run.</string>
+    <string name="magic_builder_run">Run Magic Builder</string>
+    <string name="magic_builder_running">Magic Builder is working…</string>
+    <string name="magic_builder_capture_ok">Live boot image captured. Building against the running kernel…</string>
+    <string name="magic_builder_source">Captured from: %1$s</string>
+    <string name="magic_builder_ready">Magic payload ready</string>
+    <string name="magic_builder_exported">Downloads copy: %1$s</string>
+    <string name="magic_builder_activated">Added to Payload sources / Local payload. It is intentionally left unchecked, so the next root run will not use it until you enable it yourself.</string>
+    <string name="magic_builder_need_cveyra">Magic Builder requires CVeyra to be enabled.</string>
+    <string name="magic_builder_need_root">Magic Builder needs CVeyra Root access to read the live boot partition.</string>
+    <string name="magic_builder_need_boot">The active boot partition could not be located or read. Add a boot image manually in Loading Builder.</string>
+    <string name="magic_builder_workdir_failed">Magic Builder could not create its private work directory.</string>
+    <string name="magic_builder_capture_failed">The live boot image could not be captured. Check CVeyra Root or provide the image manually.</string>
+
+    <string name="builder_live_kernel_title">Live kernel target</string>
+    <string name="builder_live_kernel_summary">When exact-kernel validation is enabled, the selected boot image must resolve to this running kernel release.</string>
+    <string name="builder_exact_kernel_title">Require exact live-kernel match</string>
+    <string name="builder_exact_kernel_summary">Reject a boot image whose detected kernel release differs from the phone currently running Veyra.</string>
+    <string name="builder_auto_export_title">Auto-export payload to Downloads</string>
+    <string name="builder_auto_export_summary">Save a copy of each successful normal Builder result to the Android Downloads folder.</string>
+    <string name="builder_auto_apply_title">Auto-activate built payload</string>
+    <string name="builder_auto_apply_summary">Set a successful normal Builder result as the current local payload automatically.</string>
+    <string name="builder_exact_kernel_mismatch">Exact-kernel check failed. Running device: %1$s. Selected boot image: %2$s.</string>
+    <string name="builder_auto_export_disabled">[*] Automatic Downloads export is disabled in Builder Settings.</string>
+    <string name="builder_auto_apply_disabled">[*] Automatic local-payload activation is disabled in Builder Settings.</string>
+    <string name="vspr_cveyra">CVeyra</string>
+    <string name="vspr_permission_mode_title">Permission Mode</string>
+    <string name="vspr_permission_mode_offline">Offline</string>
+    <string name="vspr_permission_mode_auto">Auto</string>
+    <string name="vspr_permission_mode_self">Self</string>
+    <string name="vspr_permission_mode_offline_body">CVeyra keeps stored rules but does not manage app permissions while Offline is selected.</string>
+    <string name="vspr_permission_mode_auto_body">Automatic policy management is reserved for a later policy engine. Auto currently stays disabled and returns to the previous mode.</string>
+    <string name="vspr_permission_mode_self_body">You choose the managed apps and their permissions yourself. The list starts empty; use + to add an app.</string>
+    <string name="vspr_offline_apps_inactive">Offline mode is active. No app is managed from this section.</string>
+    <string name="vspr_self_no_apps">No apps are managed yet. Tap + above to add one.</string>
+    <string name="vspr_add_app_title">Add app</string>
+    <string name="vspr_add_app_empty">No additional apps are available with the current system-app filter.</string>
+    <string name="vspr_preview_activate">Activate preview</string>
+    <string name="vspr_shizuku_module_title">Shizuku compatibility module</string>
+    <string name="vspr_shizuku_module_body">Shizuku compatibility uses the real Shizuku API permission when the target app requests it. CVeyra applies or revokes that permission through its privileged broker and never reports a fake grant.</string>
+    <string name="vspr_adveyra_owner_title">You want to activate Phone Owner permission?</string>
+    <string name="vspr_adveyra_owner_body">ADVeyra reflects the real Android Device Owner state. CVeyra only marks it active when Android reports the app as owner; provisioning restrictions are not bypassed or faked.</string>
+    <string name="magic_builder_range">Kernel scan range: 4.x–7.x. Runnable output is created only when the exact kernel family has a compatible registered baseline/base library; otherwise Magic Builder keeps the analysis result and tries the next strategy.</string>
+    <string name="magic_builder_retry_scheme">No runnable payload from the first strategy. Retrying automatically with %1$s…</string>
+    <string name="magic_builder_analysis_only_done">No runnable baseline was available after all automatic strategies. The exact live-kernel analysis was still completed and remains available for export.</string>
+    <string name="magic_builder_all_strategies_failed">All automatic Magic Builder strategies were tried. No compatible runnable payload could be produced from the currently available baseline files.</string>
+    <string name="magic_builder_support_bundle_title">Live support bundle</string>
+    <string name="magic_builder_support_bundle_body">Exports the current boot image plus live kernel evidence that CVeyra Root can read: BTF, kallsyms, config, modules, vendor_boot/init_boot/dtbo when available, and device metadata. Magic Builder also creates this automatically when every runnable strategy is exhausted.</string>
+    <string name="magic_builder_support_bundle_export">Export live support bundle</string>
+    <string name="magic_builder_support_bundle_working">Collecting live kernel files…</string>
+    <string name="magic_builder_support_bundle_saved">Support bundle saved to %1$s</string>
+    <string name="magic_builder_support_bundle_auto">No runnable baseline exists yet. Magic Builder finished the live analysis and automatically saved the support bundle to %1$s</string>
+    <string name="magic_builder_support_bundle_failed">The live support bundle could not be created.</string>
+    <string name="magic_builder_support_bundle_missing">Not exposed by this kernel/device: %1$s</string>
+    <string name="sound_menu_title">Sounds</string>
+    <string name="sound_menu_summary">Premium interaction sounds for pages, settings and controls.</string>
+    <string name="sound_menu_off">Off</string>
+    <string name="sound_activate">Activate sounds</string>
+    <string name="sound_activate_summary">Enable Veyra interaction sounds. Disabled by default.</string>
+    <string name="sound_old_activate">Switch to V1</string>
+    <string name="sound_old_activate_summary">Use the original V1 sounds and profile names.</string>
+    <string name="sound_profile">Sound profile</string>
+    <string name="sound_profile_summary">Choose the character of Veyra UI sounds.</string>
+    <string name="sound_pages">Page transitions</string>
+    <string name="sound_pages_summary">Sound when switching Home, History, Logs and Settings.</string>
+    <string name="sound_settings">Settings navigation</string>
+    <string name="sound_settings_summary">Sound when opening or leaving settings sections.</string>
+    <string name="sound_buttons">Buttons</string>
+    <string name="sound_buttons_summary">Short premium tap sound for app controls.</string>
+    <string name="sound_expand">Expand / collapse</string>
+    <string name="sound_expand_summary">Sound for Status, Device Information and folders.</string>
+    <string name="sound_without_ringer">Play in silent / vibrate</string>
+    <string name="sound_without_ringer_summary">Allow Veyra sounds even when the phone ringer is muted.</string>
+    <string name="sound_done">Done</string>
+    <string name="unstable_4x_switch">4.x kernel support (unstable)</string>
+    <string name="unstable_4x_switch_description">Enables the 4.4 / 4.9 / 4.14 / 4.19 analysis path. 4.19.152-perf+ has public adapter evidence; runnable output still requires an exact baseline.</string>
+    <string name="builder_nearest_family_title">Nearest family fallback (DON\'T USE)</string>
+    <string name="builder_nearest_family_summary">Unverified expert override. Uses the closest buildable 4.x–6.x baseline when the exact family is missing. ABI/layout mismatch can cause kernel panic or memory corruption.</string>
+    <string name="builder_nearest_family_confirm_title">Enable nearest-family fallback?</string>
+    <string name="builder_nearest_family_confirm_body">This deliberately allows a mismatched rt_mutex_waiter/task_struct ABI family. A wrong baseline can write into the wrong kernel fields and cause an immediate kernel panic, memory corruption or RAM/kernel crash. Use only for controlled research.</string>
+    <string name="builder_nearest_family_confirm_action">Enable DON\'T USE mode</string>
+    <string name="magic_builder_settings_title">Magic Builder Settings</string>
+    <string name="magic_builder_settings_summary">Magic-only routes, unstable kernel families, source intelligence and automatic build behavior.</string>
+    <string name="magic_builder_4x_title">Include 4.x (unstable)</string>
+    <string name="magic_builder_4x_summary">Analyze Android-era 4.4 / 4.9 / 4.14 / 4.19 kernels. Exact runnable output remains baseline-gated.</string>
+    <string name="magic_builder_vivo_legacy_title">Vivo legacy local route</string>
+    <string name="magic_builder_vivo_legacy_summary">Enable the local vivo/iQOO legacy route and X60-family detection before the universal fallback.</string>
+    <string name="magic_sources_title">Magic research sources</string>
+    <string name="magic_sources_summary">Evidence used by Magic Builder for legacy kernel routing.</string>
+    <string name="magic_source_k419">GhostLock K4.19 adapter · exact 4.19.152-perf+ evidence</string>
+    <string name="magic_source_vivo4x">vivo 4.x autopatch · tested 4.9 / 4.14 / 4.19 kernel families</string>
+    <string name="magic_df_inventory_title">Samsung DF KMI Bundle · Local</string>
+    <string name="magic_df_inventory_summary">%1$d modules bundled · %2$d Classic · %3$d Next</string>
+    <string name="magic_vivo_x60_local_title">Local / vivo X60</string>
+    <string name="magic_vivo_x60_local_summary">Recognizes V2045 / V2046A / PD2046-family devices and prioritizes the vivo route. Root is only marked runnable when its exact kernel baseline is present.</string>
+
+    <string name="vspr_info_version">Veyra System Permission Provider · Access 2.0.0</string>
+    <string name="vspr_info_provider_body_v2">CVeyra keeps every app on its normal Android UID and brokers privileged actions through a visible, per-app policy layer. With CVeyra Access active, the broker is enforced through VeyraKSU and Veyra’s root backend.</string>
+    <string name="vspr_info_activation_title">CVeyra Permission Activate</string>
+    <string name="vspr_info_activation_body">Activation requires VeyraKSU 2.0.0 and a KernelSU Superuser grant for Veyra. The existing KernelSU app-grant state is backed up before the full permission manager is enforced.</string>
+    <string name="vspr_info_permissions_title">Permission Management</string>
+    <string name="vspr_info_permissions_body">Offline keeps rules stored without managing apps. Self lets you choose apps yourself. Auto is reserved for a later policy engine and is not enabled yet. Detailed per-app privileges remain visible on Grant CVeyra Access.</string>
+    <string name="vspr_info_ksu_title">KernelSU and migration</string>
+    <string name="vspr_info_ksu_body_v2">Older direct KernelSU grants remain KernelSU-managed and are backed up before CVeyra Access is accepted. Veyra does not silently delete them; add those apps to CVeyra when you want to migrate their management.</string>
+    <string name="vspr_info_modules_title">App Module Loader</string>
+    <string name="vspr_info_modules_body">CVeyra modules can temporarily change real device settings such as Accessibility, Developer options, USB debugging or Private DNS. The exact previous values are saved and restored when the module is disabled.</string>
+    <string name="vspr_info_firewall_title">CVeyra Firewall</string>
+    <string name="vspr_info_firewall_body">The firewall combines Android’s package networking gate with a root-persistent IPv4/IPv6 UID rule layer. Veyra remembers only the apps it manages and reapplies its own rules after the VeyraKSU module starts.</string>
+    <string name="vspr_info_read_action">I have read this information</string>
+</resources>

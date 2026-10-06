@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The restart shortcut's own icon: the power symbol, in the same green as the app's logo.
+
+    Filled rather than stroked, because a launcher draws a shortcut icon at whatever size its own grid wants
+    and a 2dp stroke scaled to 96dp is a shape nobody draws on purpose.
+
+    The path is the standard 24dp power glyph: the bar across the top, then the ring, whose gap the bar sits
+    in. It parses as 2 subpaths - the bar as a rectangle, the ring as one closed curve - and both stay inside
+    the viewport.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <path
+        android:fillColor="#78966F"
+        android:pathData="M13,3h-2v10h2V3zM17.83,5.17l-1.42,1.42C17.99,7.86,19,9.81,19,12c0,3.87,-3.13,7,-7,7s-7,-3.13,-7,-7c0,-2.19,1.01,-4.14,2.58,-5.42L6.17,5.17C4.23,6.82,3,9.26,3,12c0,4.97,4.03,9,9,9s9,-4.03,9,-9C21,9.26,19.77,6.82,17.83,5.17z" />
+</vector>

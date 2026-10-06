@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    What a long press on the app icon offers.
+
+    Two shortcuts, and they differ in what they can promise. "Restart" opens the sheet rather than asking for a
+    target of its own, because which of the six this phone will do at this moment depends on whether root or a
+    Shizuku shell answers right now - a probe, not a constant - and a shortcut hard-coded to "reboot to
+    recovery" would be a button that fails silently on a phone with neither.
+
+    "Soft restart" is the one target asked for directly: it restarts the Android userspace and leaves the
+    kernel alone, so a tap that turns out to be a mistake costs fifteen seconds, and it is the step a root run
+    usually ends with. It still answers to the same probe - with no root the daemon cannot restart anything, so
+    the app opens the sheet that says so. The four targets that leave Android stay behind the sheet's own
+    confirmation.
+
+    Android's own power menu already restarts the phone, which is why there is no shortcut for a plain reboot:
+    what these add is everything the sheet offers that the system's menu does not.
+-->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
+        `android:targetPackage` is the build's applicationId, which in this fork is deliberately not the
+        Java package the action strings above name: only the former decides which app the launcher opens,
+        and the two installs can both be present. RestartShortcutTest reads this attribute against
+        BuildConfig.APPLICATION_ID, so a rename here cannot go unnoticed.
+    -->
+    <shortcut
+        android:shortcutId="restart_options"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_restart"
+        android:shortcutShortLabel="@string/shortcut_restart_short"
+        android:shortcutLongLabel="@string/reboot_sheet_title">
+        <intent
+            android:action="ctrl.mietze.veyraroot.action.RESTART_OPTIONS"
+            android:targetPackage="dev.rushiranpise.rmgnext"
+            android:targetClass="ctrl.mietze.veyraroot.MainActivity" />
+    </shortcut>
+
+    <!--
+        The same window as the shortcut above, and deliberately: the direct action runs in the activity the app
+        already has rather than in a second one added for it. What it costs is a moment of the app's window
+        before the restart - which is also the only feedback the probe can give while it runs - and what it
+        saves is a second exported entry point that any app on the phone could poke.
+
+        The icon is the sheet's, because a second glyph would have to be drawn by hand: the platform's own icon
+        set is a Compose API and a shortcut icon has to be a drawable. The labels are what tell the two apart.
+    -->
+    <shortcut
+        android:shortcutId="soft_restart"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_restart"
+        android:shortcutShortLabel="@string/reboot_target_soft_restart"
+        android:shortcutLongLabel="@string/shortcut_soft_restart_long">
+        <intent
+            android:action="ctrl.mietze.veyraroot.action.SOFT_RESTART"
+            android:targetPackage="dev.rushiranpise.rmgnext"
+            android:targetClass="ctrl.mietze.veyraroot.MainActivity" />
+    </shortcut>
+</shortcuts>

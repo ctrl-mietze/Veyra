@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: {{BACKGROUND}};
+    --text: {{TEXT}};
+    --muted: {{MUTED}};
+    --card: {{CARD}};
+    --accent: {{ACCENT}};
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 20px 18px 36px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.52;
+  }
+  h1 { font-size: 28px; margin: 0 0 8px; font-weight: 650; }
+  h2 { font-size: 19px; margin: 26px 0 10px; font-weight: 650; }
+  p { margin: 8px 0; }
+  .sub { color: var(--muted); margin-bottom: 20px; }
+  .card {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 16px;
+    margin: 12px 0;
+  }
+  .badge {
+    display: inline-block;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .row { margin: 7px 0; }
+  .note { color: var(--muted); }
+</style>
+</head>
+<body>
+<h1>V-SPR</h1>
+<p class="sub">Veyra System Permission Provider</p>
+<div class="card">
+  <span class="badge">CVeyra Provider</span>
+  <p>V-SPR ist die Berechtigungsschicht von CVeyra. Eine App behält ihre normale Android-UID. Privilegierte Aktionen werden stattdessen kontrolliert über CVeyra vermittelt.</p>
+</div>
+<h2>Privilegien</h2>
+<div class="card">
+  <div class="row">🟣 <strong>SuperSU (UID 0)</strong> – Aktionen über den Root-Broker.</div>
+  <div class="row">🟢 <strong>ADB</strong> – Aktionen über einen verfügbaren ADB-/Shell-Pfad.</div>
+  <div class="row">🔵 <strong>Shizuku</strong> – Shizuku-kompatibler Zugriff über die vorgesehene Compatibility-Schicht.</div>
+  <div class="row">🔴 <strong>ADVeyra</strong> – Admin Veyra; der Device-Owner-/DHizuku-Pfad.</div>
+  <div class="row">🟠 <strong>System (UID 1000)</strong> – vorgesehener System-Broker für dafür unterstützte Operationen.</div>
+</div>
+
+<h2>Warum V-SPR?</h2>
+<p>V-SPR soll Berechtigungen zentral, sichtbar und pro App verwalten. Dadurch kann Veyra genau protokollieren, welche App welche privilegierte Fähigkeit erhalten hat.</p>
+
+<h2>KernelSU</h2>
+<div class="card">
+  <p>Für Root sollte eine App möglichst nur über <strong>einen</strong> Verwaltungsweg freigegeben werden.</p>
+  <p>Hat eine App bereits direkten Superuser-Zugriff in KernelSU, blendet Veyra sie aus der V-SPR-App-Liste aus und verwendet keinen zusätzlichen V-SPR-SuperSU-Grant.</p>
+  <p class="note">Veyra verändert dabei keine KernelSU-Freigaben automatisch. Die Prüfung ist read-only und dient dazu, doppelte Root-Verwaltung zu vermeiden.</p>
+</div>
+
+<h2>Aktueller Entwicklungsstand</h2>
+<p>Die Grant-Verwaltung und Provider-Schalter sind bereits Bestandteil von V-SPR. Einige Backend-Routen – insbesondere die vollständige Shizuku-Kompatibilität, ADVeyra und der System-Broker – werden schrittweise an die jeweiligen Provider angebunden.</p>
+</body>
+</html>

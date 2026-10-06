@@ -1,0 +1,9 @@
+{
+  "kind": "research-only",
+  "connected": false,
+  "runnablePayloads": false,
+  "repository": "p2p3p/GhostLock-for-OnePlus",
+  "coverage": "OnePlus GhostLock runtime offset/device-table research",
+  "evidence": "Per-uname offset tables; unknown kernels are rejected rather than cross-used.",
+  "note": "Visible in Payload Sources for research/adaptation. It is not treated as a runnable feed until a Veyra-compatible exact payload manifest exists."
+}

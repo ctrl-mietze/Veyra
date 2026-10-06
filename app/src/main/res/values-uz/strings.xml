@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Veyra Root</string>
+    <string name="nav_overview">Asosiy</string>
+    <string name="nav_history">Tarix</string>
+    <string name="nav_settings">Sozlamalar</string>
+    <string name="install_confirm_title">KernelSU o\'rnatilsinmi?</string>
+    <string name="install_confirm_body">Ilova profil mosligini tekshiradi, so\'ngra GitHub\'dan eksployt va KernelSU paketlarini yuklab olib, ishga tushiradi.</string>
+    <string name="action_confirm">Tasdiqlash</string>
+    <string name="action_cancel">Bekor qilish</string>
+    <string name="action_close">Yopish</string>
+    <string name="action_retry">Qayta urinish</string>
+    <string name="action_done">Tayyor</string>
+    <string name="action_back">Orqaga</string>
+    <string name="install_tap_manager">KernelSU menejerini o\'rnatish uchun bosing</string>
+    <string name="install_tap_open_manager">KernelSU menejerini ochish uchun bosing</string>
+    <string name="install_tap_retry">Qayta urinish uchun bosing</string>
+    <string name="install_tap_start">KernelSU\'ni o\'rnatish uchun bosing</string>
+    <string name="device">Qurilma</string>
+    <string name="kernelsu_card_title">KernelSU</string>
+    <string name="kernelsu_card_description">Android uchun karnel-asoslangan rootlash</string>
+    <string name="firmware">Proshivka</string>
+    <string name="system">Tizim</string><string name="kernel">Yadro</string>
+    <string name="system_abi">Tizim ABI\'si</string>
+    <string name="settings">Sozlamalar</string>
+    <string name="version_format">%1$s (%2$d)</string>
+    <string name="language">Til</string>
+    <string name="language_description">Ilova tilini tanlang</string>
+    <string name="appearance">Tashqi ko\'rinish</string>
+    <string name="theme_system">Tizim</string>
+    <string name="theme_light">Kungduzgi</string>
+    <string name="theme_dark">Tungi</string>
+    <string name="material_color">Mavzu</string>
+    <string name="material_color_description">Ko\'rinishni o\'zgartirish</string>
+    <string name="language_system">Tizimga moslashish</string>
+    <string name="language_korean" translatable="false">한국어</string>
+    <string name="language_english" translatable="false">English</string>
+    <string name="language_japanese" translatable="false">日本語</string>
+    <string name="language_chinese" translatable="false">简体中文</string>
+    <string name="language_chinese_traditional" translatable="false">繁體中文</string>
+    <string name="language_turkish" translatable="false">Türkçe</string>
+    <string name="language_brazillian_portuguese" translatable="false">Português Brasileiro</string>
+    <string name="language_russian" translatable="false">Русский</string>
+    <string name="language_vietnamese" translatable="false">Tiếng Việt</string>
+    <string name="language_uzbek" translatable="false">O\'zbek</string>
+    <string name="color_dynamic">Tizimning dinamik rangi</string>
+    <string name="color_blue">Ko\'k</string>
+    <string name="color_violet">Binafsha</string>
+    <string name="color_green">Yashil</string>
+    <string name="color_orange">Malla</string>
+    <string name="history_title">Ishlatilish tarixi</string>
+    <string name="history_empty_title">Hali ishlatilinmagan</string>
+    <string name="history_empty_description">O\'rnatish natijalari va jurnallar (loglar) shu yerda ko\'rinadi.</string>
+    <string name="history_running">Bajarilmoqda</string>
+    <string name="history_succeeded">Muvaffaqiyatli yakunlandi</string>
+    <string name="history_failed">Xatolik yuz berdi</string>
+    <string name="history_detail_title">Jarayon tafsilotlari</string>
+    <string name="history_started">Boshlandi: %1$s</string>
+    <string name="history_completed">Yakunlandi: %1$s</string>
+    <string name="history_log_empty">Jurnalda (log) hali hech qanday ma\'lumot yo\'q.</string>
+    <string name="history_payload">Paket (Payload): %1$s</string>
+    <string name="history_shizuku_used">Shizuku: ishlatildi</string>
+    <string name="history_shizuku_not_used">Shizuku: ishlatilmadi</string>
+    <string name="export_log">Jurnalni (logni) eksport qilish</string>
+    <string name="export_log_saved">Jurnal (log) saqlandi</string>
+    <string name="export_log_failed">Jurnalni (logni) saqlab bo\'lmadi</string>
+    <string name="about">Dastur haqida</string>
+    <string name="about_title">Root My Galaxy haqida</string>
+    <string name="about_description">Root My Galaxy haqida</string>
+    <string name="about_body">Qo\'llab-quvvatlanadigan Samsung Galaxy qurilmalarini yadro eksployti yordamida bir bosish orqali root o\'rnatuvchi dastur.</string>
+
+    <string name="install_title">O\'rnatish</string>
+    <string name="install_keep_open">O\'rnatish yakunlangunicha ilovani yopmang</string>
+    <string name="install_live_progress">Jurnal (Log)</string>
+    <string name="install_preparing">Tayyorlanmoqda…</string>
+    <string name="step_support_title">Moslikni tekshirish</string>
+    <string name="step_support_detail">Qurilma va proshivka profilini tasdiqlash</string>
+    <string name="step_download_title">Yuklab olish</string>
+    <string name="step_download_detail">Moslik manifestini yuklash</string>
+    <string name="step_exploit_title">Yadro eksployti</string>
+    <string name="step_exploit_detail">Boshlang\'ich (bootstrap) root huquqini olish</string>
+    <string name="step_ksu_title">KernelSU\'ni yuklash</string>
+    <string name="step_ksu_detail">Modulni kechiktirib yuklash va boshqaruv kanalini tekshirish</string>
+    <string name="phase_checking">Mos keladigan qurilma va proshivka tekshirilmoqda</string>
+    <string name="phase_ready">O\'rnatishga tayyor</string>
+    <string name="phase_downloading">GitHub\'dan maxsus tasdiqlangan (commit-pinned) paketlar yuklab olinmoqda</string>
+    <string name="phase_exploiting">Bu jarayon 10 daqiqa yoki undan ko\'proq vaqt olishi mumkin. Qurilmangiz qizib ketishi yoki qotib qolishi mumkin.</string>
+    <string name="phase_loading_ksu">Olingan boshlang\'ich root orqali KernelSU yuklanmoqda</string>
+    <string name="phase_installed">KernelSU moduli va boshqaruv kanali muvaffaqiyatli tekshirildi</string>
+    <string name="phase_failed">Xatolik sababini quyidagi jurnalda (logda) ko\'rib chiqing</string>
+
+    <string name="status_ksu_active">KernelSU faol</string>
+    <string name="status_not_installed">O\'rnatilmagan</string>
+    <string name="status_support_failed">Moslikni tekshirish muvaffaqiyatsiz yakunlandi</string>
+    <string name="status_checking_github">GitHub moslik manifesti tekshirilmoqda</string>
+    <string name="status_downloading_payload">Paketlar yuklab olinmoqda</string>
+    <string name="status_exploit_running">Yadro eksployti ishga tushirilmoqda</string>
+    <string name="status_ksu_loading">KernelSU kechiktirib yuklanmoqda</string>
+    <string name="status_install_failed">O\'rnatishda xatolik yuz berdi</string>
+    <string name="log_profile">[+] Moslik profili: %1$s</string>
+    <string name="log_download_verified">[+] Paketni yuklab olish yakunlandi</string>
+    <string name="log_install_complete">[+] O\'rnatish yakunlandi</string>
+    <string name="log_bootstrap_root">[+] Boshlang\'ich root olindi</string>
+    <string name="log_ksu_staged">[+] KernelSU tayyorgarligi yakunlandi</string>
+    <string name="log_ksu_control_verified">[+] KernelSU boshqaruv kanali tekshirildi (%1$s)</string>
+    <string name="error_ksu_not_ready">KernelSU yuklandi, ammo boshqaruv kanali javob bermadi; root hali ishlamaydi</string>
+    <string name="error_helper_unavailable">Bootstrap yordamchisini ishga tushirib bo\'lmaydi</string>
+    <string name="error_exploit_stalled">Eksployt jurnali 90 soniya davomida yangilanmadi</string>
+    <string name="error_exploit_timeout">Eksployt 15 daqiqalik vaqt chegarasidan oshib ketdi</string>
+    <string name="error_payload_exit">Paketni ishga tushirishda xatolik yuz berdi: %1$d%2$s</string>
+    <string name="error_success_marker">Eksployt muvaffaqiyatli yakunlanganligi haqida belgilar topilmadi</string>
+    <string name="error_ksu_stage">KernelSU tayyorgarligida xatolik yuz berdi: %1$s</string>
+    <string name="error_ksu_verify">KernelSU yuklanishi yoki boshqaruvini tekshirish muvaffaqiyatsiz bo\'ldi (rc=%1$d): %2$s</string>
+    <string name="error_boot_id">Joriy boot_id\'ni o\'qib bo\'lmadi</string>
+    <string name="error_receipt">O\'rnatishni tasdiqlovchi ma\'lumotni saqlab bo\'lmadi</string>
+
+    <string name="artifact_exploit">eksployt</string>
+    <string name="artifact_kernelsu">KernelSU</string>
+    <string name="repo_no_profile">Ushbu model va yadro versiyasini qo\'llab-quvvatlaydigan mos paket topilmadi</string>
+    <string name="repo_downloading">%1$s yuklab olinmoqda</string>
+    <string name="repo_size_mismatch">%1$s hajmi moslik manifestiga to\'g\'ri kelmadi</string>
+    <string name="repo_size_exceeded">%1$s belgilangan hajmdan oshib ketdi</string>
+    <string name="repo_incomplete">%1$s to\'liq yuklab olinmadi</string>
+    <string name="repo_finalize_failed">%1$s faylini yakunlab bo\'lmadi</string>
+    <string name="repo_verified">%1$s tekshirildi</string>
+    <string name="repo_commit_invalid">GitHub yaroqsiz commit SHA qaytardi</string>
+    <string name="repo_url_invalid">Artefakt omboriga (repository) ruxsat berilmagan</string>
+    <string name="repo_response_too_large">Javob hajmi belgilangan chegaradan oshib ketdi</string>
+    <string name="repo_api_limited">GitHub so\'rov chegarasiga yetildi; bir necha daqiqadan so\'ng qayta urinib ko\'ring</string>
+    <string name="open_github">GitHub\'ni ochish</string>
+    <string name="github_card_title">Root My Galaxy haqida ko\'proq ma\'lumot</string>
+    <string name="github_card_description">Dastur manba kodi va foydalanish bo\'yicha ko\'rsatmalarni ko\'rib chiqing.</string>
+    <string name="action_continue">Baribir davom etish</string>
+    <string name="action_next">Keyingisi</string>
+    <string name="advanced">Kengaytirilgan</string>
+    <string name="advanced_mode">Kengaytirilgan rejim</string>
+    <string name="advanced_mode_description">O\'rnatish vaqtida qurilmaga mos paketni (payload) qo\'lda tanlash</string>
+    <string name="shizuku_mode">Shizuku\'dan foydalanish</string>
+    <string name="shizuku_mode_description">Paketni ishga tushirish uchun Shizuku\'dan foydalaning. Bu o\'rnatishning ishonchliligini oshirishi mumkin.</string>
+    <string name="shizuku_not_running_title">Shizuku ishlamayapti</string>
+    <string name="shizuku_not_running_body">Avval Shizuku xizmatini adb yoki root orqali ishga tushiring va ushbu ilovaga ruxsat bering, so\'ngra bu sozlamani yoqing.</string>
+    <string name="settings_shizuku_start">Shizuku\'ni hozir ishga tushirish</string>
+    <string name="settings_shizuku_start_summary">Shizuku xizmatini KernelSU orqali ishga tushiradi, shunda ilova kompyutersiz ishlaydi</string>
+    <string name="settings_shizuku_boot">Ishga tushganda Shizuku</string>
+    <string name="settings_shizuku_boot_summary">Qayta ishga tushgandan so\'ng, qurilmada root bo\'lsa Shizuku avtomatik ishga tushadi</string>
+    <string name="status_shizuku_starting">Ishga tushirilmoqda\u2026</string>
+    <string name="status_shizuku_started">Shizuku ishlayapti</string>
+    <string name="error_shizuku_start_no_root">Shizuku bu yerda faqat root bor qurilmada ishga tushiriladi; avval o\'rnatishni bajaring.</string>
+    <string name="notification_channel_shizuku">Shizuku ishga tushishi</string>
+    <string name="action_download_shizuku">Shizuku\'ni yuklab olish</string>
+    <string name="error_shizuku_unavailable">Shizuku ishlamayapti. Avval Shizuku\'ni adb yoki root yordamida ishga tushiring.</string>
+    <string name="error_shizuku_permission">Shizuku uchun ruxsat berilmadi</string>
+    <string name="error_shizuku_stage">%1$s\'ni Shizuku orqali tayyorlab bo\'lmadi: %2$s</string>
+    <string name="log_shizuku_prepare">[*] Shizuku orqali ishga tushirishga tayyorlanmoqda</string>
+    <string name="log_shizuku_permission">[+] Shizuku uchun ruxsat berildi</string>
+    <string name="repo_profile_missing">%1$s moslik profili endi mavjud emas</string>
+    <string name="select_device_title">Paketni tanlang</string>
+    <string name="select_device_description">Qurilma modeli va yadro versiyasiga qarab kerakli paketni tanlang.</string>
+    <string name="show_my_device_only">Faqat mening qurilmamni ko\'rsatish</string>
+    <string name="no_matching_devices">Ushbu model va yadro versiyasiga mos keladigan paketlar topilmadi.</string>
+    <string name="device_mismatch_title">Qurilma mos kelmadi</string>
+    <string name="device_mismatch_body">Sizning telefoningiz %1$s, biroq tanlangan paket %2$s\'ni qo\'llab-quvvatlaydi. Uni ishga tushirish qurilmaning qotib qolishi yoki zararlanishiga olib kelishi mumkin.</string>
+    <string name="kernel_version_mismatch_title">Yadro versiyasi mos kelmadi</string>
+    <string name="kernel_version_mismatch_body">Sizning telefoningiz %1$s yadrosidan foydalanadi, lekin tanlangan paket %2$s\'ni qo\'llab-quvvatlaydi. Ofsetlar mos kelmasligi ehtimoli bor.</string>
+    <string name="updater_available_title">Yangilanish mavjud</string>
+    <string name="updater_available_body">%1$s versiyasi mavjud</string>
+    <string name="updater_available_body_short">%1$s mavjud</string>
+    <string name="updater_button_download">Yuklab olish va o\'rnatish</string>
+    <string name="updater_downloading">Yuklab olinmoqda…</string>
+    <string name="updater_download_failed">Yuklab olish muvaffaqiyatsiz tugadi</string>
+    <string name="updater_check">Yangilanishlarni tekshirish</string>
+    <string name="updater_checking">Yangilanishlar tekshirilmoqda…</string>
+    <string name="updater_up_to_date">Sizda eng so\'nggi versiya</string>
+    <string name="updater_failed">Yangilanishlarni tekshirib bo\'lmadi</string>
+    <string name="history_select_all">Hammasini tanlash</string>
+    <string name="history_clear_selection">Tanlovni bekor qilish</string>
+    <string name="history_delete_selected">O\'chirish (%1$d)</string>
+    <plurals name="history_delete_selected_title">
+        <item quantity="one">Ushbu jarayon o\'chirilsinmi?</item>
+        <item quantity="other">%1$d ta jarayon o\'chirilsinmi?</item>
+    </plurals>
+    <plurals name="history_delete_selected_body">
+        <item quantity="one">Bu jarayon va uning jurnali butunlay o\'chiriladi.</item>
+        <item quantity="other">Bu jarayonlar va ularning jurnallari butunlay o\'chiriladi.</item>
+    </plurals>
+    <string name="history_delete">O\'chirish</string>
+
+    <!-- Veyra Builder localized UI -->
+    <string name="builder_settings_summary">Yadro oilalari, moslik eshiklari va foydali yuk ishlab chiqaruvchi tomonidan ishlatiladigan asosiy qamrov.</string>
+    <string name="builder_settings_title">Quruvchi sozlamalari</string>
+    <string name="loading_builder_summary">Boot.img yoki qo\'llab-quvvatlanadigan OTA paketidan mahalliy foydali yukni yarating.</string>
+    <string name="loading_builder_title">Quruvchi yuklanmoqda</string>
+    <string name="nav_style_glass">Shisha</string>
+    <string name="nav_style_standard">Standart</string>
+    <string name="nav_style_summary">Veyraning oddiy suzuvchi baridan yoki shaffof shisha variantidan foydalaning.</string>
+    <string name="nav_style_title">Suzuvchi navigatsiya uslubi</string>
+    <string name="payload_local_source_none">Mahalliy foydali yuk tanlanmagan</string>
+    <string name="payload_local_source_title">Mahalliy yuk</string>
+
+    <!-- Veyra Builder localized UI -->
+    <string name="builder_applied">Maxsus foydali yuk sifatida saqlangan: %1$s</string>
+    <string name="builder_applied_state">Allaqachon maxsus foydali yukga yozilgan</string>
+    <string name="builder_base">Havola bazasi: %1$s</string>
+    <string name="builder_baseline">Asosiy: %1$s</string>
+    <string name="builder_baseline_coverage_summary">Quruvchi hozirda qaysi yadro oilalari va roʻyxatdan oʻtgan bazaviy koʻrsatkichlarga mos kelishi mumkinligini koʻrsating.</string>
+    <string name="builder_baseline_coverage_title">Asosiy qamrov</string>
+    <string name="builder_block_abi">Yadro ABI mojarosi</string>
+    <string name="builder_block_baseline">Bu yadro uchun roʻyxatdan oʻtgan baza yoʻq</string>
+    <string name="builder_block_other">Qurilish tugallanmagan</string>
+    <string name="builder_block_unknown_kernel">Yadro versiyasi aniqlanmadi</string>
+    <string name="builder_block_vrko">Tanlangan foydali yukda vivo vr.ko bypass yo‘q</string>
+    <string name="builder_boot_hint">Yadro versiyasi ushbu qurilmaga mos keladigan boot.img dan foydalaning (uni rasmiy proshivka paketidan oling yoki /dev/block/by-name/boot-ni tashlang).</string>
+    <string name="builder_boot_image">boot.img</string>
+    <string name="builder_boot_none">Hech qanday fayl tanlanmagan</string>
+    <string name="builder_description">Boot.img dan yadro belgilari jadvalini o\'qiydi, ushbu ekspluatatsiya zanjiri uchun zarur bo\'lgan ofsetlarni hal qiladi va tanlangan asosiy kutubxonani yadroingizga mos keladigan tuzilishga qayta yozadi. “Yuklab olish yukini yaratish” tugmasini bosgandan so‘ng qaysi sxema birinchi bo‘lib qo‘llanilishini so‘raydi: universali ko‘pchilik qurilmalarni qamrab oladi, vivo/iQOO esa vr.ko anti-root bypassli qurilmani o‘z ichiga oladi. Hamma narsa qurilmada sodir bo\'ladi - tarmoq yo\'q.</string>
+    <string name="builder_detected_kernel">Aniqlangan yadro: %1$s</string>
+    <string name="builder_export_header">Maqsadni eksport qilish.h</string>
+    <string name="builder_export_so">Eksport .so</string>
+    <string name="builder_heading">Yuk ishlab chiqaruvchisi</string>
+    <string name="builder_ignore_conflicts_summary">Majburiy seriya yoki asosiy ABI o\'lchangan yadro bilan ziddiyatli bo\'lsa ham chiqishga ruxsat bering. Quruvchi bekor qilishni qayd qiladi.</string>
+    <string name="builder_ignore_conflicts_title">Mojarolarga e\'tibor bermaslik (ilg\'or)</string>
+    <string name="builder_input_gone">Ilgari olingan rasm tizim tomonidan tozalandi. Iltimos, havolani qaytadan tahlil qiling.</string>
+    <string name="builder_kernel">Yadro: %1$s (%2$s)</string>
+    <string name="builder_kernel_series_5">Force 5.x — beta/test</string>
+    <string name="builder_kernel_series_6">Force 6.x - asosiy chiziq</string>
+    <string name="builder_kernel_series_auto">Avtomatik - boot.img dan aniqlash</string>
+    <string name="builder_kernel_series_title">Yadro seriyasi</string>
+    <string name="builder_loaded">boot.img %1$d KB · asosiy kutubxona %2$d KB</string>
+    <string name="builder_log_title">Qurilish jurnali</string>
+    <string name="builder_no_input">Avval boot.img ni tanlang</string>
+    <string name="builder_no_output">Ofsetlar hal qilindi, lekin kutubxona to\'ldirilmagan (jurnalga qarang)</string>
+    <string name="builder_offsets">Ofsetlar hal qilindi: %1$d / %2$d</string>
+    <string name="builder_open_kernel_settings">Quruvchi sozlamalarini oching</string>
+    <string name="builder_ota">OTA havolasini tahlil qilish</string>
+    <string name="builder_ota_bad_url">Faqat http / https havolalari qabul qilinadi</string>
+    <string name="builder_ota_close">Yopish</string>
+    <string name="builder_ota_desc">To\'liq OTA ZIP ga to\'g\'ridan-to\'g\'ri havolani joylashtiring. Butun paket emas (odatda 4–8 GiB).\nServer HTTP diapazoni so\'rovlarini qo\'llab-quvvatlashi kerak bo\'lgan faqat kerakli qismlar olinadi — ZIP markaziy katalogi, foydali yuk manifesti va yuklash bo\'limi egallagan bir necha o\'nlab MiB; agar shunday bo\'lmasa, so\'rov hamma narsani jimgina yuklab olishdan ko\'ra rad etiladi.</string>
+    <string name="builder_ota_done">Chiqarilgan %1$s (%2$s) — siz hozir foydali yukni yaratish tugmasini bosishingiz mumkin</string>
+    <string name="builder_ota_hint">To\'liq paketga to\'g\'ridan-to\'g\'ri havola (http / https)</string>
+    <string name="builder_ota_run">Tahlil qilish</string>
+    <string name="builder_ota_running">Toʻliq paket tahlil qilinmoqda…</string>
+    <string name="builder_ota_started">Boshlanmoqda…</string>
+    <string name="builder_ota_title">OTA havolasini tahlil qilish</string>
+    <string name="builder_output_ready">Paketli kutubxona: %1$d KB</string>
+    <string name="builder_output_sha">SHA-256: %1$s</string>
+    <string name="builder_output_size">Hajmi: %1$s</string>
+    <string name="builder_patch_absent">%1$d kalitlariga ushbu kutubxona havola etilmagan</string>
+    <string name="builder_patch_done">Yamoq: %1$d kalitlari qayta yozilishi kerak · %2$d saytlari qayta ishlanadi</string>
+    <string name="builder_patch_noop">Bu kutubxona allaqachon yadroingizga mos keladi — qadoqlangan nusxa toʻplamdagi bilan bayt jihatidan bir xil.</string>
+    <string name="builder_patch_stats">Qayta yozishni talab qiluvchi kalitlar: %1$d · tasdiqlangan: %2$d</string>
+    <string name="builder_phase_reading">%1$s o‘qilmoqda…</string>
+    <string name="builder_pick_boot">boot.img ni tanlang</string>
+    <string name="builder_read_failed">Tanlangan faylni o‘qib bo‘lmadi</string>
+    <string name="builder_run">Foydali yukni yaratish</string>
+    <string name="builder_running">Qurilish…</string>
+    <string name="builder_save_download_failed">Yuklab olish jildiga yozib bo\'lmadi</string>
+    <string name="builder_saved_download">%1$s da saqlandi</string>
+    <string name="builder_scheme_subtitle">Ikkala sxema ham bir xil CVE-2026-43499 zanjiri — ular sotuvchining moslashuvida farqlanadi.</string>
+    <string name="builder_scheme_title">Qaysi yukni qurish kerak?</string>
+    <string name="builder_scheme_universal">Universal</string>
+    <string name="builder_scheme_universal_detail">Ko\'pgina GKI 6.6 qurilmalarida ishlaydi. Hech qanday sotuvchi anti-root bypass, shuning uchun u vivo/iQOO tashqarisida xavfsiz standart hisoblanadi.</string>
+    <string name="builder_scheme_vivo">vivo / iQOO (vr.ko aylanib o\'tish)</string>
+    <string name="builder_scheme_vivo_detail">vr.ko anti-root bypass qo\'shadi. Umumjahon zanjiri bloklangan vivo / iQOO da talab qilinadi.</string>
+    <string name="builder_section_result">Natija</string>
+    <string name="builder_symbols">Belgilar: %1$d</string>
+    <string name="builder_test_kernel_confirm_action">Baribir yoqing</string>
+    <string name="builder_test_kernel_confirm_body">5.x qo\'llab-quvvatlash beta hisoblanadi. Uning joylashuvi langarlari asosiy 6.x yo\'llariga qaraganda kamroq tasdiqlangan. Uni faqat 5.x tuzilmasini sinab ko\'rmoqchi bo\'lganingizda yoqing.</string>
+    <string name="builder_test_kernel_confirm_title">5.x yadro yordami yoqilsinmi?</string>
+    <string name="builder_variant">Variant: %1$s</string>
+    <string name="builder_vr_ko_hint">Bu vivo/iQOO qurilmasiga o\'xshaydi. Agar yadro vr.ko ni olib yursa, vivo foydali yuk sxemasiga o\'ting - universal foydali yukda vr.ko aylanib o\'tish yo\'q va ildiz qobig\'i sys_exit probi tomonidan o\'chiriladi.</string>
+    <string name="builder_vr_ko_ok">vr.ko bypass mavjud — bu foydali yuk W2 uid tekshiruvidan oldin vazifa belgilarini tozalaydi</string>
+    <string name="custom_import_failed">Import amalga oshmadi</string>
+    <string name="error_bundled_missing">O‘rnatilgan foydali yuk kutubxonasi yo‘q</string>
+    <string name="offsets_counts">%1$d belgilari · %2$d tuzilish maydonlari</string>
+    <string name="offsets_dialog_title">ofsets.json</string>
+    <string name="offsets_error">Bu faylni oʻqib boʻlmadi: %1$s</string>
+    <string name="offsets_import">Ofsets.jsonni import qiling</string>
+    <string name="offsets_import_desc">GhostLock/IonStack tomonidan ishlab chiqarilgan yadro ofset faylini yuklang</string>
+    <string name="offsets_missing">Yo‘qolgan: %1$d belgilari, %2$d tuzilma maydonlari</string>
+    <string name="offsets_release">Yadro versiyasi: %1$s</string>
+    <string name="offsets_unknown">%1$d noma\'lum kalit(lar)ni saqlab qo\'ydi — ikki tomonga xavfsiz</string>
+    <string name="test_kernel_blocked_title">5.x yadrosi aniqlandi - qo\'llab-quvvatlash o\'chirilgan</string>
+    <string name="test_kernel_switch">5.x yadrosini qo\'llab-quvvatlash (beta)</string>
+    <string name="test_kernel_switch_description">5.x yadrosi aniqlanganda (tasdiqlanmagan) 5.x sxemasidan foydalaning.</string>
+
+    <!-- Veyra Builder localized UI -->
+    <string name="builder_base_library">Asosiy kutubxona: %1$s · %2$s</string>
+    <string name="builder_notices">Eslatmalar</string>
+    <string name="builder_set_as_payload">Shaxsiy yuk sifatida foydalaning</string>
+
+    <string name="log_veyra_ksu_temp_root_state">[+] VeyraKSU received the current temp-root boot state</string>
+
+    <string name="veyra_ksu_title">VeyraKSU</string>
+
+    <string name="veyra_ksu_card_summary">KernelSU bridge for boot state, temp-root state and the future V-SPR permission path.</string>
+
+    <string name="veyra_ksu_status_not_installed">Not installed</string>
+
+    <string name="veyra_ksu_status_installed">Installed</string>
+
+    <string name="veyra_ksu_status_active">Active</string>
+
+    <string name="veyra_ksu_status_enabled">Enabled</string>
+
+    <string name="veyra_ksu_status_disabled">Disabled</string>
+
+    <string name="veyra_ksu_subtitle">Persistent Veyra bridge inside KernelSU</string>
+
+    <string name="veyra_ksu_bridge_status">Bridge status</string>
+
+    <string name="veyra_ksu_reading_install">Module</string>
+
+    <string name="veyra_ksu_reading_load">Load state</string>
+
+    <string name="veyra_ksu_reading_stage">Last stage</string>
+
+    <string name="veyra_ksu_reading_boot">Boot ID</string>
+
+    <string name="veyra_ksu_reading_temp_root">Temp root seen</string>
+
+    <string name="veyra_ksu_reading_permission_bridge">Permission bridge</string>
+
+    <string name="veyra_ksu_yes">Yes</string>
+
+    <string name="veyra_ksu_no">No</string>
+
+    <string name="veyra_ksu_permission_bridge_inactive">Prepared · inactive</string>
+
+    <string name="veyra_ksu_install_heading">Install or update VeyraKSU</string>
+
+    <string name="veyra_ksu_install_body">Veyra exports the module, installs it through KernelSU and then reloads the module lifecycle for the current boot. The V-SPR permission bridge stays inactive for now.</string>
+
+    <string name="veyra_ksu_install_failed">KernelSU did not install VeyraKSU.</string>
+
+    <string name="veyra_ksu_installed">VeyraKSU was installed or updated successfully.</string>
+
+    <string name="veyra_ksu_reload_done">KernelSU module lifecycle was refreshed for this boot.</string>
+
+    <string name="veyra_ksu_old_provider_disabled">The previous compatible RMG provider was backed up and disabled after Veyra root was verified.</string>
+
+    <string name="veyra_ksu_old_provider_kept">The previous provider was kept because Veyra could not safely verify and migrate it.</string>
+
+    <string name="veyra_ksu_install_update">Install / Update through KernelSU</string>
+
+    <string name="veyra_ksu_exported">VeyraKSU exported to %1$s</string>
+
+    <string name="veyra_ksu_export">Export a copy to Downloads</string>
+
+    <string name="veyra_ksu_migrate_title">Migrate from previous RMG provider</string>
+
+    <string name="veyra_ksu_migrate_summary">After Veyra root is verified, back up and disable the selected compatible user app. System apps are never touched.</string>
+
+    <string name="veyra_ksu_migrate_pick">Previous root provider</string>
+
+    <string name="veyra_ksu_load_toggle">Load VeyraKSU with KernelSU</string>
+
+    <string name="veyra_ksu_load_toggle_summary">Disabling keeps the module installed but prevents KernelSU from loading it.</string>
+
+    <string name="veyra_ksu_state_changed">VeyraKSU load state was updated.</string>
+
+    <string name="veyra_ksu_action_ok">KernelSU accepted the requested action.</string>
+
+    <string name="veyra_ksu_action_failed">KernelSU could not complete the requested action.</string>
+
+    <string name="veyra_ksu_reload_modules">Reload KernelSU modules</string>
+
+    <string name="veyra_ksu_soft_reboot">KernelSU Soft Reboot</string>
+
+    <string name="veyra_ksu_working">Working…</string>
+
+    <string name="vspr_veyra_ksu_bridge_title">VeyraKSU Bridge</string>
+
+    <string name="vspr_veyra_ksu_bridge_summary">Active privileged provider path for CVeyra Permission Provider. VeyraKSU 2.0.0 backs the root broker and persistent policy state.</string>
+
+    <string name="vspr_veyra_ksu_bridge_installed">Connected · active</string>
+
+    <string name="vspr_veyra_ksu_bridge_prepared">Ready · activation required</string>
+
+    <string name="builder_ota_log_connected">Ulandi · paket hajmi %1$s</string>
+
+    <string name="builder_ota_log_raw_payload">Havola to‘g‘ridan-to‘g‘ri payload.bin ga olib boradi.</string>
+
+    <string name="builder_ota_log_zip_directory">ZIP markaziy katalogi qidirilmoqda…</string>
+
+    <string name="builder_ota_log_payload_found">Paket ichida payload.bin topildi (%1$s).</string>
+
+    <string name="builder_ota_log_direct_boot">payload.bin yo‘q; %1$s paket ichida bevosita topildi.</string>
+
+    <string name="builder_ota_log_partitions">Payload %1$s ta bo‘limni o‘z ichiga oladi · %2$s chiqarilmoqda.</string>
+
+    <string name="builder_ota_log_downloading">Yuklanmoqda %1$s / %2$s</string>
+
+    <string name="builder_ota_log_restored">%1$s tiklandi → %2$s (%3$s).</string>
+
+    <string name="builder_ota_log_download_entry">%1$s yuklanmoqda (%2$s)…</string>
+
+    <string name="builder_ota_log_extracted">%1$s chiqarildi (%2$s).</string>
+
+    <string name="builder_ota_error_range">Bu server HTTP Range so‘rovlarini qo‘llamaydi. Veyra bir necha GB hajmdagi to‘liq paketni bekorga yuklamaydi.</string>
+
+    <string name="builder_ota_error_connect">Veyra OTA havolasini ocha olmadi yoki fayl hajmini aniqlay olmadi.</string>
+
+    <string name="builder_ota_error_xz">OTA ichki extractor xavfsiz ocholmaydigan XZ tuzilmasidan foydalanadi.</string>
+
+    <string name="builder_ota_error_package">Havola qo‘llab-quvvatlanadigan to‘liq OTA/paket emas yoki kerakli boot payload topilmadi.</string>
+
+    <string name="builder_ota_error_generic">OTA tahlil qilinmadi. Texnik tafsilotlar ilova jurnaliga saqlandi.</string>
+
+    <string name="builder_log_container">Konteyner: %1$s · sarlavha %2$s · sahifa %3$s · yadro ofseti %4$s</string>
+
+    <string name="builder_log_kernel_image_decompressed">Yadro tasviri: %1$s bayt · arxivdan chiqarildi</string>
+
+    <string name="builder_log_kernel_image">Yadro tasviri: %1$s bayt</string>
+
+    <string name="builder_log_derived_offset">Ofset hisoblandi %1$s → %2$s</string>
+
+    <string name="builder_log_parse_diagnostic">Tasvir tahlilchisi format yoki joylashuv bo‘yicha diagnostika berdi. Texnik tafsilot ilova jurnaliga saqlandi.</string>
+
+    <string name="builder_log_alignment_stopped">Turli yadrolarning ofsetlari aralashmasligi uchun belgilar mosligi tekshiruvi paketlashni to‘xtatdi.</string>
+
+    <string name="builder_log_offset_warning">Ofset tekshiruvi nomuvofiqlik topdi; quyidagi mahalliylashtirilgan ogohlantirishni ko‘ring.</string>
+
+    <string name="builder_log_scheme_test">%1$s yadrosi aniqlandi · 5.x beta/sinov sxemasi ishlatilmoqda</string>
+
+    <string name="builder_log_scheme_mainline">%1$s yadrosi aniqlandi · mainline sxemasi ishlatilmoqda</string>
+
+    <string name="builder_log_test_kernel_beta">5.x beta rejimi yoqilgan. Veyra bu yadroni tahlil qiladi, ammo boshqa yadro oilasidan ofset olmaydi.</string>
+
+    <string name="builder_log_no_runnable_baseline">Ushbu yadroga aniq mos xavfsiz ro‘yxatdan o‘tgan ishga tushiriladigan baseline yo‘q.</string>
+
+    <string name="builder_log_analysis_only_safe">Veyra faqat tahlil rejimida davom etib, ishga tushadigan .so ni taxmin qilish o‘rniga target.h / offsets.json yaratadi.</string>
+
+    <string name="builder_block_detail_test_kernel">Bu 5.x sinov yadrosi va beta qo‘llab-quvvatlash o‘chiq. Builder sozlamalarida 5.x ni yoqing.</string>
+
+    <string name="builder_block_detail_baseline">Bu yadro uchun tasdiqlangan ishga tushiriladigan baseline yo‘q. Veyra boshqa yadro oilasi ofsetlarini almashtirmaydi.</string>
+
+    <string name="builder_block_detail_abi">Tanlangan yoki majburlangan baseline o‘lchangan yadro ABI bilan to‘qnashadi. Xavfsizlik uchun paketlash to‘xtatildi.</string>
+
+    <string name="builder_block_detail_unknown">Veyra yadro versiyasini ishonchli aniqlay olmadi. Tanlangan tasvir maqsad qurilmaga tegishli ekanini tekshiring.</string>
+
+    <string name="builder_block_detail_vrko">Tanlangan vivo/iQOO payload kerakli vr.ko moslashuviga ega emas. Mos sxemani tanlang.</string>
+
+    <string name="builder_block_detail_other">Builder moslik tekshiruvi sabab to‘xtadi. Texnik tafsilotlar ilova jurnaliga saqlandi.</string>
+
+    <string name="builder_notice_low_symbols">Faqat %1$d yadro belgisi yechildi. Tasvir maqsad qurilmaga mosligini tekshiring.</string>
+
+    <string name="builder_notice_base_mismatch">Aniqlangan yadro link bazasi tasvir belgilariga mos emas. Ishlatishdan oldin natijani tekshiring.</string>
+
+    <string name="builder_notice_alignment_failed">Belgilar to‘plami tanlangan baseline bilan to‘liq mos emas; xavfsizlik uchun paketlash to‘xtatildi.</string>
+
+    <string name="builder_notice_incomplete_patch">Kerakli barcha ofsetlarni almashtirib bo‘lmadi. Yetishmayotgan ma’lumotlar hal bo‘lmaguncha payloaddan foydalanmang.</string>
+
+    <string name="builder_notice_forced_override">Moslik to‘qnashuvi ataylab chetlab o‘tildi. Bu buildni tajribaviy deb hisoblang.</string>
+
+    <string name="builder_notice_baseline">Baseline registri moslik eslatmasi berdi. Ishlatishdan oldin Baseline Coverage ni tekshiring.</string>
+
+    <string name="builder_notice_vrko">Bu qurilma vivo/iQOO uchun moslashtirilgan vr.ko payloadini talab qilishi mumkin.</string>
+
+    <string name="builder_notice_technical">Builder qo‘shimcha texnik ogohlantirish berdi. Upstream tafsiloti ilova jurnalida saqlandi.</string>
+
+    <string name="builder_error_file_missing">Tanlangan kirish fayli mavjud emas. Uni qayta tanlang.</string>
+
+    <string name="builder_error_io">Builder faylni o‘qiy yoki yoza olmadi. Xotira ruxsatini tekshirib qayta urinib ko‘ring.</string>
+
+    <string name="builder_error_generic">Builder %1$s bilan to‘xtadi. Texnik tafsilotlar ilova jurnaliga saqlandi.</string>
+
+    <string name="readiness_cveyra">CVeyra</string>
+
+    <string name="readiness_cveyra_root">Active · Root</string>
+
+    <string name="readiness_cveyra_adb">Active · Wireless ADB</string>
+
+    <string name="readiness_cveyra_waiting">Enabled · waiting for access</string>
+
+    <string name="readiness_cveyra_not_running">Not running</string>
+
+    <string name="veyra_ksu_status_tagged">Tagged for install</string>
+
+    <string name="veyra_ksu_auto_install_title">Install / Update after Root</string>
+
+    <string name="veyra_ksu_auto_install_summary">Install or refresh VeyraKSU automatically immediately after Veyra loads KernelSU successfully.</string>
+
+    <string name="veyra_ksu_provider_change">KSU Provider Change</string>
+
+    <string name="veyra_ksu_provider_change_needs_root">Veyra needs KernelSU superuser access before the provider can be changed.</string>
+
+    <string name="veyra_ksu_provider_change_ready">Provider changed. The previous app was backed up, disabled and its app data cleared. KernelSU modules were reloaded and Android runtime restart was requested.</string>
+
+    <string name="veyra_ksu_provider_change_ready_no_clear">Provider changed and the previous app was disabled, but Android did not clear its app data. KernelSU modules were reloaded and Android runtime restart was requested.</string>
+
+    <string name="migration_title">Migration</string>
+
+    <string name="migration_card_summary">Move the current temp-root session from another compatible RMG provider to Veyra.</string>
+
+    <string name="migration_subtitle">Transfer the current Root My Galaxy temp-root session to Veyra</string>
+
+    <string name="migration_full_title">Fully Restart Automatic</string>
+
+    <string name="migration_full_summary">Prepare a one-time full reboot. CVeyra and Root on boot are enabled temporarily so Veyra can take over on the next boot.</string>
+
+    <string name="migration_soft_title">Try without Restart / Only soft reboot</string>
+
+    <string name="migration_soft_summary">Use VeyraKSU to migrate the current KernelSU session without a full device reboot where the running KernelSU supports it.</string>
+
+    <string name="migration_open_veyra_ksu">Open VeyraKSU migration</string>
+
+    <string name="migration_root_check_title">KernelSU root permission</string>
+
+    <string name="migration_root_check_summary">First verify that this Veyra installation has an actual KernelSU superuser shell. Provider selection remains locked until this succeeds.</string>
+
+    <string name="migration_root_check_ok">KernelSU root access for Veyra was verified.</string>
+
+    <string name="migration_root_check_failed">KernelSU root access was not granted to Veyra. Approve Veyra Root in your KernelSU manager and try again.</string>
+
+    <string name="migration_root_checked">Root verified</string>
+
+    <string name="migration_root_check">Check root access</string>
+
+    <string name="migration_provider_title">Previous root provider</string>
+
+    <string name="migration_no_provider">No compatible Root My Galaxy user app was found.</string>
+
+    <string name="migration_check_patch">Check and Patch</string>
+
+    <string name="migration_prepared">Migration from %1$s is prepared. The temporary boot settings are armed once; start the migration from Home when you are ready.</string>
+
+    <string name="migration_prepare_failed">Migration preparation failed.</string>
+
+    <string name="migration_ready_title">Migration prepared</string>
+
+    <string name="migration_ready_body">CVeyra, CVeyra on boot, KernelSU loading and Root on boot are temporarily armed. Start the migration once from Home.</string>
+
+    <string name="migration_working">Preparing migration…</string>
+
+    <string name="migration_unknown_provider">previous root provider</string>
+
+    <string name="migration_home_title">Migration ready</string>
+
+    <string name="migration_home_provider">From %1$s</string>
+
+    <string name="migration_home_body">Starting now performs one normal reboot. On the next boot Veyra runs the cached root flow with CVeyra support, installs/updates VeyraKSU, then backs up and disables the previous provider.</string>
+
+    <string name="migration_home_start">Start migration and reboot</string>
+
+    <string name="migration_cancel">Cancel migration</string>
+
+    <string name="migration_reboot_failed">The reboot request was refused. The migration remains prepared so you can try again.</string>
+
+    <string name="migration_root_required">Veyra does not currently have KernelSU superuser access.</string>
+
+    <string name="migration_ksu_not_active">KernelSU is not active in the current boot.</string>
+
+    <string name="log_veyra_ksu_auto_installed">[+] VeyraKSU installed or updated automatically after root</string>
+
+    <string name="log_veyra_ksu_auto_loaded">[+] VeyraKSU module lifecycle applied in the current boot</string>
+
+    <string name="log_veyra_ksu_auto_failed">[!] VeyraKSU automatic installation failed: %1$s</string>
+
+    <string name="log_migration_old_provider_disabled">[+] Previous root provider disabled and app state cleared: %1$s</string>
+
+    <string name="log_migration_old_provider_cleanup_failed">[!] Previous root provider could not be fully cleaned up: %1$s</string>
+
+    <string name="log_migration_completed">[+] Veyra root migration completed and temporary migration settings restored</string>
+
+    <string name="log_migration_failed_cleanup">[!] Veyra owns the new root session, but the previous provider could not be fully disabled/cleared. Temporary migration settings were restored.</string>
+
+    <string name="migration_cveyra_pair_required">This cached root flow needs a shell helper after reboot. Pair CVeyra with Wireless ADB first so the migration can continue without Shizuku.</string>
+
+    <string name="vspr_info_version">Veyra System Permission Provider · Access 2.0.0</string>
+    <string name="vspr_info_provider_body_v2">CVeyra har bir ilovani odatiy Android UID ostida qoldiradi va imtiyozli amallarni ilova bo‘yicha ko‘rinadigan siyosat qatlami orqali boshqaradi. CVeyra Access faol bo‘lsa, broker VeyraKSU va Veyra root backend orqali majburiy ishlaydi.</string>
+    <string name="vspr_info_activation_title">CVeyra Permission Activate</string>
+    <string name="vspr_info_activation_body">Faollashtirish uchun VeyraKSU 2.0.0 va Veyra uchun KernelSU Superuser ruxsati kerak. To‘liq Permission Manager yoqilishidan oldin mavjud KernelSU ilova ruxsatlari zaxiralanadi.</string>
+    <string name="vspr_info_permissions_title">Permission Management</string>
+    <string name="vspr_info_permissions_body">Offline qoidalarni saqlaydi, lekin ilovalarni boshqarmaydi. Self ilovalarni o‘zingiz tanlashga imkon beradi. Auto kelajakdagi siyosat mexanizmi uchun saqlangan va hozircha faol emas. Batafsil ruxsatlar Grant CVeyra Access sahifasida qoladi.</string>
+    <string name="vspr_info_ksu_title">KernelSU va migratsiya</string>
+    <string name="vspr_info_ksu_body_v2">Eski to‘g‘ridan-to‘g‘ri KernelSU ruxsatlari KernelSU tomonidan boshqarilishda davom etadi va CVeyra Access qabul qilinishidan oldin zaxiralanadi. Veyra ularni yashirincha o‘chirmaydi; boshqaruvni ko‘chirish uchun ilovani CVeyra’ga qo‘shing.</string>
+    <string name="vspr_info_modules_title">App Module Loader</string>
+    <string name="vspr_info_modules_body">CVeyra modullari Accessibility, Developer options, USB debugging yoki Private DNS kabi haqiqiy qurilma sozlamalarini vaqtincha o‘zgartirishi mumkin. O‘chirilganda oldingi aniq qiymatlar qayta tiklanadi.</string>
+    <string name="vspr_info_firewall_title">CVeyra Firewall</string>
+    <string name="vspr_info_firewall_body">Firewall Android paket tarmoq boshqaruvini root-persistent IPv4/IPv6 UID qoidalari bilan birlashtiradi. Veyra faqat o‘zi boshqaradigan ilovalarni eslab qoladi va VeyraKSU ishga tushgach o‘z qoidalarini qayta qo‘llaydi.</string>
+    <string name="vspr_info_read_action">Bu ma’lumotni o‘qidim</string>
+
+    <string name="vspr_provider_info_summary">Permission Provider 2.0.0 · faollashtirish, ilova siyosati, KernelSU migratsiyasi, modullar va Firewall</string>
+</resources>

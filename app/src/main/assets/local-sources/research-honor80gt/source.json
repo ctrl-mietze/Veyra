@@ -1,0 +1,9 @@
+{
+  "kind": "research-only",
+  "connected": false,
+  "runnablePayloads": false,
+  "repository": "yakidango-official/GhostLock-H80GT",
+  "coverage": "Honor 80 GT / AGT-AN00 kernel 5.10 research",
+  "evidence": "Documented 5.10.198/5.10.209 target generation from boot/kernel evidence.",
+  "note": "Visible in Payload Sources for research/adaptation. It is not treated as a runnable feed until a Veyra-compatible exact payload manifest exists."
+}

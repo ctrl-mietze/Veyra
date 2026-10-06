@@ -1,0 +1,9 @@
+{
+  "kind": "research-only",
+  "connected": false,
+  "runnablePayloads": false,
+  "repository": "rushiranpise/Shizuku-Next",
+  "coverage": "CVeyra compatibility, Wireless ADB, permission and firewall reference",
+  "evidence": "v14.0.13-next source used for start-method and networking/permission behavior research.",
+  "note": "Visible in Payload Sources for research/adaptation. It is not treated as a runnable feed until a Veyra-compatible exact payload manifest exists."
+}

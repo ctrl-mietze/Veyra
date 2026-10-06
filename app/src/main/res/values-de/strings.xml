@@ -1,0 +1,871 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Veyra Root</string>
+    <string name="nav_overview">Startseite</string>
+    <string name="nav_history">Verlauf</string>
+    <string name="nav_settings">Einstellungen</string>
+    <string name="install_confirm_title">KernelSU installieren?</string>
+    <string name="install_confirm_body">Die App überprüft das Support-Profil und lädt anschließend den Exploit sowie den KernelSU-Payload von GitHub und führt sie aus.</string>
+    <string name="action_confirm">Bestätigen</string>
+    <string name="action_cancel">Abbrechen</string>
+    <string name="action_close">Schließen</string>
+    <string name="action_retry">Erneut versuchen</string>
+    <string name="action_done">Fertig</string>
+    <string name="action_back">Zurück</string>
+    <string name="install_tap_manager">Tippen, um den KernelSU Manager zu installieren</string>
+    <string name="install_tap_open_manager">Tippen, um den KernelSU Manager zu öffnen</string>
+    <string name="install_tap_retry">Tippen zum Wiederholen</string>
+    <string name="install_tap_start">Tippen um KernelSU zu installieren</string>
+    <string name="device">Gerät</string>
+    <string name="kernelsu_card_title">KernelSU</string>
+    <string name="kernelsu_card_description">Eine kernelbasierte Root-Lösung für Android</string>
+    <string name="firmware">Firmware</string>
+    <string name="system">System</string>
+    <string name="kernel">Kernel</string>
+    <string name="system_abi">System ABI</string>
+    <string name="settings">Einstellungen</string>
+    <string name="version_format">%1$s (%2$d)</string>
+    <string name="language">Sprache</string>
+    <string name="language_description">App-Sprache auswählen</string>
+    <string name="appearance">Aussehen</string>
+    <string name="settings_section_cveyra">CVeyra-Verwaltung</string>
+    <string name="settings_section_adb_manager">ADB Manager</string>
+    <string name="cveyra_use_title">CVeyra benutzen</string>
+    <string name="cveyra_use_summary">Startet den persistenten CVeyra-Shell-Broker. Wireless ADB wird zum Aufbau der Shell-Identität verwendet; danach läuft CVeyras authentifizierter lokaler Broker außerhalb des App-Prozesses weiter. Root bleibt über den separaten Root-Schalter optional.</string>
+    <string name="cveyra_root_title">CVeyra als Root starten</string>
+    <string name="cveyra_root_summary">Verwendet den Root-Broker, sobald ein Root-Backend verfügbar ist.</string>
+    <string name="cveyra_root_active">Root-Broker verfügbar</string>
+    <string name="cveyra_root_menu_title">CVeyra Root</string>
+    <string name="cveyra_root_menu_body">CVeyra Root rootet das Handy nicht erneut. Es bittet den bereits aktiven Root-Manager um eine Freigabe für Veyra Root und verwendet diese anschließend für den privilegierten CVeyra-Broker. Der persistente ADB-Broker bleibt als Fallback ohne Root erhalten.</string>
+    <string name="cveyra_root_menu_status">Aktueller Ausführungspfad</string>
+    <string name="cveyra_root_menu_note">KernelSU kann dabei einen Freigabe-Dialog anzeigen. Erlaube dort Veyra Root. Du kannst den Manager unten vorher öffnen.</string>
+    <string name="cveyra_root_menu_requesting">Root-Zugriff wird angefragt…</string>
+    <string name="cveyra_root_menu_request">Root-Zugriff anfragen</string>
+    <string name="cveyra_root_menu_open_manager">KernelSU Manager öffnen</string>
+    <string name="cveyra_root_menu_use_adb">Persistenten ADB-Fallback behalten</string>
+    <string name="cveyra_root_menu_granted">Root-Zugriff erteilt. CVeyra verwendet jetzt den privilegierten Backend-Pfad.</string>
+    <string name="cveyra_root_menu_failed">KernelSU hat Veyra Root noch nicht freigegeben. Erlaube es im Manager und versuche es erneut.</string>
+    <string name="cveyra_promote_title">Nach erfolgreichem Boot als Root neu starten</string>
+    <string name="cveyra_promote_summary">Nach erfolgreichem Boot wechselt CVeyra auf den privilegierten Ausführungspfad, sobald Root verfügbar ist.</string>
+    <string name="cveyra_token_title">CVeyra Start Token</string>
+    <string name="cveyra_token_summary_off">Nur für externe Start-Anfragen nötig. Der Token wird lokal erzeugt.</string>
+    <string name="cveyra_token_summary_on">Externe Start-Anfragen können den lokal erzeugten Token verwenden.</string>
+    <string name="cveyra_token_copy_title">CVeyra Start Token kopieren</string>
+    <string name="cveyra_token_copy_summary">Aktuellen Token kopieren oder einen neuen erzeugen.</string>
+    <string name="cveyra_boot_title">CVeyra beim Start</string>
+    <string name="cveyra_boot_summary">Startet CVeyra nach dem Android-Neustart. Ist bereits Root vorhanden, kann der Root-Broker direkt aktiviert werden.</string>
+    <string name="cveyra_grant_title">Grant CVeyra Access</string>
+    <string name="cveyra_grant_summary">V-SPR Berechtigungsverwaltung – Vorschau</string>
+    <string name="cveyra_grant_value">Vorschau</string>
+    <string name="cveyra_token_copied">CVeyra Token kopiert</string>
+    <string name="cveyra_token_rotated">Neuer CVeyra Token erzeugt</string>
+    <string name="cveyra_token_regenerate">Neu erzeugen</string>
+    <string name="cveyra_setup_title">CVeyra benötigt Zugriff</string>
+    <string name="cveyra_setup_body">CVeyra ist aktiviert, aber es ist noch kein Ausführungspfad verfügbar. Gib Veyra Root über deinen Root-Manager frei oder kopple Wireless ADB.</string>
+    <string name="cveyra_setup_root">Über Root-Manager freigeben</string>
+    <string name="cveyra_setup_wireless">Wireless ADB koppeln</string>
+    <string name="cveyra_setup_open_wireless">Wireless-ADB-Einstellungen öffnen</string>
+    <string name="cveyra_setup_root_failed">Root-Zugriff wurde nicht freigegeben. Erlaube Veyra Root im Root-Manager oder verwende Wireless ADB.</string>
+    <string name="cveyra_setup_pair_started">Kopplung gestartet. Öffne den Android-Dialog für den Kopplungscode; die Benachrichtigung erscheint erneut zur Code-Eingabe.</string>
+    <string name="cveyra_backend_root">Root-Broker aktiv</string>
+    <string name="cveyra_backend_adb">Persistenter ADB-Shell-Broker aktiv</string>
+    <string name="cveyra_backend_none">Wartet auf Root oder Wireless ADB</string>
+    <string name="adb_legacy_title">ADB TCP Legacy Connection</string>
+    <string name="adb_legacy_summary">Konfiguriert adbd bei verfügbarem Root für einen klassischen TCP-Port.</string>
+    <string name="adb_legacy_port">TCP Port</string>
+    <string name="adb_legacy_enable">Aktivieren</string>
+    <string name="adb_legacy_disable">Deaktivieren</string>
+    <string name="adb_legacy_root_required">Zum Umschalten des adbd-TCP-Modus ist Root erforderlich.</string>
+    <string name="adb_legacy_enabled">ADB TCP auf Port %1$d aktiviert.</string>
+    <string name="adb_legacy_disabled">ADB TCP Legacy deaktiviert.</string>
+    <string name="vspr_title">Grant CVeyra Access</string>
+    <string name="vspr_provider_title">CVeyra Permission Provider</string>
+    <string name="vspr_provider_subtitle">Veyra System Permission Provider · V-SPR</string>
+    <string name="vspr_provider_info">CVeyra Provider</string>
+    <string name="vspr_provider_info_summary">Permission Provider 2.0.0 · Aktivierung, App-Regeln, KernelSU-Migration, Module und Firewall</string>
+    <string name="vspr_apps_title">Apps</string>
+    <string name="vspr_apps_summary">App-Berechtigungen, die über V-SPR verwaltet werden</string>
+    <string name="vspr_loading">Installierte Apps und direkte KernelSU-Freigaben werden gelesen…</string>
+    <string name="vspr_no_apps">Keine geeigneten Apps gefunden.</string>
+    <string name="vspr_direct_root_hidden">%1$d Apps mit direktem KernelSU-Root sind in V-SPR ausgeblendet.</string>
+    <string name="vspr_supersu">SuperSU (UID 0)</string>
+    <string name="vspr_adb">ADB</string>
+    <string name="vspr_shizuku">Shizuku</string>
+    <string name="vspr_adveyra">ADVeyra</string>
+    <string name="vspr_system">System (UID 1000)</string>
+    <string name="vspr_disabled_by_provider">Im Provider deaktiviert</string>
+    <string name="vspr_info_title">V-SPR</string>
+    <string name="vspr_info_close">Zurück</string>
+    <string name="vspr_preview_notice">CVeyra Access ist aktiv: unterstützte Provider-Änderungen werden sofort durchgesetzt und erst gespeichert, wenn das Gerät sie bestätigt.</string>
+    <string name="vspr_show_system_apps">Zeige System Apps</string>
+    <string name="vspr_show_system_apps_summary">Standardmäßig ausgeblendet. System-Apps mit einer bestehenden CVeyra-Regel bleiben sichtbar.</string>
+    <string name="device_information">Geräteinformationen</string>
+    <string name="veyra_link_unavailable">Die Veyra-Projektseite ist noch nicht verfügbar.</string>
+    <string name="theme_system">System</string>
+    <string name="theme_light">Hell</string>
+    <string name="theme_dark">Dunkel</string>
+    <string name="theme_white_dark">White Dark</string>
+    <string name="theme_white_purple">Veyra White</string>
+    <string name="theme_dark_purple">Dark Purple</string>
+    <string name="theme_oled">OLED Mode</string>
+    <string name="theme_oled_purple">Veyra Dark</string>
+    <string name="theme_green">Green</string>
+    <string name="theme_violet">Violet</string>
+    <string name="theme_orange">Orange</string>
+    <string name="theme_aurora">Veyra Aurora</string>
+    <string name="theme_graphite">Veyra Graphite</string>
+    <string name="theme_midnight">Veyra Midnight</string>
+    <string name="settings_layout_folder">Switch to folder design</string>
+    <string name="settings_layout_pages">Switch to page design</string>
+    <string name="settings_layout_folder_summary">Klappt Einstellungsordner auf und zu und merkt sich deren Zustand.</string>
+    <string name="settings_layout_pages_summary">Öffnet jede Einstellungskategorie in einem eigenen Bereich.</string>
+    <string name="settings_section_open">Bereich öffnen</string>
+    <string name="material_color">Theme</string>
+    <string name="material_color_description">Das komplette App-Design auswählen</string>
+    <string name="color_title">Akzentfarbe</string>
+    <string name="color_description">Akzent für kompatible Designs auswählen</string>
+    <string name="language_system">System folgen</string>
+    <string name="language_korean" translatable="false">한국어</string>
+    <string name="language_english" translatable="false">English</string>
+    <string name="language_german" translatable="false">Deutsch</string>
+    <string name="language_japanese" translatable="false">日本語</string>
+    <string name="language_chinese" translatable="false">简体中文</string>
+    <string name="language_chinese_traditional" translatable="false">繁體中文</string>
+    <string name="language_turkish" translatable="false">Türkçe</string>
+    <string name="language_brazillian_portuguese" translatable="false">Português Brasileiro</string>
+    <string name="language_russian" translatable="false">Русский</string>
+    <string name="language_vietnamese" translatable="false">Tiếng Việt</string>
+    <string name="language_uzbek" translatable="false">O\'zbek</string>
+    <string name="color_dynamic">System-Dynamisch</string>
+    <string name="color_blue">Blau</string>
+    <string name="color_violet">Violett</string>
+    <string name="color_green">Grün</string>
+    <string name="color_orange">Orange</string>
+    <string name="history_title">Verlauf</string>
+    <string name="history_empty_title">Noch keine Versuche</string>
+    <string name="history_empty_description">Installationsergebnisse und Logs erscheinen hier.</string>
+    <string name="history_running">Läuft</string>
+    <string name="history_succeeded">Erfolgreich</string>
+    <string name="history_failed">Fehlgeschlagen</string>
+    <string name="history_detail_title">Details zum Durchlauf</string>
+    <string name="history_started">Gestartet: %1$s</string>
+    <string name="history_completed">Abgeschlossen: %1$s</string>
+    <string name="history_log_empty">Noch kein Log-Output</string>
+    <string name="history_payload">Payload: %1$s</string>
+    <string name="history_shizuku_used">Shizuku: Genutzt</string>
+    <string name="history_shizuku_not_used">Shizuku: Nicht genutzt</string>
+    <string name="export_log">Log exportieren</string>
+    <string name="export_log_saved">Log gespeichert</string>
+    <string name="export_log_failed">Log konnte nicht gespeichert werden</string>
+    <string name="about">Über</string>
+    <string name="about_title">Über Veyra Root</string>
+    <string name="about_description">Über Root My Galaxy</string>
+    <string name="about_body">Ein-Klick-Installer, der einen Kernel-Exploit verwendet, um unterstützte Samsung Galaxy-Geräte zu rooten.</string>
+
+    <string name="install_title">Installieren</string>
+    <string name="install_keep_open">Diesen Bildschirm geöffnet lassen, bis die Installation abgeschlossen ist</string>
+    <string name="install_live_progress">Log</string>
+    <string name="install_preparing">Vorbereiten…</string>
+    <string name="step_support_title">Unterstützungsprüfung</string>
+    <string name="step_support_detail">Gerät und Firmware-Profil verifizieren</string>
+    <string name="step_download_title">Herunterladen</string>
+    <string name="step_download_detail">Unterstützungsmanifest laden</string>
+    <string name="step_exploit_title">Kernel-Exploit</string>
+    <string name="step_exploit_detail">Bootstrap-Root abrufen</string>
+    <string name="step_ksu_title">KernelSU laden</string>
+    <string name="step_ksu_detail">Modul nachträglich laden und Steuerungskanal verifizieren</string>
+    <string name="phase_checking">Unterstütztes Gerät und Firmware werden geprüft</string>
+    <string name="phase_ready">Bereit zur Installation</string>
+    <string name="phase_downloading">Commit-gebundene Payloads von GitHub herunterladen</string>
+    <string name="phase_exploiting">Dieser Vorgang kann 10 Minuten oder länger dauern. Dein Gerät kann heiß werden oder nicht mehr reagieren.</string>
+    <string name="phase_loading_ksu">KernelSU wird mit dem erhaltenen Bootstrap-Root geladen</string>
+    <string name="phase_installed">KernelSU-Modul und Steuerungskanal verifiziert</string>
+    <string name="phase_failed">Überprüfe den Fehlerpunkt im folgenden Log</string>
+
+    <string name="status_ksu_active">KernelSU aktiv</string>
+    <string name="status_not_installed">Nicht installiert</string>
+    <string name="status_support_failed">Support-Check fehlgeschlagen</string>
+    <string name="status_checking_github">GitHub-Unterstützungsmanifest wird geprüft</string>
+    <string name="status_downloading_payload">Payloads werden heruntergeladen</string>
+    <string name="status_exploit_running">Kernel-Exploit wird ausgeführt</string>
+    <string name="status_ksu_loading">KernelSU wird nachträglich geladen</string>
+    <string name="status_install_failed">Installation fehlgeschlagen</string>
+    <string name="log_profile">[+] Support-Profil: %1$s</string>
+    <string name="log_download_verified">[+] Payload-Download abgeschlossen</string>
+    <string name="log_install_complete">[+] Installation abgeschlossen</string>
+    <string name="log_bootstrap_root">[+] Bootstrap-Root erhalten</string>
+    <string name="log_ksu_staged">[+] KernelSU-Staging abgeschlossen</string>
+    <string name="log_ksu_stage_skipped_active">[*] KernelSU ist bereits aktiv. Das erneute Staging des Daemons war nicht möglich (%1$s); Veyra behält deshalb den verifizierten laufenden KernelSU-Zustand bei, statt ihn erneut zu laden.</string>
+    <string name="log_ksu_control_verified">[+] KernelSU-Steuerungskanal verifiziert (%1$s)</string>
+    <string name="log_payload_sigkill_recovered">[+] Das Payload wurde nach der späten Kernel-Phase beendet, aber KernelSU ist bereits aktiv (%1$s). Veyra übernimmt den verifizierten Root-Zustand.</string>
+    <string name="error_ksu_not_ready">KernelSU geladen, aber kein Steuerungskanal hat geantwortet; root ist noch nicht nutzbar</string>
+    <string name="error_helper_unavailable">Bootstrap-Helfer ist nicht ausführbar</string>
+    <string name="error_exploit_stalled">Exploit-Log ist seit 90 Sekunden nicht vorangeschritten</string>
+    <string name="error_exploit_timeout">Exploit hat das 15-Minuten-Limit überschritten</string>
+    <string name="error_payload_exit">Payload fehlgeschlagen: %1$d%2$s</string>
+    <string name="error_success_marker">Erfolgsmarker für den Exploit wurden nicht gefunden</string>
+    <string name="error_ksu_stage">KernelSU-Staging fehlgeschlagen: %1$s</string>
+    <string name="error_ksu_verify">KernelSU nachträglich laden oder Steuerungskanal-Verifizierung fehlgeschlagen (rc=%1$d): %2$s</string>
+    <string name="error_helper_timeout">KernelSU-Helfer wurde nicht innerhalb von 120 Sekunden beendet%1$s</string>
+    <string name="error_boot_id">Aktuelle boot_id konnte nicht gelesen werden</string>
+    <string name="error_receipt">Installationsprüfbeleg konnte nicht gespeichert werden</string>
+
+    <string name="artifact_exploit">exploit</string>
+    <string name="artifact_kernelsu">KernelSU</string>
+    <string name="repo_no_profile">Keine kompatible Payload für dieses Modell und diese Kernel-Version gefunden</string>
+    <string name="repo_downloading">Download von %1$s</string>
+    <string name="repo_size_mismatch">Größe von %1$s stimmt nicht mit dem Support-Manifest überein</string>
+    <string name="repo_size_exceeded">%1$s ist größer als angegeben</string>
+    <string name="repo_incomplete">Download von %1$s ist unvollständig</string>
+    <string name="repo_finalize_failed">Die Datei %1$s konnte nicht fertiggestellt werden</string>
+    <string name="repo_verified">%1$s verifiziert</string>
+    <string name="repo_commit_invalid">GitHub hat einen ungültigen Commit-SHA zurückgegeben</string>
+    <string name="repo_url_invalid">Das Artefakt-Repository ist nicht zulässig</string>
+    <string name="repo_response_too_large">Die Antwort hat das Größenlimit überschritten</string>
+    <string name="repo_api_limited">GitHubs Ratenlimit wurde erreicht; versuche es in ein paar Minuten erneut</string>
+    <string name="open_github">GitHub öffnen</string>
+    <string name="github_card_title">Veyra erkunden</string>
+    <string name="github_card_description">Projektseite und Dokumentation von Veyra.</string>
+    <string name="action_continue">Trotzdem fortfahren</string>
+    <string name="action_next">Weiter</string>
+    <string name="advanced">Erweitert</string>
+    <string name="advanced_mode">Erweiterter Modus</string>
+    <string name="advanced_mode_description">Während der Installation manuell eine gerätekompatible Payload auswählen</string>
+    <string name="shizuku_mode">Shizuku benutzen</string>
+    <string name="shizuku_mode_description">Shizuku zum Ausführen der Payload verwenden. Dies kann die Zuverlässigkeit verbessern</string>
+    <string name="shizuku_not_running_title">Shizuku ist nicht aktiv</string>
+    <string name="shizuku_not_running_body">Starte den Shizuku-Dienst über ADB oder Root, erteile dieser App die Berechtigung und aktiviere dann diese Option.</string>
+    <string name="settings_shizuku_start">Shizuku jetzt starten</string>
+    <string name="settings_shizuku_start_summary">Startet den Shizuku-Dienst über KernelSU, damit diese App ohne Computer weiter funktioniert</string>
+    <string name="settings_shizuku_boot">Shizuku beim Start</string>
+    <string name="settings_shizuku_boot_summary">Shizuku nach einem Neustart automatisch starten, wenn das Gerät bereits Root hat</string>
+    <string name="status_shizuku_starting">Wird gestartet\u2026</string>
+    <string name="status_shizuku_started">Shizuku läuft</string>
+    <string name="error_shizuku_start_no_root">Shizuku kann hier nur auf einem Gerät mit Root gestartet werden; führe zuerst die Installation aus.</string>
+    <string name="notification_channel_shizuku">Shizuku-Start</string>
+    <string name="action_download_shizuku">Shizuku herunterladen</string>
+    <string name="error_shizuku_unavailable">Shizuku ist nicht aktiv. Starte Shizuku zuerst über ADB oder Root.</string>
+    <string name="error_shizuku_permission">Die Shizuku-Berechtigung wurde nicht erteilt</string>
+    <string name="error_shizuku_stage">Konnte %1$s nicht über Shizuku vorbereiten: %2$s</string>
+    <string name="log_shizuku_prepare">[*] Shizuku-Ausführung wird vorbereitet</string>
+    <string name="log_shizuku_permission">[+] Shizuku-Berechtigung erteilt</string>
+    <string name="repo_profile_missing">Support-Profil %1$s ist nicht mehr verfügbar</string>
+    <string name="select_device_title">Wähle eine Payload</string>
+    <string name="select_device_description">Wähle eine Payload anhand von Gerätemodell und Kernel-Version aus.</string>
+    <string name="show_my_device_only">Nur mein Gerät zeigen</string>
+    <string name="no_matching_devices">Keine Payload stimmt mit diesem Gerätemodell und dieser Kernel-Version überein.</string>
+    <string name="device_mismatch_title">Geräte-Inkompatibilität</string>
+    <string name="device_mismatch_body">Dieses Gerät ist %1$s, aber das ausgewählte Payload unterstützt %2$s. Das Ausführen kann das Gerät zum Absturz bringen oder beschädigen.</string>
+    <string name="kernel_version_mismatch_title">Kernel-Version-Inkompabilität</string>
+    <string name="kernel_version_mismatch_body">Dieses Gerät benutzt Kernel-Version %1$s, aber das ausgewählte Payload unterstützt %2$s. Die Kernel-Offsets sind möglicherweise inkompatibel.</string>
+    <string name="updater_available_title">Ein Update ist verfügbar</string>
+    <string name="updater_available_body">Version %1$s ist jetzt verfügbar</string>
+    <string name="updater_available_body_short">%1$s ist verfügbar</string>
+    <string name="updater_button_download">Herunterladen &amp; Installieren</string>
+    <string name="updater_downloading">Wird heruntergeladen…</string>
+    <string name="updater_download_failed">Download fehlgeschlagen</string>
+    <string name="updater_check">Auf Updates überprüfen</string>
+    <string name="updater_checking">Nach Updates wird gesucht…</string>
+    <string name="updater_up_to_date">Du bist auf dem neuesten Stand</string>
+    <string name="updater_failed">Suche nach Updates fehlgeschlagen</string>
+    <string name="history_delete">Löschen</string>
+    <string name="history_select_all">Alle auswählen</string>
+    <string name="history_clear_selection">Auswahl aufheben</string>
+    <string name="history_delete_selected">(%1$d) Löschen</string>
+    <plurals name="history_delete_selected_title">
+        <item quantity="one">Diesen Durchlauf löschen?</item>
+        <item quantity="other">%1$d Durchläufe löschen?</item>
+    </plurals>
+    <plurals name="history_delete_selected_body">
+        <item quantity="one">Dieser Durchlauf und sein Protokoll werden unwiderruflich gelöscht.</item>
+        <item quantity="other">Diese Durchläufe und ihre Protokolle werden unwiderruflich gelöscht.</item>
+    </plurals>
+    <string name="wireless_adb_dialog_title">Wireless ADB</string>
+    <string name="wireless_adb_pair_help">Öffne Android: Entwickleroptionen → Drahtloses Debugging → Gerät mit Kopplungscode koppeln. Tippe unten auf Koppeln; sobald der Code-Dialog erscheint, erscheint die Veyra-Benachrichtigung erneut und du kannst den sechsstelligen Code direkt dort eingeben.</string>
+    <string name="wireless_adb_permission_note">Veyra besitzt WRITE_SECURE_SETTINGS noch nicht und kann Drahtloses Debugging deshalb nicht selbst einschalten. Erteile die Berechtigung über Root oder schließe zuerst die Wireless-ADB-Kopplung ab.</string>
+    <string name="wireless_adb_pair">Mit Kopplungscode koppeln</string>
+    <string name="wireless_adb_pair_again">Erneut koppeln</string>
+    <string name="wireless_adb_test">Verbindung testen</string>
+    <string name="wireless_adb_forget">Kopplung entfernen</string>
+    <string name="wireless_adb_fingerprint">Schlüssel-Fingerprint</string>
+    <string name="adb_pair_open_developer_options">Entwickleroptionen öffnen</string>
+    <string name="grant_action">Secure-Settings-Berechtigung erteilen</string>
+    <string name="adb_pair_working">Wird eingerichtet…</string>
+    <string name="settings_wireless_adb_none">Nicht gekoppelt</string>
+    <string name="settings_wireless_adb_unverified">Gekoppelt</string>
+    <string name="settings_wireless_adb_valid">Funktioniert</string>
+    <string name="settings_wireless_adb_rejected">Kopplung abgelehnt</string>
+    <string name="settings_wireless_adb_port_missing">Port nicht gefunden</string>
+    <string name="settings_wireless_adb_no_permission">Berechtigung erforderlich</string>
+    <string name="settings_wireless_adb_failed">Verbindung fehlgeschlagen</string>
+    <string name="loading_builder_title">Loading Builder</string>
+    <string name="loading_builder_summary">Erstellt einen lokalen Payload aus boot.img oder einem unterstützten OTA-Paket.</string>
+    <string name="builder_settings_title">Builder-Einstellungen</string>
+    <string name="builder_settings_summary">Kernel-Familien, Kompatibilitätsprüfungen und Baseline-Abdeckung des Payload-Builders.</string>
+    <string name="builder_open_kernel_settings">Builder-Einstellungen öffnen</string>
+    <string name="builder_block_baseline">Für diesen Kernel ist keine Baseline registriert</string>
+    <string name="builder_block_abi">Kernel-ABI-Konflikt</string>
+    <string name="builder_block_unknown_kernel">Kernel-Version konnte nicht erkannt werden</string>
+    <string name="builder_block_vrko">Der gewählte Payload enthält keinen vivo-vr.ko-Bypass</string>
+    <string name="builder_block_other">Build wurde nicht abgeschlossen</string>
+    <string name="builder_kernel_series_title">Kernel-Serie</string>
+    <string name="builder_kernel_series_auto">Automatisch – aus boot.img erkennen</string>
+    <string name="builder_kernel_series_4">4.x erzwingen – unstable</string>
+    <string name="builder_kernel_series_5">5.x erzwingen – Legacy</string>
+    <string name="builder_kernel_series_6">6.x erzwingen – Mainline</string>
+    <string name="builder_ignore_conflicts_title">Konflikte ignorieren (Erweitert)</string>
+    <string name="builder_ignore_conflicts_summary">Erlaubt einen Build trotz Konflikt zwischen erzwungener Serie bzw. Baseline-ABI und gemessenem Kernel. Der Override wird protokolliert.</string>
+    <string name="builder_baseline_coverage_title">Baseline-Abdeckung</string>
+    <string name="builder_baseline_coverage_summary">Zeigt, welche Kernel-Familien und registrierten Baselines der Builder aktuell zuordnen kann.</string>
+    <string name="builder_test_kernel_confirm_title">5.x-Kernel-Unterstützung aktivieren?</string>
+    <string name="builder_test_kernel_confirm_body">5.x verwendet für 5.4 / 5.10 / 5.15 einen eigenen Legacy-Layout- und Analysepfad. Ohne exakt registrierte Baseline bleibt ein ausführbarer Build unverified; Veyra setzt niemals still 6.x-Offsets ein.</string>
+    <string name="builder_test_kernel_confirm_action">5.x aktivieren</string>
+    <string name="payload_local_source_title">Lokaler Payload</string>
+    <string name="payload_local_source_summary">Von Veyra lokal verwendeter Builder-/Import-Payload.</string>
+    <string name="payload_local_source_none">Kein lokaler Payload ausgewählt</string>
+    <string name="nav_style_title">Floating-Bar-Stil</string>
+    <string name="nav_style_summary">Verwende Veyras normale Floating Bar oder eine durchsichtige Glas-Variante.</string>
+    <string name="nav_style_standard">Standard</string>
+    <string name="nav_style_glass">Glas</string>
+
+    <!-- Veyra Builder Deutsch -->
+    <string name="builder_applied">Als lokaler Payload gespeichert: %1$s</string>
+    <string name="builder_applied_state">Bereits als lokaler Payload gespeichert</string>
+    <string name="builder_base">Link-Basis: %1$s</string>
+    <string name="builder_baseline">Baseline: %1$s</string>
+    <string name="builder_boot_hint">Verwende eine boot.img mit derselben Kernel-Version wie dieses Gerät (aus der offiziellen Firmware oder als Dump von /dev/block/by-name/boot).</string>
+    <string name="builder_boot_image">boot.img</string>
+    <string name="builder_boot_none">Keine Datei ausgewählt</string>
+    <string name="builder_description">Liest die Kernel-Symboltabelle aus einer boot.img, ermittelt die für die Exploit-Kette benötigten Offsets und passt die gewählte Basisbibliothek an deinen Kernel an. Beim Erstellen wählst du zwischen Universal und vivo/iQOO mit vr.ko-Bypass. Alles läuft lokal auf dem Gerät.</string>
+    <string name="builder_detected_kernel">Erkannter Kernel: %1$s</string>
+    <string name="builder_export_header">target.h exportieren</string>
+    <string name="builder_export_so">.so exportieren</string>
+    <string name="builder_heading">Payload Builder</string>
+    <string name="builder_input_gone">Das zuvor extrahierte Image wurde vom System gelöscht. Bitte den Link erneut verarbeiten.</string>
+    <string name="builder_kernel">Kernel: %1$s (%2$s)</string>
+    <string name="builder_loaded">boot.img %1$d KB · Basisbibliothek %2$d KB</string>
+    <string name="builder_log_title">Build-Protokoll</string>
+    <string name="builder_no_input">Wähle zuerst eine boot.img aus</string>
+    <string name="builder_no_output">Offsets wurden aufgelöst, aber die Bibliothek wurde nicht gepackt (siehe Protokoll)</string>
+    <string name="builder_offsets">Offsets aufgelöst: %1$d / %2$d</string>
+    <string name="builder_ota">OTA-Link verarbeiten</string>
+    <string name="builder_ota_bad_url">Nur http-/https-Links werden akzeptiert</string>
+    <string name="builder_ota_close">Schließen</string>
+    <string name="builder_ota_desc">Füge einen direkten Link zu einer vollständigen OTA-ZIP ein. Es werden nur die benötigten Bereiche geladen – ZIP-Verzeichnis, Payload-Manifest und die für die Boot-Partition nötigen Daten, nicht das komplette Paket. Der Server muss HTTP-Range unterstützen.</string>
+    <string name="builder_ota_done">%1$s (%2$s) extrahiert – du kannst jetzt den Payload erstellen</string>
+    <string name="builder_ota_hint">Direktlink zum vollständigen Paket (http / https)</string>
+    <string name="builder_ota_run">Verarbeiten</string>
+    <string name="builder_ota_running">Vollständiges Paket wird verarbeitet…</string>
+    <string name="builder_ota_started">Wird gestartet…</string>
+    <string name="builder_ota_title">OTA-Link verarbeiten</string>
+    <string name="builder_output_ready">Gepackte Bibliothek: %1$d KB</string>
+    <string name="builder_output_sha">SHA-256: %1$s</string>
+    <string name="builder_output_size">Größe: %1$s</string>
+    <string name="builder_patch_absent">%1$d Schlüssel werden von dieser Bibliothek nicht verwendet</string>
+    <string name="builder_patch_done">Patch: %1$d Schlüssel müssen geändert werden · %2$d Stellen verarbeitet</string>
+    <string name="builder_patch_noop">Diese Bibliothek passt bereits zu deinem Kernel – die gepackte Kopie ist bytegenau identisch.</string>
+    <string name="builder_patch_stats">Zu ändernde Schlüssel: %1$d · verifiziert: %2$d</string>
+    <string name="builder_phase_reading">%1$s wird gelesen …</string>
+    <string name="builder_pick_boot">boot.img auswählen</string>
+    <string name="builder_read_failed">Ausgewählte Datei konnte nicht gelesen werden</string>
+    <string name="builder_run">Payload erstellen</string>
+    <string name="builder_running">Wird erstellt…</string>
+    <string name="builder_save_download_failed">Konnte nicht in den Download-Ordner schreiben</string>
+    <string name="builder_saved_download">Gespeichert unter %1$s</string>
+    <string name="builder_scheme_subtitle">Beide Varianten verwenden dieselbe CVE-2026-43499-Kette und unterscheiden sich nur bei der Herstelleranpassung.</string>
+    <string name="builder_scheme_title">Welcher Payload soll erstellt werden?</string>
+    <string name="builder_scheme_universal">Universal</string>
+    <string name="builder_scheme_universal_detail">Für die meisten GKI-6.6-Geräte. Ohne Hersteller-Anti-Root-Bypass und deshalb außerhalb von vivo/iQOO die sichere Standardwahl.</string>
+    <string name="builder_scheme_vivo">vivo / iQOO (vr.ko-Bypass)</string>
+    <string name="builder_scheme_vivo_detail">Enthält den vr.ko-Anti-Root-Bypass. Für vivo/iQOO gedacht, wo die universelle Kette blockiert wird.</string>
+    <string name="builder_section_result">Ergebnis</string>
+    <string name="builder_symbols">Symbole: %1$d</string>
+    <string name="builder_variant">Variante: %1$s</string>
+    <string name="builder_vr_ko_hint">Dieses Gerät sieht nach vivo/iQOO aus. Wenn der Kernel vr.ko enthält, verwende die vivo-Variante; die universelle Variante enthält keinen vr.ko-Bypass.</string>
+    <string name="builder_vr_ko_ok">vr.ko-Bypass vorhanden – der Payload bereinigt die Task-Markierungen vor der W2-UID-Prüfung</string>
+    <string name="custom_import_failed">Import fehlgeschlagen</string>
+    <string name="error_bundled_missing">Integrierte Payload-Bibliothek fehlt</string>
+    <string name="offsets_counts">%1$d Symbole · %2$d Strukturfelder</string>
+    <string name="offsets_dialog_title">offsets.json</string>
+    <string name="offsets_error">Datei konnte nicht gelesen werden: %1$s</string>
+    <string name="offsets_import">offsets.json importieren</string>
+    <string name="offsets_import_desc">Lädt eine von GhostLock / IonStack erzeugte Kernel-Offset-Datei</string>
+    <string name="offsets_missing">Fehlend: %1$d Symbole, %2$d Strukturfelder</string>
+    <string name="offsets_release">Kernel-Release: %1$s</string>
+    <string name="offsets_unknown">%1$d unbekannte Schlüssel beibehalten – Roundtrip-sicher</string>
+    <string name="test_kernel_blocked_title">5.x-Kernel erkannt – Unterstützung ist deaktiviert</string>
+    <string name="test_kernel_switch">5.x-Kernel-Unterstützung</string>
+    <string name="test_kernel_switch_description">Nicht verifiziert: aktiviert den eigenen Legacy-Pfad für 5.4 / 5.10 / 5.15. Ausführbare Builds brauchen weiterhin eine passende Baseline.</string>
+
+    <!-- Veyra Builder localized UI -->
+    <string name="builder_base_library">Basisbibliothek: %1$s · %2$s</string>
+    <string name="builder_notices">Hinweise</string>
+    <string name="builder_set_as_payload">Verwendung als benutzerdefinierte Nutzlast</string>
+    <string name="temp_root_adopt_title">Steal Temp Root</string>
+    <string name="temp_root_adopt_subtitle">Übernimmt die bereits laufende KernelSU-Sitzung in Veyra – ohne vollständigen Neustart.</string>
+    <string name="temp_root_adopt_card_summary">Prüft eine kompatible Root-My-Galaxy-User-App, sichert sie, verifiziert Veyras eigenen KernelSU-Zugriff und kann die alte App anschließend deaktivieren.</string>
+    <string name="temp_root_candidate_heading">Kompatible Root-My-Galaxy-Apps</string>
+    <string name="temp_root_candidate_rules">Es werden nur User-Apps mit Root-My-Galaxy-/Payload-Merkmalen angezeigt. System-Apps sind niemals auswählbar.</string>
+    <string name="temp_root_scanning">Installierte User-Apps werden geprüft…</string>
+    <string name="temp_root_none_found">Keine kompatible Root-My-Galaxy-User-App gefunden.</string>
+    <string name="temp_root_disable_source">Quell-App nach Übernahme deaktivieren</string>
+    <string name="temp_root_disable_source_summary">Die APK bleibt gesichert, die alte App kann aber nicht mehr laufen, bis sie wieder aktiviert wird.</string>
+    <string name="temp_root_adopt_action">Aktuelle KernelSU-Sitzung übernehmen</string>
+    <string name="temp_root_reload_modules">KernelSU-Module neu laden</string>
+    <string name="temp_root_backup_saved">Original-APK gesichert: %1$s</string>
+    <string name="temp_root_action_accepted">Die angeforderte KernelSU-Userspace-Aktion wurde angenommen.</string>
+    <string name="temp_root_action_refused">Die angeforderte Aktion wurde abgelehnt.</string>
+    <string name="temp_root_working">Wird ausgeführt…</string>
+    <string name="override_instance_title">Override Instance</string>
+    <string name="override_instance_subtitle">Bereitet eine geprüfte RMG-User-App für einen Veyra-kompatiblen Ersatz vor.</string>
+    <string name="override_instance_card_summary">Sichert und prüft eine RMG-Instanz. Androids Paket- und Signaturregeln bleiben unangetastet.</string>
+    <string name="override_instance_guard_title">Paketidentität prüfen</string>
+    <string name="override_instance_pick_first">Wähle zuerst eine kompatible User-App.</string>
+    <string name="override_instance_backup">Ausgewählte App sichern</string>
+    <string name="override_instance_backup_ready">Original-APK unter %1$s gesichert. Damit Android einen Ersatz als Update akzeptiert, muss ein Ersatz-Build dieselbe Paketidentität und eine akzeptierte Signatur-Linie besitzen.</string>
+    <string name="veyra_rooter_title">VeyraRooter</string>
+    <string name="veyra_rooter_subtitle">Stabiles Hilfsmodul für KernelSU Late-Load- und Soft-Reboot-Abläufe.</string>
+    <string name="veyra_rooter_card_summary">Exportiert ein KernelSU-Modul zum Auffrischen der aktuellen Sitzung. Superuser-Freigaben anderer Apps werden nicht heimlich kopiert.</string>
+    <string name="veyra_rooter_body">VeyraRooter ist ein temporärer KernelSU-Helfer. Er kann in Downloads exportiert, über KernelSU installiert und mit Module Reload oder KernelSU Soft Reboot verwendet werden. Sobald Veyra seinen eigenen direkten Root-Pfad verifiziert hat, markiert sich der Helfer als nicht mehr benötigt.</string>
+    <string name="veyra_rooter_export">VeyraRooter nach Downloads exportieren</string>
+    <string name="veyra_rooter_exported">VeyraRooter exportiert nach %1$s</string>
+    <string name="veyra_rooter_install">Über KernelSU installieren</string>
+    <string name="veyra_rooter_installed">KernelSU hat das VeyraRooter-Modul angenommen.</string>
+    <string name="veyra_rooter_install_failed">KernelSU hat VeyraRooter nicht installiert.</string>
+    <string name="veyra_rooter_soft_reboot">KernelSU Soft Reboot</string>
+    <string name="builder_export_offsets">offsets.json exportieren</string>
+    <string name="builder_analysis_only_title">Analyse abgeschlossen – keine ausführbare Basisbibliothek</string>
+    <string name="builder_analysis_only_body">Veyra hat den Kernel soweit wie anhand des Images möglich ausgewertet und target.h sowie offsets.json erzeugt. Es wird aber keine lauffähige Payload erzeugt, indem eine Basisbibliothek einer anderen Kernel-Familie übernommen wird. Für eine .so-Ausgabe muss eine exakt kompatible Baseline ergänzt werden.</string>
+    <string name="builder_coverage_registered">%1$s · %2$s: %3$d registriert (%4$d gemessen / %5$d unverified)</string>
+    <string name="builder_coverage_missing">%1$s · %2$s: keine ausführbare Baseline registriert</string>
+    <string name="builder_coverage_test">Legacy / Unverified %1$s: %2$d registrierte Einträge</string>
+    <string name="builder_coverage_feasibility">Layout bekannt %1$d/%3$d · Landepunkte gemessen %2$d/%3$d</string>
+    <string name="builder_coverage_upstream">Upstream-Exact-Kernel-Katalog: %1$d deklariert · %2$d importiert</string>
+
+    <string name="builder_log_container">Container: %1$s · Header %2$s · Page %3$s · Kernel-Offset %4$s</string>
+
+    <string name="builder_log_kernel_image_decompressed">Kernel-Image: %1$s Byte · dekomprimiert</string>
+
+    <string name="builder_log_kernel_image">Kernel-Image: %1$s Byte</string>
+
+    <string name="builder_log_derived_offset">Offset %1$s hergeleitet → %2$s</string>
+
+    <string name="builder_log_parse_diagnostic">Der Image-Parser hat eine Format- oder Layout-Diagnose gemeldet. Das technische Detail wurde im App-Log gespeichert.</string>
+
+    <string name="builder_log_alignment_stopped">Die Symbolausrichtung hat das Packen gestoppt, damit keine Offsets verschiedener Kernel vermischt werden.</string>
+
+    <string name="builder_log_offset_warning">Eine Offset-Prüfung hat eine Unstimmigkeit gemeldet; siehe den lokalisierten Hinweis unten.</string>
+
+    <string name="builder_log_scheme_test">Kernel %1$s erkannt · 5.x-Legacy-Pfad (Unverified) wird verwendet</string>
+
+    <string name="builder_log_scheme_mainline">Kernel %1$s erkannt · Mainline-Schema wird verwendet</string>
+
+    <string name="builder_log_test_kernel_beta">5.x Legacy (Unverified) ist aktiv. Veyra analysiert diesen Kernel mit eigenen Familienregeln und übernimmt niemals 6.x-Offsets.</string>
+
+    <string name="builder_log_no_runnable_baseline">Für diesen exakten Kernel ist keine sicher registrierte ausführbare Baseline vorhanden.</string>
+
+    <string name="builder_log_analysis_only_safe">Veyra arbeitet im reinen Analysemodus weiter und erzeugt target.h / offsets.json, statt eine ausführbare .so zu erraten.</string>
+
+    <string name="builder_block_detail_test_kernel">Dies ist ein 5.x-Legacy-Kernel und die Unverified-Unterstützung ist deaktiviert. Aktiviere die 5.x-Kernel-Unterstützung in den Builder-Einstellungen.</string>
+
+    <string name="builder_block_detail_baseline">Für diesen Kernel gibt es keine verifizierte ausführbare Baseline. Veyra ersetzt sie nicht durch Offsets einer anderen Kernel-Familie.</string>
+
+    <string name="builder_block_detail_abi">Die gewählte oder erzwungene Baseline widerspricht der gemessenen Kernel-ABI. Das Packen wurde aus Sicherheitsgründen gestoppt.</string>
+
+    <string name="builder_block_detail_unknown">Veyra konnte die Kernel-Version nicht zuverlässig erkennen. Prüfe, ob das gewählte Image wirklich zum Zielgerät gehört.</string>
+
+    <string name="builder_block_detail_vrko">Der gewählte vivo/iQOO-Payload enthält die benötigte vr.ko-Anpassung nicht. Wähle ein kompatibles Payload-Schema.</string>
+
+    <string name="builder_block_detail_other">Der Builder wurde durch eine Kompatibilitätsprüfung gestoppt. Technische Details wurden im App-Log gespeichert.</string>
+
+    <string name="builder_notice_low_symbols">Es wurden nur %1$d Kernel-Symbole aufgelöst. Prüfe, ob das gewählte Image zum Zielgerät gehört.</string>
+
+    <string name="builder_notice_base_mismatch">Die ermittelte Kernel-Link-Basis stimmt nicht mit den Image-Symbolen überein. Prüfe das Ergebnis vor der Verwendung.</string>
+
+    <string name="builder_notice_alignment_failed">Der Symbolsbestand passt nicht vollständig zur gewählten Baseline; das Packen wurde aus Sicherheitsgründen gestoppt.</string>
+
+    <string name="builder_notice_incomplete_patch">Nicht alle benötigten Offsets konnten ersetzt werden. Verwende den Payload erst, wenn die fehlenden Daten geklärt sind.</string>
+
+    <string name="builder_notice_forced_override">Ein Kompatibilitätskonflikt wurde ausdrücklich übergangen. Behandle diesen Build als experimentell.</string>
+
+    <string name="builder_notice_baseline">Die Baseline-Registry meldet einen Kompatibilitätshinweis. Prüfe vor der Verwendung die Baseline-Abdeckung.</string>
+
+    <string name="builder_notice_vrko">Dieses Gerät benötigt möglicherweise den für vivo/iQOO angepassten vr.ko-Payload.</string>
+
+    <string name="builder_notice_technical">Der Builder hat einen zusätzlichen technischen Hinweis gemeldet. Das Upstream-Detail wurde im App-Log gespeichert.</string>
+
+    <string name="builder_error_file_missing">Die gewählte Builder-Datei ist nicht mehr verfügbar. Wähle sie erneut aus.</string>
+
+    <string name="builder_error_io">Der Builder konnte eine Datei nicht lesen oder schreiben. Prüfe den Speicherzugriff und versuche es erneut.</string>
+
+    <string name="builder_error_generic">Der Builder wurde mit %1$s beendet. Technische Details wurden im App-Log gespeichert.</string>
+    <string name="builder_error_architecture">Magic Builder konnte die Kernel-Architektur dieses Images nicht eindeutig erkennen. ARM64-Header und ELF-Identität werden jetzt vor der Instruktions-Heuristik geprüft; technische Details stehen im App-Log.</string>
+    <string name="builder_error_kallsyms">Das Kernel-Image wurde erkannt, aber die kallsyms-Tabelle konnte nicht dekodiert werden. Magic Builder behält die exakten Geräte-/Kernel-Belege für das Support-Bundle, statt Offsets zu erraten.</string>
+
+    <string name="log_veyra_ksu_temp_root_state">[+] VeyraKSU hat den Temp-Root-Status dieses Boots übernommen</string>
+
+    <string name="veyra_ksu_title">VeyraKSU</string>
+
+    <string name="veyra_ksu_card_summary">KernelSU-Bridge für Boot-Status, Temp-Root-Status und den zukünftigen V-SPR-Berechtigungspfad.</string>
+
+    <string name="veyra_ksu_status_not_installed">Nicht installiert</string>
+
+    <string name="veyra_ksu_status_installed">Installiert</string>
+
+    <string name="veyra_ksu_status_active">Aktiv</string>
+
+    <string name="veyra_ksu_status_enabled">Aktiviert</string>
+
+    <string name="veyra_ksu_status_disabled">Deaktiviert</string>
+
+    <string name="veyra_ksu_subtitle">Dauerhafte Veyra-Bridge innerhalb von KernelSU</string>
+
+    <string name="veyra_ksu_bridge_status">Bridge-Status</string>
+
+    <string name="veyra_ksu_reading_install">Modul</string>
+
+    <string name="veyra_ksu_reading_load">Ladezustand</string>
+
+    <string name="veyra_ksu_reading_stage">Letzte Phase</string>
+
+    <string name="veyra_ksu_reading_boot">Boot-ID</string>
+
+    <string name="veyra_ksu_reading_temp_root">Temp Root erkannt</string>
+
+    <string name="veyra_ksu_reading_permission_bridge">Permission Bridge</string>
+
+    <string name="veyra_ksu_yes">Ja</string>
+
+    <string name="veyra_ksu_no">Nein</string>
+
+    <string name="veyra_ksu_permission_bridge_inactive">Vorbereitet · inaktiv</string>
+
+    <string name="veyra_ksu_install_heading">VeyraKSU installieren oder aktualisieren</string>
+
+    <string name="veyra_ksu_install_body">Veyra exportiert das Modul, installiert es über KernelSU und lädt anschließend den Modul-Lebenszyklus für den aktuellen Boot neu. Die V-SPR-Permission-Bridge bleibt vorerst inaktiv.</string>
+
+    <string name="veyra_ksu_install_failed">KernelSU konnte VeyraKSU nicht installieren.</string>
+
+    <string name="veyra_ksu_installed">VeyraKSU wurde erfolgreich installiert oder aktualisiert.</string>
+
+    <string name="veyra_ksu_reload_done">Der KernelSU-Modul-Lebenszyklus wurde für diesen Boot neu geladen.</string>
+
+    <string name="veyra_ksu_old_provider_disabled">Der vorherige kompatible RMG-Provider wurde nach verifiziertem Veyra-Root gesichert und deaktiviert.</string>
+
+    <string name="veyra_ksu_old_provider_kept">Der vorherige Provider blieb aktiv, weil Veyra die Migration nicht sicher verifizieren konnte.</string>
+
+    <string name="veyra_ksu_install_update">Über KernelSU installieren / aktualisieren</string>
+
+    <string name="veyra_ksu_exported">VeyraKSU exportiert nach %1$s</string>
+
+    <string name="veyra_ksu_export">Kopie nach Downloads exportieren</string>
+
+    <string name="veyra_ksu_migrate_title">Von vorherigem RMG-Provider migrieren</string>
+
+    <string name="veyra_ksu_migrate_summary">Nach verifiziertem Veyra-Root wird die ausgewählte kompatible User-App gesichert und deaktiviert. System-Apps werden niemals verändert.</string>
+
+    <string name="veyra_ksu_migrate_pick">Bisheriger Root-Provider</string>
+
+    <string name="veyra_ksu_load_toggle">VeyraKSU mit KernelSU laden</string>
+
+    <string name="veyra_ksu_load_toggle_summary">Deaktivieren lässt das Modul installiert, verhindert aber das Laden durch KernelSU.</string>
+
+    <string name="veyra_ksu_state_changed">Der VeyraKSU-Ladezustand wurde aktualisiert.</string>
+
+    <string name="veyra_ksu_action_ok">KernelSU hat die angeforderte Aktion angenommen.</string>
+
+    <string name="veyra_ksu_action_failed">KernelSU konnte die angeforderte Aktion nicht ausführen.</string>
+
+    <string name="veyra_ksu_reload_modules">KernelSU-Module neu laden</string>
+
+    <string name="veyra_ksu_soft_reboot">KernelSU Soft Reboot</string>
+
+    <string name="veyra_ksu_working">Wird ausgeführt…</string>
+
+    <string name="vspr_veyra_ksu_bridge_title">VeyraKSU Bridge</string>
+
+    <string name="vspr_veyra_ksu_bridge_summary">Aktiver privilegierter Provider-Pfad für den CVeyra Permission Provider. VeyraKSU 2.0.0 stellt Root-Broker und persistenten Policy-Zustand bereit.</string>
+
+    <string name="vspr_veyra_ksu_bridge_installed">Verbunden · aktiv</string>
+
+    <string name="vspr_veyra_ksu_bridge_prepared">Bereit · Aktivierung erforderlich</string>
+
+    <string name="builder_ota_log_connected">Verbunden · Paketgröße %1$s</string>
+
+    <string name="builder_ota_log_raw_payload">Der Link zeigt direkt auf payload.bin.</string>
+
+    <string name="builder_ota_log_zip_directory">ZIP-Zentralverzeichnis wird gesucht…</string>
+
+    <string name="builder_ota_log_payload_found">payload.bin im Paket gefunden (%1$s).</string>
+
+    <string name="builder_ota_log_direct_boot">Keine payload.bin; %1$s wurde direkt im Paket gefunden.</string>
+
+    <string name="builder_ota_log_partitions">Payload enthält %1$s Partitionen · %2$s wird extrahiert.</string>
+
+    <string name="builder_ota_log_downloading">Download %1$s / %2$s</string>
+
+    <string name="builder_ota_log_restored">%1$s wiederhergestellt → %2$s (%3$s).</string>
+
+    <string name="builder_ota_log_download_entry">%1$s wird heruntergeladen (%2$s)…</string>
+
+    <string name="builder_ota_log_extracted">%1$s extrahiert (%2$s).</string>
+
+    <string name="builder_ota_error_range">Dieser Server unterstützt keine HTTP-Range-Anfragen. Veyra lädt nicht ungefragt das komplette mehrere Gigabyte große Paket herunter.</string>
+
+    <string name="builder_ota_error_connect">Veyra konnte den OTA-Link nicht öffnen oder die Dateigröße nicht ermitteln.</string>
+
+    <string name="builder_ota_error_xz">Das OTA verwendet ein XZ-Layout, das der integrierte Extractor nicht sicher dekodieren kann.</string>
+
+    <string name="builder_ota_error_package">Der Link enthält kein unterstütztes vollständiges OTA-/Paketformat oder der benötigte Boot-Payload wurde nicht gefunden.</string>
+
+    <string name="builder_ota_error_generic">Das OTA konnte nicht analysiert werden. Technische Details wurden im App-Log gespeichert.</string>
+
+    <string name="readiness_cveyra">CVeyra</string>
+
+    <string name="readiness_cveyra_root">Aktiv · Root</string>
+
+    <string name="readiness_cveyra_adb">Aktiv · Persistente ADB-Shell</string>
+
+    <string name="readiness_cveyra_waiting">Aktiviert · wartet auf Zugriff</string>
+
+    <string name="readiness_cveyra_not_running">Nicht aktiv</string>
+
+    <string name="veyra_ksu_status_tagged">Zur Installation vorgemerkt</string>
+
+    <string name="veyra_ksu_auto_install_title">Nach Root installieren / aktualisieren</string>
+
+    <string name="veyra_ksu_auto_install_summary">VeyraKSU automatisch direkt installieren oder aktualisieren, sobald Veyra KernelSU erfolgreich geladen hat.</string>
+
+    <string name="veyra_ksu_provider_change">KSU Provider Change</string>
+
+    <string name="veyra_ksu_provider_change_needs_root">Veyra benötigt zuerst echten KernelSU-Superuser-Zugriff, bevor der Provider gewechselt werden kann.</string>
+
+    <string name="veyra_ksu_provider_change_ready">Provider gewechselt. Die vorherige App wurde gesichert, deaktiviert und ihre App-Daten wurden gelöscht. KernelSU-Module wurden neu geladen und der Android-Runtime-Neustart angefordert.</string>
+
+    <string name="veyra_ksu_provider_change_ready_no_clear">Provider gewechselt und die vorherige App wurde deaktiviert, aber Android konnte ihre App-Daten nicht löschen. KernelSU-Module wurden neu geladen und der Android-Runtime-Neustart angefordert.</string>
+
+    <string name="migration_title">Migration</string>
+
+    <string name="migration_card_summary">Übernimmt die aktuelle Temp-Root-Sitzung eines kompatiblen RMG-Providers in Veyra.</string>
+
+    <string name="migration_subtitle">Aktuelle Root-My-Galaxy-Temp-Root-Sitzung zu Veyra übertragen</string>
+
+    <string name="migration_full_title">Fully Restart Automatic</string>
+
+    <string name="migration_full_summary">Bereitet einen einmaligen vollständigen Neustart vor. CVeyra und Root on boot werden dafür temporär aktiviert, damit Veyra beim nächsten Boot übernehmen kann.</string>
+
+    <string name="migration_soft_title">Try without Restart / Only soft reboot</string>
+
+    <string name="migration_soft_summary">Versucht die laufende KernelSU-Sitzung über VeyraKSU ohne vollständigen Geräteneustart zu übernehmen, soweit das laufende KernelSU dies zulässt.</string>
+
+    <string name="migration_open_veyra_ksu">VeyraKSU-Migration öffnen</string>
+
+    <string name="migration_root_check_title">KernelSU-Root-Berechtigung</string>
+
+    <string name="migration_root_check_summary">Zuerst wird geprüft, ob diese Veyra-Installation tatsächlich eine KernelSU-Superuser-Shell besitzt. Erst danach lässt sich der vorherige Provider auswählen.</string>
+
+    <string name="migration_root_check_ok">KernelSU-Root-Zugriff für Veyra wurde bestätigt.</string>
+
+    <string name="migration_root_check_failed">KernelSU-Root-Zugriff wurde Veyra nicht erteilt. Erlaube Veyra Root im KernelSU-Manager und versuche es erneut.</string>
+
+    <string name="migration_root_checked">Root bestätigt</string>
+
+    <string name="migration_root_check">Root-Zugriff prüfen</string>
+
+    <string name="migration_provider_title">Bisheriger Root-Provider</string>
+
+    <string name="migration_no_provider">Keine kompatible Root-My-Galaxy-User-App gefunden.</string>
+
+    <string name="migration_check_patch">Check and Patch</string>
+
+    <string name="migration_prepared">Die Migration von %1$s ist vorbereitet. Die temporären Boot-Einstellungen sind einmalig gesetzt; starte die Migration auf der Startseite, wenn du bereit bist.</string>
+
+    <string name="migration_prepare_failed">Die Migration konnte nicht vorbereitet werden.</string>
+
+    <string name="migration_ready_title">Migration vorbereitet</string>
+
+    <string name="migration_ready_body">CVeyra, CVeyra beim Boot, KernelSU-Laden und Root on boot sind temporär vorbereitet. Starte die Migration einmalig über die Startseite.</string>
+
+    <string name="migration_working">Migration wird vorbereitet…</string>
+
+    <string name="migration_unknown_provider">bisherigem Root-Provider</string>
+
+    <string name="migration_home_title">Migration bereit</string>
+
+    <string name="migration_home_provider">Von %1$s</string>
+
+    <string name="migration_home_body">Beim Start wird einmal normal neu gestartet. Beim nächsten Boot führt Veyra den gecachten Root-Ablauf mit CVeyra-Unterstützung aus, installiert/aktualisiert VeyraKSU und sichert sowie deaktiviert anschließend den bisherigen Provider.</string>
+
+    <string name="migration_home_start">Migration starten und neu starten</string>
+
+    <string name="migration_cancel">Migration abbrechen</string>
+
+    <string name="migration_reboot_failed">Die Neustart-Anfrage wurde abgelehnt. Die Migration bleibt vorbereitet und kann erneut gestartet werden.</string>
+
+    <string name="migration_root_required">Veyra besitzt aktuell keinen KernelSU-Superuser-Zugriff.</string>
+
+    <string name="migration_ksu_not_active">KernelSU ist in diesem Boot nicht aktiv.</string>
+
+    <string name="log_veyra_ksu_auto_installed">[+] VeyraKSU wurde nach Root automatisch installiert oder aktualisiert</string>
+
+    <string name="log_veyra_ksu_auto_loaded">[+] VeyraKSU-Modul-Lebenszyklus wurde im aktuellen Boot angewendet</string>
+
+    <string name="log_veyra_ksu_auto_failed">[!] Automatische VeyraKSU-Installation fehlgeschlagen: %1$s</string>
+
+    <string name="log_migration_old_provider_disabled">[+] Bisheriger Root-Provider deaktiviert und App-Zustand gelöscht: %1$s</string>
+
+    <string name="log_migration_old_provider_cleanup_failed">[!] Bisheriger Root-Provider konnte nicht vollständig bereinigt werden: %1$s</string>
+
+    <string name="log_migration_completed">[+] Veyra-Root-Migration abgeschlossen und temporäre Migrationseinstellungen wiederhergestellt</string>
+
+    <string name="log_migration_failed_cleanup">[!] Veyra besitzt die neue Root-Sitzung, aber der bisherige Provider konnte nicht vollständig deaktiviert/bereinigt werden. Die temporären Migrationseinstellungen wurden wiederhergestellt.</string>
+
+    <string name="migration_cveyra_pair_required">Dieser gecachte Root-Ablauf benötigt nach dem Neustart einen Shell-Helper. Kopple CVeyra zuerst mit Wireless ADB, damit die Migration ohne Shizuku fortgesetzt werden kann.</string>
+    <string name="run_guard_notification">Der Root-Lauf bleibt geschützt, während Veyra den Kernel-Vorgang überwacht.</string>
+    <string name="cveyra_runtime_notification">Der persistente CVeyra-Shell-Broker wird vorbereitet…</string>
+    <string name="magic_builder_title">Magic Builder</string>
+    <string name="magic_builder_card_summary">OEM-aware Auto-Builder: Capture über CVeyra Root oder Storage Proxy, exakten Kernel prüfen, nur mit kompatibler Baseline bauen, nach Downloads exportieren und unter Local Payload eintragen.</string>
+    <string name="magic_builder_subtitle">Automatischer Payload-Builder direkt vom laufenden Gerät</string>
+    <string name="magic_builder_device">Erkanntes Gerät</string>
+    <string name="magic_builder_backend">CVeyra: %1$s</string>
+    <string name="magic_builder_oem_title">%1$s Implementation</string>
+    <string name="magic_builder_oem_body">Magic Builder hat den %1$s-Pfad erkannt. Exakte Live-Kernel-Prüfung, OEM-aware Capture und strikte Baseline-Gates bleiben aktiv. Ein ausführbarer Payload wird nur bei kompatibler Base-Library erzeugt; andernfalls exportiert Magic Builder Analyse-/Supportdaten, statt OEM- oder Kernel-Offsets zu vermischen.</string>
+    <string name="magic_builder_oem_log">[Magic Builder] OEM-Pfad gewählt: %1$s</string>
+    <string name="magic_builder_nothing_title">Nothing Exact-Device-Profil</string>
+    <string name="magic_builder_nothing_profile">%1$s · %2$s · %3$s</string>
+    <string name="magic_builder_nothing_kernel_known">Live-Kernel-Familie: %1$s · bekannte Stock-Familie: %2$s. Maßgeblich bleibt der exakte laufende Kernel-Release.</string>
+    <string name="magic_builder_nothing_kernel_live">Live-Kernel-Familie: %1$s. Dieses Modell wird vom exakt laufenden Gerät gelernt, statt eine Stock-Familie anzunehmen.</string>
+    <string name="magic_builder_nothing_unknown_profile">Nothing-Gerät erkannt, aber dieses Modell steht noch nicht in der eingebauten Profiltabelle. Magic Builder bleibt im Exact-Device-Modus.</string>
+    <string name="magic_builder_nothing_exact_build">Exakter Build: %1$s</string>
+    <string name="magic_builder_nothing_ab_policy">A/B-sicher: Es wird nur der aktive Slot gelesen. Magic Builder wechselt keinen Slot und flasht keine Partition.</string>
+    <string name="magic_builder_proxy_no_exact_boot">Kein gespeichertes Boot-Image passt exakt zum laufenden Kernel %1$s.</string>
+    <string name="magic_builder_samsung_title">Samsung / One UI Implementation</string>
+    <string name="magic_builder_samsung_body">Magic Builder hat ein Samsung-Gerät erkannt. Verwendet wird ausschließlich der Samsung-GKI-Pfad: exakte Live-Kernel-Prüfung, Universal-/Samsung-kompatible Baselines, Capture über CVeyra Root oder Storage Proxy und danach bei Bedarf das Support-Bundle. Der vivo/iQOO-vr.ko-Pfad wird auf Samsung niemals versucht.</string>
+    <string name="magic_builder_samsung_log">[Magic Builder] Samsung-/One-UI-Pfad gewählt; vivo/iQOO-vr.ko-Retries sind deaktiviert.</string>
+    <string name="magic_builder_vivo_log">[Magic Builder] vivo/iQOO-Pfad gewählt; vr.ko wird vor dem Universal-Fallback versucht.</string>
+    <string name="magic_builder_generic_log">[Magic Builder] Generischer OEM-Pfad gewählt; herstellerspezifische vr.ko-Retries sind deaktiviert.</string>
+    <string name="magic_builder_oem_scheme_blocked">Magic Builder hat eine Payload-Strategie abgelehnt, die nicht zu diesem Gerätehersteller gehört.</string>
+    <string name="magic_builder_proxy_title">Privileged Storage Proxy</string>
+    <string name="magic_builder_proxy_body">Der Root-Broker ist nicht aktiv. Magic Builder nutzt die authentifizierte CVeyra-ADB-Identität und streamt shell-lesbare Boot-Images aus privilegiertem Speicher. Rohe Boot-Blockgeräte benötigen weiterhin echten Root-Zugriff.</string>
+    <string name="magic_builder_proxy_unavailable">CVeyra ADB ist ausgewählt, aber der authentifizierte Storage Proxy ist noch nicht bereit.</string>
+    <string name="magic_builder_proxy_no_boot">Der Privileged Storage Proxy ist aktiv, aber es wurde kein lesbares Boot-Image gefunden. Lege boot.img in Downloads, Veyras externen App-Ordner oder /data/local/tmp — oder aktiviere CVeyra Root für direkten Live-Partitionszugriff.</string>
+    <string name="magic_builder_proxy_pull_failed">Der Privileged Storage Proxy hat Boot-Image-Kandidaten gefunden, konnte aber keinen davon in den Builder streamen.</string>
+    <string name="magic_builder_missing_title">Magic Builder benötigt einen privilegierten Leseweg</string>
+    <string name="magic_builder_missing_root">Aktiviere CVeyra Root, damit Veyra die aktive Boot-Partition selbst lesen kann. Falls das nicht verfügbar ist, öffne Loading Builder und wähle ein Boot-Image manuell aus.</string>
+    <string name="magic_builder_open_cveyra">CVeyra Root einrichten</string>
+    <string name="magic_builder_add_manually">Loading Builder öffnen</string>
+    <string name="magic_builder_what_it_does">Automatischer Build</string>
+    <string name="magic_builder_what_it_does_body">Liest oder importiert das aktuelle Boot-Image über CVeyra Root oder den Privileged Storage Proxy, vergleicht den vollständigen Kernel-Release mit dem laufenden Gerät, wählt eine OEM-sichere Strategie, baut nur mit kompatibler Baseline, speichert eine Kopie in Downloads und trägt sie unter Local Payload ein. Der neue Local Payload wird für den nächsten Root-Lauf nicht automatisch angehakt.</string>
+    <string name="magic_builder_run">Magic Builder starten</string>
+    <string name="magic_builder_running">Magic Builder arbeitet…</string>
+    <string name="magic_builder_capture_ok">Live-Boot-Image eingelesen. Build gegen den laufenden Kernel startet…</string>
+    <string name="magic_builder_source">Gelesen von: %1$s</string>
+    <string name="magic_builder_ready">Magic Payload fertig</string>
+    <string name="magic_builder_exported">Kopie in Downloads: %1$s</string>
+    <string name="magic_builder_activated">Unter Payload Sources / Local Payload eingetragen. Der Haken bleibt absichtlich AUS; erst wenn du ihn selbst aktivierst, wird der Payload für einen Root-Lauf verwendet.</string>
+    <string name="magic_builder_need_cveyra">Magic Builder benötigt aktiviertes CVeyra.</string>
+    <string name="magic_builder_need_root">Magic Builder benötigt CVeyra Root, um die Live-Boot-Partition lesen zu können.</string>
+    <string name="magic_builder_need_boot">Die aktive Boot-Partition konnte nicht gefunden oder gelesen werden. Füge das Boot-Image im Loading Builder manuell hinzu.</string>
+    <string name="magic_builder_workdir_failed">Magic Builder konnte sein privates Arbeitsverzeichnis nicht anlegen.</string>
+    <string name="magic_builder_capture_failed">Das Live-Boot-Image konnte nicht eingelesen werden. Prüfe CVeyra Root oder füge das Image manuell hinzu.</string>
+
+    <string name="builder_live_kernel_title">Live-Kernel-Ziel</string>
+    <string name="builder_live_kernel_summary">Bei aktivierter exakter Kernelprüfung muss das ausgewählte Boot-Image genau zu diesem laufenden Kernel-Release gehören.</string>
+    <string name="builder_exact_kernel_title">Exakten Live-Kernel verlangen</string>
+    <string name="builder_exact_kernel_summary">Lehnt ein Boot-Image ab, dessen erkannter Kernel-Release vom aktuell laufenden Gerät abweicht.</string>
+    <string name="builder_auto_export_title">Payload automatisch nach Downloads exportieren</string>
+    <string name="builder_auto_export_summary">Speichert bei jedem erfolgreichen normalen Builder-Lauf automatisch eine Kopie im Android-Download-Ordner.</string>
+    <string name="builder_auto_apply_title">Gebauten Payload automatisch aktivieren</string>
+    <string name="builder_auto_apply_summary">Setzt ein erfolgreiches normales Builder-Ergebnis automatisch als aktuelle lokale Payload-Quelle.</string>
+    <string name="builder_exact_kernel_mismatch">Exakte Kernelprüfung fehlgeschlagen. Laufendes Gerät: %1$s. Ausgewähltes Boot-Image: %2$s.</string>
+    <string name="builder_auto_export_disabled">[*] Automatischer Export nach Downloads ist in Builder Settings deaktiviert.</string>
+    <string name="builder_auto_apply_disabled">[*] Automatische Aktivierung als lokaler Payload ist in Builder Settings deaktiviert.</string>
+    <string name="vspr_cveyra">CVeyra</string>
+    <string name="vspr_permission_mode_title">Permission Mode</string>
+    <string name="vspr_permission_mode_offline">Offline</string>
+    <string name="vspr_permission_mode_auto">Auto</string>
+    <string name="vspr_permission_mode_self">Self</string>
+    <string name="vspr_permission_mode_offline_body">CVeyra behält gespeicherte Regeln, verwaltet im Offline-Modus aber keine App-Berechtigungen.</string>
+    <string name="vspr_permission_mode_auto_body">Automatische Policy-Verwaltung ist für eine spätere Engine reserviert. Auto bleibt derzeit deaktiviert und kehrt zum vorherigen Modus zurück.</string>
+    <string name="vspr_permission_mode_self_body">Du wählst Apps und deren Berechtigungen selbst aus. Die Liste ist standardmäßig leer; mit + fügst du eine App hinzu.</string>
+    <string name="vspr_offline_apps_inactive">Offline-Modus ist aktiv. In diesem Bereich wird keine App verwaltet.</string>
+    <string name="vspr_self_no_apps">Noch keine Apps hinzugefügt. Tippe oben auf +, um eine App auszuwählen.</string>
+    <string name="vspr_add_app_title">App hinzufügen</string>
+    <string name="vspr_add_app_empty">Mit dem aktuellen System-App-Filter sind keine weiteren Apps verfügbar.</string>
+    <string name="vspr_preview_activate">Vorschau aktivieren</string>
+    <string name="vspr_shizuku_module_title">Shizuku Compatibility Module</string>
+    <string name="vspr_shizuku_module_body">Shizuku-Kompatibilität nutzt die echte Shizuku-API-Berechtigung, wenn die Ziel-App sie anfordert. CVeyra vergibt oder entzieht sie über den privilegierten Broker und zeigt keinen Fake-Grant an.</string>
+    <string name="vspr_adveyra_owner_title">You want to activate Phone Owner permission?</string>
+    <string name="vspr_adveyra_owner_body">ADVeyra bildet den echten Android-Device-Owner-Zustand ab. CVeyra markiert ihn nur aktiv, wenn Android die App wirklich als Owner meldet; Provisionierungsregeln werden weder umgangen noch vorgetäuscht.</string>
+    <string name="magic_builder_range">Kernel-Scanbereich: 4.x–7.x. Ein ausführbarer Payload wird nur erzeugt, wenn für die exakte Kernel-Familie eine passende registrierte Baseline/Base-Library vorhanden ist; andernfalls behält Magic Builder die Analyse und probiert automatisch die nächste Strategie.</string>
+    <string name="magic_builder_retry_scheme">Die erste Strategie hat keinen ausführbaren Payload erzeugt. Automatischer neuer Versuch mit %1$s…</string>
+    <string name="magic_builder_analysis_only_done">Nach allen automatischen Strategien war keine ausführbare Baseline verfügbar. Die exakte Live-Kernel-Analyse wurde trotzdem abgeschlossen und bleibt exportierbar.</string>
+    <string name="magic_builder_all_strategies_failed">Alle automatischen Magic-Builder-Strategien wurden ausprobiert. Mit den aktuell vorhandenen Baseline-Dateien konnte kein kompatibler ausführbarer Payload erzeugt werden.</string>
+    <string name="magic_builder_support_bundle_title">Live Support Bundle</string>
+    <string name="magic_builder_support_bundle_body">Exportiert das aktuelle Boot-Image plus Live-Kernel-Daten, die CVeyra Root lesen kann: BTF, kallsyms, Config, Module, vendor_boot/init_boot/dtbo soweit vorhanden und Geräte-Metadaten. Wenn alle ausführbaren Strategien ausgeschöpft sind, erstellt Magic Builder dieses Paket automatisch.</string>
+    <string name="magic_builder_support_bundle_export">Live Support Bundle exportieren</string>
+    <string name="magic_builder_support_bundle_working">Live-Kernel-Dateien werden gesammelt…</string>
+    <string name="magic_builder_support_bundle_saved">Support Bundle gespeichert unter %1$s</string>
+    <string name="magic_builder_support_bundle_auto">Noch keine ausführbare Baseline vorhanden. Magic Builder hat die Live-Analyse abgeschlossen und automatisch ein Support Bundle unter %1$s gespeichert.</string>
+    <string name="magic_builder_support_bundle_failed">Das Live Support Bundle konnte nicht erstellt werden.</string>
+    <string name="magic_builder_support_bundle_missing">Von diesem Kernel/Gerät nicht bereitgestellt: %1$s</string>
+    <string name="page_transition_sound_title">Seitenwechsel-Sound</string>
+    <string name="page_transition_sound_summary">Spielt beim Wechsel zwischen Home, Verlauf, Logs und Einstellungen einen kurzen Veyra-Sound.</string>
+    <string name="page_transition_sound_without_ringer_title">Ohne Klingelton abspielen</string>
+    <string name="page_transition_sound_without_ringer_summary">Spielt den Seitenwechsel-Sound auch im Lautlos- oder Vibrationsmodus.</string>
+    <string name="sound_menu_title">Sounds</string>
+    <string name="sound_menu_summary">Premium-Interaktionssounds für Seiten, Einstellungen und Bedienelemente.</string>
+    <string name="sound_menu_off">Aus</string>
+    <string name="sound_activate">Sounds aktivieren</string>
+    <string name="sound_activate_summary">Aktiviert Veyra-Interaktionssounds. Standardmäßig deaktiviert.</string>
+    <string name="sound_old_activate">Wechsel zu V1</string>
+    <string name="sound_old_activate_summary">Verwendet die ursprünglichen V1-Sounds und Profilnamen.</string>
+    <string name="sound_profile">Soundprofil</string>
+    <string name="sound_profile_summary">Wähle den Charakter der Veyra-UI-Sounds.</string>
+    <string name="sound_pages">Seitenwechsel</string>
+    <string name="sound_pages_summary">Sound beim Wechsel zwischen Home, Verlauf, Logs und Einstellungen.</string>
+    <string name="sound_settings">Einstellungsnavigation</string>
+    <string name="sound_settings_summary">Sound beim Öffnen und Verlassen von Einstellungsbereichen.</string>
+    <string name="sound_buttons">Buttons</string>
+    <string name="sound_buttons_summary">Kurzer Premium-Tap-Sound für Bedienelemente.</string>
+    <string name="sound_expand">Auf- / Zuklappen</string>
+    <string name="sound_expand_summary">Sound für Status, Geräteinformationen und Ordner.</string>
+    <string name="sound_without_ringer">Bei Lautlos / Vibration abspielen</string>
+    <string name="sound_without_ringer_summary">Erlaubt Veyra-Sounds auch bei stummgeschaltetem Klingelton.</string>
+    <string name="sound_done">Fertig</string>
+    <string name="unstable_4x_switch">4.x-Kernel-Unterstützung (unstable)</string>
+    <string name="unstable_4x_switch_description">Aktiviert den Analysepfad für 4.4 / 4.9 / 4.14 / 4.19. Für 4.19.152-perf+ gibt es öffentliche Adapter-Belege; ausführbare Builds bleiben an eine exakte Baseline gebunden.</string>
+    <string name="builder_nearest_family_title">Nächste Kernel-Familie (NICHT NUTZEN)</string>
+    <string name="builder_nearest_family_summary">Unverified-Expertenoverride. Nutzt bei fehlender exakter Familie die nächstliegende baubare 4.x–6.x-Baseline. ABI-/Layout-Mismatch kann Kernel-Panic oder Memory Corruption verursachen.</string>
+    <string name="builder_nearest_family_confirm_title">Nearest-Family-Fallback aktivieren?</string>
+    <string name="builder_nearest_family_confirm_body">Dieser Modus erlaubt absichtlich eine nicht passende rt_mutex_waiter-/task_struct-ABI-Familie. Eine falsche Baseline kann in falsche Kernel-Felder schreiben und sofort Kernel-Panic, Memory Corruption oder RAM-/Kernel-Crash auslösen. Nur für kontrollierte Forschung.</string>
+    <string name="builder_nearest_family_confirm_action">NICHT-NUTZEN-Modus aktivieren</string>
+    <string name="magic_builder_settings_title">Magic-Builder-Einstellungen</string>
+    <string name="magic_builder_settings_summary">Nur für Magic: instabile Kernel-Familien, Quellenanalyse und automatisches Build-Verhalten.</string>
+    <string name="magic_builder_4x_title">4.x (unstable) einbeziehen</string>
+    <string name="magic_builder_4x_summary">Analysiert Android-4.x-Kernel 4.4 / 4.9 / 4.14 / 4.19. Ausführbare Builds bleiben an exakte Baselines gebunden.</string>
+    <string name="magic_builder_vivo_legacy_title">Vivo Legacy Local Route</string>
+    <string name="magic_builder_vivo_legacy_summary">Aktiviert die lokale vivo/iQOO-Legacy-Route und X60-Erkennung vor dem Universal-Fallback.</string>
+    <string name="magic_sources_title">Magic Research Sources</string>
+    <string name="magic_sources_summary">Belegquellen, die Magic Builder für Legacy-Kernel-Routing nutzt.</string>
+    <string name="magic_source_k419">GhostLock K4.19 Adapter · exakter 4.19.152-perf+-Beleg</string>
+    <string name="magic_source_vivo4x">vivo 4.x autopatch · getestete 4.9-/4.14-/4.19-Kernel-Familien</string>
+    <string name="magic_df_inventory_title">Samsung DF KMI Bundle · Local</string>
+    <string name="magic_df_inventory_summary">%1$d Module enthalten · %2$d Classic · %3$d Next</string>
+    <string name="magic_vivo_x60_local_title">Local / vivo X60</string>
+    <string name="magic_vivo_x60_local_summary">Erkennt V2045 / V2046A / PD2046-Geräte und priorisiert die vivo-Route. Root wird nur mit exakt vorhandener Kernel-Baseline als runnable markiert.</string>
+
+    <string name="vspr_info_version">Veyra System Permission Provider · Access 2.0.0</string>
+    <string name="vspr_info_provider_body_v2">CVeyra lässt jede App unter ihrer normalen Android-UID laufen und vermittelt privilegierte Aktionen über eine sichtbare, appbezogene Richtlinienschicht. Bei aktivem CVeyra Access wird der Broker über VeyraKSU und Veyras Root-Backend durchgesetzt.</string>
+    <string name="vspr_info_activation_title">CVeyra Permission Activate</string>
+    <string name="vspr_info_activation_body">Die Aktivierung benötigt VeyraKSU 2.0.0 und eine KernelSU-Superuser-Freigabe für Veyra. Vor dem vollständigen Permission Manager wird der vorhandene KernelSU-App-Grant-Zustand gesichert.</string>
+    <string name="vspr_info_permissions_title">Permission Management</string>
+    <string name="vspr_info_permissions_body">Offline speichert Regeln, verwaltet aber keine Apps. Self lässt dich die Apps selbst auswählen. Auto ist für eine spätere Policy-Engine reserviert und noch nicht aktiv. Die detaillierten App-Rechte bleiben unter Grant CVeyra Access sichtbar.</string>
+    <string name="vspr_info_ksu_title">KernelSU und Migration</string>
+    <string name="vspr_info_ksu_body_v2">Ältere direkte KernelSU-Freigaben bleiben zunächst KernelSU-verwaltet und werden vor dem Aktivieren von CVeyra Access gesichert. Veyra löscht sie nicht stillschweigend; füge diese Apps zu CVeyra hinzu, wenn du ihre Verwaltung migrieren möchtest.</string>
+    <string name="vspr_info_modules_title">App Module Loader</string>
+    <string name="vspr_info_modules_body">CVeyra-Module können echte Geräteeinstellungen wie Bedienungshilfen, Entwickleroptionen, USB-Debugging oder Private DNS vorübergehend ändern. Die exakten vorherigen Werte werden gespeichert und beim Deaktivieren wiederhergestellt.</string>
+    <string name="vspr_info_firewall_title">CVeyra Firewall</string>
+    <string name="vspr_info_firewall_body">Die Firewall kombiniert Androids Paket-Netzwerk-Gate mit einer root-persistenten IPv4/IPv6-UID-Regelschicht. Veyra merkt sich nur die von ihm verwalteten Apps und setzt seine eigenen Regeln nach dem Start des VeyraKSU-Moduls erneut.</string>
+    <string name="vspr_info_read_action">Ich habe diese Informationen gelesen</string>
+</resources>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!--
+      Held by the boot gate while it waits out the settle floor and runs the install, so the device
+      cannot drop back into suspend mid-run. Missing this is a hard crash, not a degraded run.
+    -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <!-- Needed to reach the device's own adbd on loopback and to discover its port.-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <!--
+      Declared but not granted by default: only a rooted device (or `adb install -g`) can grant it,
+      and it is what allows wireless debugging to be turned on for a run. Without it the transport
+      still works when the user has wireless debugging on already.
+    -->
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+
+    <!--
+        KernelSU-Next's spoofed manager build rewrites its package to three random words, so no name
+        in this list can cover it and the app has to look for one by what it carries instead. Needs
+        this app to see packages it has not asked about by name; it is a sideloaded root tool, so
+        nothing here is subject to a store's policy on it.
+    -->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+
+    <queries>
+        <package android:name="me.weishu.kernelsu" />
+        <!--
+            KernelSU-Next's manager. The spoofed build of it renames its package to three random
+            words, so a fixed list cannot cover that one - see KernelSuManager, which finds it by the
+            daemon it carries instead.
+        -->
+        <package android:name="com.rifsxd.ksunext" />
+        <!--
+            ReSukiSU's manager, which publishes this one name and does not rewrite it per build. It is
+            still validated inside the kernel by its signature, so a repacked copy is a separate
+            concern from finding it - see KernelSuManager.
+        -->
+        <package android:name="com.resukisu.resukisu" />
+        <package android:name="moe.shizuku.manager" />
+    </queries>
+
+    <application
+        android:name=".RootMyGalaxyApplication"
+        android:allowBackup="false"
+        android:debuggable="false"
+        android:fullBackupContent="false"
+        android:usesCleartextTraffic="false"
+        android:largeHeap="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:localeConfig="@xml/locales_config"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.S25URoot">
+        <profileable android:shell="false" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <provider
+            android:name="rikka.shizuku.ShizukuProvider"
+            android:authorities="${applicationId}.shizuku"
+            android:enabled="true"
+            android:exported="true"
+            android:multiprocess="false"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
+        <service
+            android:name=".CVeyraService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse"
+            android:stopWithTask="false">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="bootstraps the user-enabled CVeyra local shell broker" />
+        </service>
+        <service
+            android:name=".CVeyraBootJobService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name=".RunGuardService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync"
+            android:stopWithTask="false" />
+        <receiver
+            android:name=".CVeyraBootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".CVeyraStartReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="ctrl.mietze.veyraroot.action.CVEYRA_START" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".AutoRootService"
+            android:exported="false"
+            android:process=":autoroot_gate"
+            android:foregroundServiceType="dataSync"
+            android:stopWithTask="false" />
+        <service
+            android:name=".ShizukuBootService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync"
+            android:stopWithTask="false" />
+        <receiver
+            android:name=".AutoRootBootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".AutoRootActionReceiver"
+            android:exported="false" />
+        <receiver
+            android:name=".RunActionReceiver"
+            android:exported="false" />
+        <service
+            android:name=".AdbPairingService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse"
+            android:stopWithTask="false">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="pairs with the device's own wireless debugging" />
+        </service>
+        <receiver
+            android:name=".WirelessAdbCleanupReceiver"
+            android:exported="false" />
+        <receiver
+            android:name=".OpenDeveloperOptionsReceiver"
+            android:exported="false" />
+        <activity
+            android:name=".AdbPairingSetupActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:noHistory="true" />
+        <activity
+            android:name=".InstallActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- What a long press on the app icon offers, without the app being opened first. -->
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity>
+    </application>
+</manifest>

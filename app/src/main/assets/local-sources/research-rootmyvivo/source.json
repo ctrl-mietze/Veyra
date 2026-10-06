@@ -1,0 +1,9 @@
+{
+  "kind": "research-only",
+  "connected": false,
+  "runnablePayloads": false,
+  "repository": "zenyxx-xd/RootMyVivo + zenyxx-xd/RootMyVivo-Payloads",
+  "coverage": "vivo/iQOO full-kernel-string catalog and 5.15/6.1/6.6 payload research",
+  "evidence": "Catalog v5 separates ready/experimental entries and matches exact build/kernel strings.",
+  "note": "Visible in Payload Sources for research/adaptation. It is not treated as a runnable feed until a Veyra-compatible exact payload manifest exists."
+}
