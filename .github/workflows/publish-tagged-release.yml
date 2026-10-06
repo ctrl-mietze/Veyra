@@ -1,0 +1,43 @@
+name: Publish tagged release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout tagged source
+        uses: actions/checkout@v4
+
+      - name: Validate version/tag
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION="$(grep -oE 'appVersionBase[[:space:]]*=[[:space:]]*"[^"]+"' app/build.gradle.kts | head -n1 | cut -d'"' -f2)"
+          test "$GITHUB_REF_NAME" = "v$VERSION"
+
+      - name: Verify staged release hash
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd release-assets
+          sha256sum -c VeyraRoot-1.0.0.sha256
+
+      - name: Publish GitHub Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release edit "$GITHUB_REF_NAME"               --title "Veyra Root v1.0.0 — First Public Release"               --notes-file docs/RELEASE_NOTES_v1.0.0.md               --latest
+            gh release upload "$GITHUB_REF_NAME"               release-assets/VeyraRoot-1.0.0.apk               release-assets/VeyraRoot-1.0.0.sha256               --clobber
+          else
+            gh release create "$GITHUB_REF_NAME"               release-assets/VeyraRoot-1.0.0.apk               release-assets/VeyraRoot-1.0.0.sha256               --title "Veyra Root v1.0.0 — First Public Release"               --notes-file docs/RELEASE_NOTES_v1.0.0.md               --latest
+          fi
