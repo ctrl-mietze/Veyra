@@ -1,7 +1,4 @@
 import java.util.Properties
-import org.gradle.api.provider.ValueSource
-import org.gradle.api.provider.ValueSourceParameters
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.plugin.compose")
@@ -23,29 +20,9 @@ fun signingProperty(envName: String, propertyName: String): String? =
 // plain string here rather than being assembled from somewhere else.
 val appVersionBase = "1.0.0"
 
-// An offset under the version code, not a version of its own: the code is this plus the clock, and the
-// only rule is that it may be raised and never lowered - lowering it would put a new build below an
-// installed one and Android would refuse the install.
-val appVersionCodeBase = 13
-
-// The clock the version code is derived from, read through a value source so the reading counts as
-// a build configuration input. Reading the clock directly is not enough: configuration cache
-// entries outlive builds and store the value, so a local rebuild that changed only source files
-// was handed the previous build's clock and reused its version code — two different APKs under one
-// identity. Being a configuration input means a changed reading invalidates the entry, so every
-// build reconfigures; that reconfiguration is the price of a version code that is unique per build.
-abstract class BuildClockValueSource : ValueSource<Long, ValueSourceParameters.None> {
-    override fun obtain(): Long = System.currentTimeMillis()
-}
-
-// A version code that only ever grows, on every machine that builds this. A per-CI run counter
-// would not be comparable with a local build, and Android refuses to install a lower version code
-// over a higher one, which would break installing a local build over a CI build (or the reverse),
-// so the number is seconds since 2026-01-01 UTC: unique per build everywhere and always larger
-// than the build before it.
-val appVersionCode =
-    appVersionCodeBase +
-        (providers.of(BuildClockValueSource::class) {}.get() / 1000L - 1_767_225_600L).toInt()
+// Public release builds use a stable, monotonically managed code instead of the development
+// clock-derived code. v1.0.0 deliberately starts far above the current personal/dev build range.
+val appVersionCode = 100_000_000
 
 // Which build this is: the CI run that produced it, or the local commit it was built from. Two
 // builds of the same version are otherwise indistinguishable on the phone, which is what this is
