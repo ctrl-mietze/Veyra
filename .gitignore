@@ -9,3 +9,5 @@ keystore/
 *.key
 *.properties.local
 .DS_Store
+
+.kotlin/
