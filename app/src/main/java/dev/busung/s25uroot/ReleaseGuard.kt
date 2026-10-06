@@ -29,6 +29,7 @@ internal object ReleaseGuard {
     private val apkEntrySha256 = linkedMapOf(
         "assets/local-sources/dfroot/targets-v3.json" to "e0246f4f16195bbd71fa864bd81acb698ce609982e517fb39b10d599a1a08058",
         "assets/local-sources/pixel/targets-v3.json" to "bd5a31a2cd793920e2e8e911c345fed9c63ce5ae691f9141325513f40841257d",
+        "assets/vmarked/manifest.json" to "51646425e1e9c76a0057d27316252767ee0b1b8ddfbe5c0b4240ed565d32e48d",
         "assets/local-sources/research-oneplus-p2p3p/source.json" to "68c83bcf53408c09bdc8fbf9d345e5f6cfe517b3327e004546e62e549ffab4a4",
         "assets/local-sources/research-rootmys24/source.json" to "ff133da0ca445ce60e4959553a7898ee6864934dbffe382d2422e30b97a6beb9",
         "assets/local-sources/research-honor80gt/source.json" to "d4708060eec5489e8a84aae4cb6c04ddff296ae426415ffb3abb8f7fdadb1157",

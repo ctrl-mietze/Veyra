@@ -444,7 +444,8 @@ class MainActivity : ComponentActivity() {
         batteryUnrestricted = isBatteryUnrestricted()
         setContent {
             RootMyGalaxyTheme(accentColor = accentColor, themeMode = themeMode) {
-                RootApp(
+                MandatoryReleaseGate {
+                    RootApp(
                     installViewModel = installViewModel,
                     accentColor = accentColor,
                     themeMode = themeMode,
@@ -563,9 +564,10 @@ class MainActivity : ComponentActivity() {
                     onSettingsTargetHandled = { settingsTarget = null },
                     openedRunEntry = openedRunId,
                     onOpenedRunEntryHandled = { openedRunId = null },
-                    restartShortcut = restartShortcut,
-                    onRestartShortcutHandled = { restartShortcut = null },
-                )
+                        restartShortcut = restartShortcut,
+                        onRestartShortcutHandled = { restartShortcut = null },
+                    )
+                }
             }
         }
         maybeRequestBatteryExemption()
@@ -2739,7 +2741,13 @@ private fun VeyraMarkedPage(
     onBack: () -> Unit,
 ) {
     BackHandler(onBack = onBack)
+    val context = LocalContext.current
     val view = LocalView.current
+    LaunchedEffect(Unit) {
+        withContext(Dispatchers.IO) {
+            runCatching { VMarkedRepository.refresh(context) }
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()

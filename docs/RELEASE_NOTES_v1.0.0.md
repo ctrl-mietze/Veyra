@@ -243,3 +243,32 @@ Veyra's research layer references public work from multiple Android/kernel proje
 This is the first public Veyra Root release. The project is intentionally shipping the architecture, diagnostics and safety boundaries together rather than publishing a list of kernels that Veyra cannot actually prove it can handle.
 
 Future releases can expand exact device baselines and the automatic CVeyra policy engine without weakening the evidence requirements introduced here.
+
+
+## Veyra Marked + registry foundation
+
+v1.0.0 also introduces the backend structure for **Veyra Marked +** without changing the existing visible screen.
+
+The repository now contains:
+
+- `vmarked/manifest.json`
+- `vmarked/README.md`
+- a reserved `vmarked/plugins/` directory
+
+The app refreshes the public manifest in the background when the existing Veyra Marked + page is opened and keeps a bundled/cached fallback. The v1.0.0 manifest intentionally contains zero plugins, so the UI still shows the existing **Soon, stay hyped** state exactly as before.
+
+This establishes the registry contract for later installable extensions without prematurely exposing unfinished plugin UI.
+
+## Mandatory public-release updates
+
+The hardened public channel checks the latest stable GitHub release when the app starts online.
+
+If GitHub reports a version newer than the installed public release:
+
+- normal Veyra UI is blocked,
+- there is no skip option,
+- only the required update flow is exposed,
+- the official APK release asset is downloaded and passed to Android's package installer,
+- a GitHub-provided SHA-256 asset digest is verified when one is available.
+
+If the network or GitHub API is unavailable, Veyra does not brick offline use and continues normally. This mandatory gate exists **only in the public hardened release source**; personal/development builds do not contain the forced-update component.
