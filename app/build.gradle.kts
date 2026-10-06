@@ -40,7 +40,7 @@ val buildLabel = listOfNotNull(
     System.getenv("GITHUB_RUN_NUMBER")?.takeIf { it.isNotBlank() }?.let { "ci.$it" } ?: "local",
     buildCommit,
 ).joinToString(".")
-val appVersionName = "$appVersionBase+$buildLabel"
+val appVersionName = appVersionBase
 
 android {
     namespace = "ctrl.mietze.veyraroot"

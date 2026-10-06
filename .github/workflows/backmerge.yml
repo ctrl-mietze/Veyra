@@ -12,9 +12,6 @@ name: Back-merge
 #
 # `workflow_dispatch` is here so a dev that drifted can be levelled without pushing to main again.
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions:

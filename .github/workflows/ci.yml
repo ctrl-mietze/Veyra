@@ -133,11 +133,11 @@ jobs:
           # The run number is in the asset name so two CI downloads of the same version differ.
           mkdir -p ci-release
           cp app/build/outputs/apk/release/*.apk \
-            "ci-release/RootMyGalaxyNext-${VERSION_NAME}-ci${GITHUB_RUN_NUMBER}.apk"
+            "ci-release/VeyraRoot-${VERSION_NAME}-ci${GITHUB_RUN_NUMBER}.apk"
           # The debug APK goes out with it, and it is installable over the signed builds because the
           # debug buildtype is signed with the same key when one is configured (app/build.gradle.kts).
           cp app/build/outputs/apk/debug/*.apk \
-            "ci-release/RootMyGalaxyNext-${VERSION_NAME}-ci${GITHUB_RUN_NUMBER}-debug.apk"
+            "ci-release/VeyraRoot-${VERSION_NAME}-ci${GITHUB_RUN_NUMBER}-debug.apk"
 
       - name: Publish pre-release
         if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/dev'
@@ -150,8 +150,8 @@ jobs:
           VERSION_NAME="$(grep -oE 'appVersionBase[[:space:]]*=[[:space:]]*"[^"]+"' app/build.gradle.kts | head -n 1 | cut -d'"' -f2)"
           TAG="ci-${VERSION_NAME}-${GITHUB_RUN_NUMBER}"
           TITLE="CI build ${VERSION_NAME} (${GITHUB_RUN_NUMBER})"
-          APK="ci-release/RootMyGalaxyNext-${VERSION_NAME}-ci${GITHUB_RUN_NUMBER}.apk"
-          DEBUG_APK="ci-release/RootMyGalaxyNext-${VERSION_NAME}-ci${GITHUB_RUN_NUMBER}-debug.apk"
+          APK="ci-release/VeyraRoot-${VERSION_NAME}-ci${GITHUB_RUN_NUMBER}.apk"
+          DEBUG_APK="ci-release/VeyraRoot-${VERSION_NAME}-ci${GITHUB_RUN_NUMBER}-debug.apk"
           SHORT_SHA="$(echo "$GITHUB_SHA" | cut -c1-7)"
 
           {
@@ -164,11 +164,11 @@ jobs:
             echo "- Branch: ${GITHUB_REF_NAME}"
             echo "- Workflow run: [${GITHUB_RUN_NUMBER}](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})"
             echo
-            echo "Two APKs: \`RootMyGalaxyNext-${VERSION_NAME}-ci${GITHUB_RUN_NUMBER}.apk\` is the release"
+            echo "Two APKs: \`VeyraRoot-${VERSION_NAME}-ci${GITHUB_RUN_NUMBER}.apk\` is the release"
             echo "build, and \`...-debug.apk\` is the same code with debugging on. Both are signed with"
             echo "the repository key, so either installs over the other and over CI builds of this fork that"
-            echo "share its package id. This build is its own app (\`dev.rushiranpise.rmgnext\`): it installs"
-            echo "beside Root My Galaxy rather than over it, and starts with no settings, no history and no"
+            echo "share its package id. This build is its own app (\`ctrl.mietze.veyraroot\`): it installs"
+            echo "beside Veyra Root rather than over it, and starts with no settings, no history and no"
             echo "superuser grant of its own."
             echo
             echo "Tagged releases come from the Release Build workflow, not from here."

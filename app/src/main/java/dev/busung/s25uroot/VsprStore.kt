@@ -29,8 +29,6 @@ internal object VsprStore {
     private const val SHOW_SYSTEM_APPS = "show_system_apps"
     private const val PERMISSION_MODE = "permission_mode"
     private const val SELF_APPS = "self_apps"
-    private const val SHIZUKU_MODULE_PREVIEW = "shizuku_module_preview"
-    private const val ADVEYRA_OWNER_PREVIEW = "adveyra_owner_preview"
 
     private fun prefs(context: Context) =
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
@@ -101,19 +99,6 @@ internal object VsprStore {
         prefs(context).edit().putStringSet(SELF_APPS, next).apply()
     }
 
-    fun shizukuModulePreview(context: Context): Boolean =
-        prefs(context).getBoolean(SHIZUKU_MODULE_PREVIEW, false)
-
-    fun setShizukuModulePreview(context: Context, enabled: Boolean) {
-        prefs(context).edit().putBoolean(SHIZUKU_MODULE_PREVIEW, enabled).apply()
-    }
-
-    fun adVeyraOwnerPreview(context: Context): Boolean =
-        prefs(context).getBoolean(ADVEYRA_OWNER_PREVIEW, false)
-
-    fun setAdVeyraOwnerPreview(context: Context, enabled: Boolean) {
-        prefs(context).edit().putBoolean(ADVEYRA_OWNER_PREVIEW, enabled).apply()
-    }
 }
 
 /**

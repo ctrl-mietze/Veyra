@@ -60,8 +60,8 @@
     <string name="cveyra_boot_title">Start CVeyra on boot</string>
     <string name="cveyra_boot_summary">Starts CVeyra after Android boots. If root already exists, the root broker can be activated immediately.</string>
     <string name="cveyra_grant_title">Grant CVeyra Access</string>
-    <string name="cveyra_grant_summary">V-SPR permission management preview</string>
-    <string name="cveyra_grant_value">Preview</string>
+    <string name="cveyra_grant_summary">CVeyra Access and permission management</string>
+    <string name="cveyra_grant_value">Open</string>
     <string name="cveyra_token_copied">CVeyra token copied</string>
     <string name="cveyra_token_rotated">New CVeyra token generated</string>
     <string name="cveyra_token_regenerate">Regenerate</string>
@@ -101,7 +101,6 @@
     <string name="vspr_disabled_by_provider">Disabled in provider</string>
     <string name="vspr_info_title">V-SPR</string>
     <string name="vspr_info_close">Back</string>
-    <string name="vspr_preview_notice">CVeyra Access is live: supported provider changes are enforced immediately and only persisted after the device confirms them.</string>
     <string name="vspr_show_system_apps">Show system apps</string>
     <string name="vspr_show_system_apps_summary">Hidden by default. System apps with an existing CVeyra rule remain visible.</string>
     <string name="device_information">Device information</string>
@@ -1443,7 +1442,6 @@ Hold Power and Volume Down together for 7 seconds to restart it from there.</str
     <string name="vspr_self_no_apps">No apps are managed yet. Tap + above to add one.</string>
     <string name="vspr_add_app_title">Add app</string>
     <string name="vspr_add_app_empty">No additional apps are available with the current system-app filter.</string>
-    <string name="vspr_preview_activate">Activate preview</string>
     <string name="vspr_shizuku_module_title">Shizuku compatibility module</string>
     <string name="vspr_shizuku_module_body">Shizuku compatibility uses the real Shizuku API permission when the target app requests it. CVeyra applies or revokes that permission through its privileged broker and never reports a fake grant.</string>
     <string name="vspr_adveyra_owner_title">You want to activate Phone Owner permission?</string>

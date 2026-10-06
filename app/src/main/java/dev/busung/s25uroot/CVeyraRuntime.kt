@@ -289,7 +289,7 @@ internal object CVeyraController {
 
     /**
      * CVeyra's shell client. No Permission-Manager policy is involved here; V-SPR remains a
-     * separate preview. This is only the base broker used by Veyra's own features.
+     * separate simulated permission layer. This is the base broker used by Veyra's own features.
      */
     fun shell(context: Context, command: String): ShizukuController.ShellResult? {
         if (CVeyraAccessStore.isActive(context)) {

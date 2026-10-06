@@ -168,8 +168,8 @@ jobs:
           set -euo pipefail
           VERSION_NAME="$(grep -oE 'appVersionBase[[:space:]]*=[[:space:]]*"[^"]+"' app/build.gradle.kts | head -n 1 | cut -d'"' -f2)"
           mkdir -p release-assets
-          cp app/build/outputs/apk/release/*.apk "release-assets/RootMyGalaxyNext-${VERSION_NAME}.apk"
-          cp app/build/outputs/apk/debug/*.apk "release-assets/RootMyGalaxyNext-${VERSION_NAME}-debug.apk"
+          cp app/build/outputs/apk/release/*.apk "release-assets/VeyraRoot-${VERSION_NAME}.apk"
+          cp app/build/outputs/apk/debug/*.apk "release-assets/VeyraRoot-${VERSION_NAME}-debug.apk"
 
       - name: Generate release notes
         shell: bash
@@ -187,11 +187,11 @@ jobs:
             echo "Version: $VERSION_NAME"
             echo "Commit: $TAG_COMMIT"
             echo
-            echo "Two APKs: \`RootMyGalaxyNext-${VERSION_NAME}.apk\` is the release build, and"
-            echo "\`RootMyGalaxyNext-${VERSION_NAME}-debug.apk\` is the same code with debugging on. Both are"
+            echo "Two APKs: \`VeyraRoot-${VERSION_NAME}.apk\` is the release build, and"
+            echo "\`VeyraRoot-${VERSION_NAME}-debug.apk\` is the same code with debugging on. Both are"
             echo "signed with the repository release key, so either installs over the other and over releases"
             echo "of this fork that share its package id. This build is its own app"
-            echo "(\`dev.rushiranpise.rmgnext\`), so Root My Galaxy is left alone if it is installed - and so"
+            echo "(\`ctrl.mietze.veyraroot\`), so Veyra Root is left alone if it is installed - and so"
             echo "are this app's own settings, history and superuser grant, which start empty here."
             echo
             if [ -n "$PREVIOUS_TAG" ]; then

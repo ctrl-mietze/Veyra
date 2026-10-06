@@ -9949,11 +9949,24 @@ private fun CVeyraAccessPage(
             confirmButton = {
                 FilledTonalButton(onClick = {
                     clickHaptic(view)
-                    VsprStore.setShizukuModulePreview(context, true)
-                    setProviderEnabled(VsprPrivilege.Shizuku, true)
-                    showShizukuModuleDialog = false
+                    val availability = ShizukuController.availability()
+                    if (availability == ShizukuAvailability.Ready) {
+                        setProviderEnabled(VsprPrivilege.Shizuku, true)
+                        Toast.makeText(
+                            context,
+                            "Shizuku provider active",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                        showShizukuModuleDialog = false
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Shizuku permission is not active yet.",
+                            Toast.LENGTH_LONG,
+                        ).show()
+                    }
                 }) {
-                    Text(stringResource(R.string.vspr_preview_activate))
+                    Text("Activate")
                 }
             },
             dismissButton = {
@@ -9973,11 +9986,24 @@ private fun CVeyraAccessPage(
             confirmButton = {
                 FilledTonalButton(onClick = {
                     clickHaptic(view)
-                    VsprStore.setAdVeyraOwnerPreview(context, true)
-                    setProviderEnabled(VsprPrivilege.AdVeyra, true)
-                    showAdVeyraOwnerDialog = false
+                    val dpm = context.getSystemService(android.app.admin.DevicePolicyManager::class.java)
+                    if (dpm?.isDeviceOwnerApp(context.packageName) == true) {
+                        setProviderEnabled(VsprPrivilege.AdVeyra, true)
+                        Toast.makeText(
+                            context,
+                            "ADVeyra Device Owner provider active",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                        showAdVeyraOwnerDialog = false
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Veyra is not the Android Device Owner on this device.",
+                            Toast.LENGTH_LONG,
+                        ).show()
+                    }
                 }) {
-                    Text(stringResource(R.string.vspr_preview_activate))
+                    Text("Activate")
                 }
             },
             dismissButton = {
@@ -10063,22 +10089,6 @@ private fun CVeyraAccessPage(
         }
 
         item {
-            Card(
-                modifier = Modifier.fillMaxWidth().alpha(0.72f),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
-                ),
-            ) {
-                Text(
-                    stringResource(R.string.vspr_preview_notice),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(16.dp),
-                )
-            }
-        }
-
-        item {
             val interactionSource = remember { MutableInteractionSource() }
             Card(
                 onClick = {
@@ -10146,12 +10156,6 @@ private fun CVeyraAccessPage(
                             }
                             else -> {
                                 setProviderEnabled(privilege, enabled)
-                                if (!enabled && privilege == VsprPrivilege.Shizuku) {
-                                    VsprStore.setShizukuModulePreview(context, false)
-                                }
-                                if (!enabled && privilege == VsprPrivilege.AdVeyra) {
-                                    VsprStore.setAdVeyraOwnerPreview(context, false)
-                                }
                             }
                         }
                     },
@@ -10409,7 +10413,7 @@ private fun CVeyraAccessPage(
                     } else {
                         null
                     },
-                    onPreviewGrantChanged = { grantRevision++ },
+                    onGrantChanged = { grantRevision++ },
                 )
             }
         }
@@ -10472,7 +10476,7 @@ private fun VsprAppCard(
     providerEnabled: (VsprPrivilege) -> Boolean,
     interactive: Boolean,
     onRemove: (() -> Unit)?,
-    onPreviewGrantChanged: () -> Unit,
+    onGrantChanged: () -> Unit,
 ) {
     val context = LocalContext.current
     val view = LocalView.current
@@ -10566,7 +10570,7 @@ private fun VsprAppCard(
                                             enabled,
                                         )
                                         grants = VsprStore.grants(context, app.packageName)
-                                        onPreviewGrantChanged()
+                                        onGrantChanged()
                                     }
                                     Toast.makeText(
                                         context,
