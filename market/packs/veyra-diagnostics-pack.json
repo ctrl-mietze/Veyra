@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "kind": "settings-data",
+  "id": "veyra-diagnostics-pack",
+  "version": "1.0.0",
+  "data": {
+    "description": "First-party data-only Veyra Market extension."
+  }
+}
