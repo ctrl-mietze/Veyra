@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "channel": "stable",
+  "entries": [
+    {
+      "id": "veyra-diagnostics-pack",
+      "name": "Veyra Diagnostics Pack",
+      "summary": "Example first-party data extension. Adds a diagnostics entry to Settings without injecting code into Veyra.",
+      "version": "1.0.0",
+      "versionCode": 1,
+      "minVeyraCode": 0,
+      "kind": "data-pack",
+      "artifactUrl": "https://raw.githubusercontent.com/ctrl-mietze/Veyra/main/market/packs/veyra-diagnostics-pack.json",
+      "sha256": "635a3d64641669574517085ff120c3bbe875ed61ff0940676f4925d629e3650f",
+      "size": 192,
+      "capabilities": ["settings-entry"],
+      "settingsEntries": [
+        {
+          "id": "diagnostics-pack",
+          "title": "Veyra Diagnostics Pack",
+          "summary": "Installed through Veyra Market · data-only extension",
+          "action": "info",
+          "value": "The diagnostics pack is installed and active."
+        }
+      ]
+    }
+  ]
+}
