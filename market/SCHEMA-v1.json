@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "channel": "stable",
+  "entries": [
+    {
+      "id": "unique-extension-id",
+      "name": "Display name",
+      "summary": "Short description",
+      "version": "1.0.0",
+      "versionCode": 1,
+      "minVeyraCode": 0,
+      "kind": "data-pack",
+      "artifactUrl": "https://example.invalid/extension.json",
+      "sha256": null,
+      "size": 0,
+      "packageName": null,
+      "signerSha256": null,
+      "capabilities": ["settings-entry"],
+      "settingsEntries": [
+        {
+          "id": "settings-row-id",
+          "title": "Extension feature",
+          "summary": "Shown inside Veyra Settings",
+          "action": "info",
+          "value": "Extension-specific value"
+        }
+      ]
+    }
+  ]
+}
