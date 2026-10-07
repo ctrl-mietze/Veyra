@@ -288,7 +288,6 @@ Public third-party repositories listed in the research layer remain the work of 
 See:
 
 - [THIRD_PARTY_RESEARCH.md](docs/THIRD_PARTY_RESEARCH.md)
-- [LICENSE](LICENSE)
 
 ## Status
 
