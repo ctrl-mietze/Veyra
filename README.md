@@ -1,45 +1,86 @@
+<p align="center">
+  <img src="assets/veyra-root-banner.jpg" alt="Veyra Root — Exact evidence before kernel writes" width="100%">
+</p>
+
+<p align="center">
+  <a href="https://github.com/ctrl-mietze/Veyra/releases/latest"><img src="https://img.shields.io/github/v/release/ctrl-mietze/Veyra?display_name=tag&style=for-the-badge&color=7c3aed&label=release" alt="Latest release"></a>
+  <img src="https://img.shields.io/badge/Android-API%2026%2B-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android API 26+">
+  <img src="https://img.shields.io/badge/tests-796%20%2F%20796-7c3aed?style=for-the-badge" alt="796 / 796 tests">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-8b5cf6?style=for-the-badge" alt="Apache 2.0"></a>
+</p>
+
+<p align="center">
+  <strong>Android root · kernel research · privileged-device management</strong><br>
+  <sub>Evidence first. No guessed kernel writes.</sub>
+</p>
+
+<p align="center">
+  <a href="https://github.com/ctrl-mietze/Veyra/releases/tag/v2.0.0"><strong>⬇ Download v2.0.0</strong></a>
+  &nbsp;•&nbsp;
+  <a href="docs/RELEASE_NOTES_v2.0.0.md">Release notes</a>
+  &nbsp;•&nbsp;
+  <a href="SECURITY.md">Security</a>
+  &nbsp;•&nbsp;
+  <a href="docs/THIRD_PARTY_RESEARCH.md">Research credits</a>
+</p>
+
+---
+
 # Veyra Root
 
-**Veyra Root** is an Android root, kernel-research and privileged-device-management app built around one rule:
+**Veyra Root** is an Android root, kernel-research and privileged-device-management project built around one rule:
 
-> **exact evidence before kernel writes.**
+> **Exact evidence before kernel writes.**
 
-Veyra does not treat a matching phone name, kernel family or installed root manager as proof that a payload is safe to run. When exact evidence is missing, it prefers analysis, source cross-checks and support-bundle collection over guessed offsets.
+A matching phone name, kernel family or installed root manager is **not** treated as proof that a payload is safe to run. When exact evidence is missing, Veyra prefers analysis, source cross-checks and support-bundle collection over guessed offsets.
 
-This repository contains the first public release: **Veyra Root v1.0.0**.
+The current public release is **Veyra Root v2.0.0**.
 
-[Latest release](https://github.com/ctrl-mietze/Veyra-Root/releases/latest)
+## ✦ At a glance
 
-## Package
+| Root & Providers | Kernel Research | Privileged Management | Builder Tooling |
+| --- | --- | --- | --- |
+| Real UID 0 verification | Magic Builder | CVeyra Permission Provider 2.0.0 | Builder Workingbench |
+| Temporary-root awareness | Boot/kernel evidence | VeyraKSU 2.0.0 | Session + report export |
+| KernelSU / KernelSU-Next | KMI / source matching | Permission broker | OTA range extraction |
+| Magisk-style boot-root awareness | Analysis-only fallback | Firewall + system controls | Termux helper generation |
 
-```text
-ctrl.mietze.veyraroot
-```
+## ⬇ Public release
 
-The public v1.0.0 APK keeps the established Veyra signing certificate so it can update over prior Veyra builds signed with the same key.
+**Veyra Root v2.0.0** is the current official public build.
 
-## What Veyra does
+| | |
+| --- | --- |
+| **Package** | `ctrl.mietze.veyraroot` |
+| **Version** | `2.0.0` |
+| **versionCode** | `200000000` |
+| **APK** | [VeyraRoot-2.0.0.apk](https://github.com/ctrl-mietze/Veyra/releases/download/v2.0.0/VeyraRoot-2.0.0.apk) |
+| **SHA-256** | `edc2af1e93861d60e94e99fff7aa776ba119280d63fa8bd5473e2ed84b55bb7c` |
+| **Signer SHA-256** | `f1d8f55217d1149f88db9e1642735363d0198c33c8da8d77547987cedf08c582` |
 
-Veyra combines several layers that used to live separately:
+> The official public APK uses the established Veyra signing identity so compatible earlier official Veyra Root builds can be updated in place.
 
-- real root-access detection for Veyra itself
-- temporary-root / jailbreak routes
-- KernelSU / KernelSU-Next / ReSukiSU integration
-- Magisk-style boot-root awareness
-- provider migration
-- Magic Builder kernel analysis
-- exact payload/source management
-- CVeyra Permission Provider 2.0.0
-- VeyraKSU 2.0.0
-- Wireless ADB and Shizuku integration
-- system/recovery utilities
-- local diagnostics and support bundles
+[**→ Open the complete v2.0.0 release**](https://github.com/ctrl-mietze/Veyra/releases/tag/v2.0.0)
 
-## Root detection
+---
 
-Veyra does not call a device rooted merely because KernelSU Manager or Magisk is installed.
+## ✦ What makes Veyra different
 
-It checks whether **Veyra itself can execute UID 0**, then classifies the active route. The UI can distinguish:
+Veyra separates **what can be observed** from **what is actually proven runnable**.
+
+A device can match a family, architecture or kernel generation without automatically receiving a writable/root payload. Veyra keeps those states distinct:
+
+- **Verified runnable** — exact evidence is sufficient for the route.
+- **Compatible / candidate** — the device or kernel matches known constraints but still needs validation.
+- **Analysis-only** — Veyra can inspect and export evidence, but refuses to invent missing physical addresses, offsets or payload constants.
+
+That boundary is intentional.
+
+## ⚡ Root detection & provider awareness
+
+Veyra does not mark a device rooted simply because a manager app exists.
+
+It checks whether **Veyra itself can execute as UID 0**, then classifies the active route. The app can distinguish:
 
 - Veyra temporary root
 - external temporary-root providers
@@ -47,83 +88,86 @@ It checks whether **Veyra itself can execute UID 0**, then classifies the active
 - Magisk-style boot root
 - other real root providers
 
-External providers can be routed into Veyra's provider-migration flow instead of being silently treated as a Veyra session.
+External providers can be routed into Veyra's provider-migration flow instead of being silently mislabeled as a Veyra session.
 
-## Magic Builder
+## 🧠 Magic Builder
 
-Magic Builder is Veyra's device/kernel research layer.
+Magic Builder is Veyra's kernel/device research layer.
 
 It can:
 
 - capture and parse boot images
-- identify ARM64 Android kernel Images by the real Image header
-- identify ELF64/AArch64 kernels
+- identify ARM64 Android kernel Images from the real Image header
+- identify ELF64 / AArch64 kernels
 - read the Linux kernel banner independently from kallsyms decoding
 - analyze kallsyms and symbol layouts
-- produce analysis-only `target.generated.h` and `offsets.json`
+- generate analysis artifacts such as `target.generated.h` and `offsets.json`
 - cross-check source-derived evidence
 - collect support bundles
 - keep runnable output blocked when required evidence is missing
 
-### Kernel families
+### Kernel-family routing
 
-The current analysis architecture covers legacy and modern Android kernel families across:
+The analysis architecture covers both legacy and modern Android kernel families, including:
 
 - 4.x
 - 5.x
 - 6.x
 - 7.x research routing
 
-A family match is **not** an automatic exploit match. Runnable output still depends on an exact baseline or equivalent target evidence.
+A family match is **not** an automatic exploit match.
 
-### Five deep diagnostics
+### Deep diagnostics
 
-Magic Builder v1.0.0 includes:
+Magic Builder exposes dedicated diagnostics for difficult ports:
 
 1. **Source Match Matrix** — ranks research sources against the current device/kernel.
 2. **Kernel Gate** — shows the exact baseline/family decision.
-3. **KMI Matrix** — compares the device against the local DF/KMI inventory.
-4. **Live Symbols** — reads selected live symbols when the privileged backend permits it.
-5. **Boot Evidence Report** — exports exact architecture/version evidence from the captured boot image.
+3. **KMI Matrix** — compares the device with Veyra's local DF/KMI inventory.
+4. **Live Symbols** — reads selected symbols when the privileged backend permits it.
+5. **Boot Evidence Report** — exports architecture/version evidence from the captured boot image.
 
-## vivo / iQOO / Kona research
+## 🧩 Builder Workingbench
 
-Veyra includes a dedicated vivo legacy intelligence path.
+The current Veyra generation consolidates builder workflows into **Builder Workingbench** while keeping builder-specific settings where they belong.
 
-For the vivo X60/Kona family the source layer can use evidence such as:
+Current tooling includes:
 
-- Qualcomm Kona / SM8250
-- ARM64
-- Linux 4.19.152
-- `-perf` source configuration
-- kallsyms source configuration
-- full live kernel release matching
+- resumable builder sessions
+- OTA range extraction
+- local image/hash comparison
+- strategy matrices
+- evidence grouping and conflict tracking
+- risk modes
+- report import/export
+- candidate/session export
+- Termux helper generation
+- automatic dependency checks/preparation
+- Android Download output handling with fallback paths
+- ADB and Shizuku/rish-aware helper paths
 
-A difficult vendor kallsyms layout can fall back to **source-assisted analysis** instead of ending in a generic architecture exception.
+## 🧬 DF Compatible / Veyra DF+
 
-That fallback is intentionally analysis-only until the remaining live physical/symbol evidence is verified.
+The DF route uses **kernel/KMI evidence** instead of blindly following the userspace Android version.
 
-## Payload Sources
+The current architecture includes:
 
-Veyra supports normal runnable payload feeds and built-in Local/Research sources.
+- DF Compatible
+- Veyra DF+
+- Samsung / DEFEX-aware routing
+- OnePlus / Oppo / realme profiles
+- generic GKI routing
+- installed manager / ksud awareness
+- KernelSU-Next package awareness
+- kernel-release-first KMI selection
+- recovery/runtime controls
+- root-on-boot and soft-reboot options where supported
+- module-disable controls
+- image-partition protection controls
 
-Research-only entries are visible in **Settings → Payload Management → Payload Sources**, but use an empty runnable manifest until a real Veyra-compatible exact payload definition exists.
+Legacy 4.19 targets such as Kona remain evidence-driven and are not silently promoted into modern GKI routes.
 
-Included research references currently cover:
-
-- [p2p3p/GhostLock-for-OnePlus](https://github.com/p2p3p/GhostLock-for-OnePlus)
-- [NanoTurtle1145/root-my-s24](https://github.com/NanoTurtle1145/root-my-s24)
-- [yakidango-official/GhostLock-H80GT](https://github.com/yakidango-official/GhostLock-H80GT)
-- [JoinChang/ghostlock-oneplus](https://github.com/JoinChang/ghostlock-oneplus)
-- [sarabpal-dev/IonStack-S22U](https://github.com/sarabpal-dev/IonStack-S22U)
-- [zenyxx-xd/RootMyVivo](https://github.com/zenyxx-xd/RootMyVivo)
-- [zenyxx-xd/RootMyVivo-Payloads](https://github.com/zenyxx-xd/RootMyVivo-Payloads)
-- [rushiranpise/Shizuku-Next](https://github.com/rushiranpise/Shizuku-Next)
-- [ZProtons/android_kernel_vivo_kona](https://github.com/ZProtons/android_kernel_vivo_kona)
-
-See [Third-party research notes](docs/THIRD_PARTY_RESEARCH.md).
-
-## CVeyra Permission Provider 2.0.0
+## 💜 CVeyra Permission Provider 2.0.0
 
 CVeyra is Veyra's privileged action broker and permission-management layer.
 
@@ -137,123 +181,114 @@ The 2.0.0 activation flow verifies:
 6. existing direct KernelSU grants are backed up,
 7. the CVeyra root broker can be enforced.
 
-After activation, CVeyra Access becomes an always-on root-broker mode.
+After activation, **CVeyra Access** becomes the always-on privileged broker mode.
 
-### Permission Management modes
+### Permission Management
 
-- **Offline** — stored rules remain, but no apps are managed.
-- **Self** — you choose managed applications.
-- **Auto** — reserved for a later policy engine.
+| Mode | Behaviour |
+| --- | --- |
+| **Offline** | Keeps stored rules but manages no applications. |
+| **Self** | The user chooses which applications are managed. |
+| **Auto** | Reserved for the later policy engine. |
 
-Detailed provider privileges stay visible on **Grant CVeyra Access**.
+Supported state changes are persisted only after the device-side action succeeds. Impossible transitions are refused rather than displayed as successful fake grants.
 
-### Real enforcement
+## 🛡 Public Release hardening
 
-V-SPR/CVeyra v2 no longer treats permission rows as decorative preview state.
+The public v2 release includes Veyra's dedicated **ReleaseGuard** layer.
 
-Supported changes are persisted only after the device-side operation succeeds.
+Current checks include:
 
-The policy engine can work with:
+- official signing-certificate pinning
+- package/build identity verification
+- real non-debuggable / non-test-only verification
+- split/repack detection
+- trusted APK source/path checks
+- SHA-256 integrity checks for critical APK entries and native libraries
+- debugger detection
+- `TracerPid` / tracing checks
+- Frida marker detection
+- Xposed / LSPosed marker detection
+- Substrate marker detection
+- `LD_PRELOAD` checks
+- suspicious process-map, thread and file-descriptor checks
+- repeated runtime guard/watchdog verification
+- backups disabled
+- cleartext traffic disabled
+- shell profiling disabled
 
-- CVeyra broker allow-list state
-- Android runtime permission grants such as `WRITE_SECURE_SETTINGS` when requested by the target app
-- Shizuku API permission state when requested by the target app
-- actual KernelSU Superuser-grant detection
-- actual Android system-UID state
-- actual Android Device Owner state
+No Android client-side protection is mathematically unbreakable. The goal is to make casual resigning, repacking, asset replacement, binary patching and runtime instrumentation substantially harder without rejecting normal legitimate root use.
 
-Impossible runtime transitions are refused rather than displayed as successful fake grants.
+See [Release protection](docs/RELEASE_PROTECTION.md) and [Security Policy](SECURITY.md).
 
-## VeyraKSU 2.0.0
+## 🔄 Mandatory public update channel
 
-VeyraKSU is the KernelSU compatibility/service layer used by CVeyra Access.
+The hardened public build uses Veyra's public GitHub update channel.
 
-It provides:
+When the published channel reports a `versionCode` higher than the installed public build, the update is treated as required. The download path validates:
 
-- permission-bridge state
-- access activation state
-- provider-migration compatibility
-- boot/service/late-load status
-- persistent CVeyra firewall state
-- root-broker integration
+- package identity
+- versionCode
+- published APK SHA-256
+- Veyra signer identity
+- HTTPS transport
 
-## App Module Loader
+Public v2 establishes `200000000` as the current stable public versionCode baseline.
 
-CVeyra Management includes restore-safe system-state modules for:
+## 🔌 ADB Manager
 
-- Hide accessibility
-- Hide developer options
-- Hide USB debugging
-- Hide Private DNS
-
-These modules change the **real Android setting** while enabled and restore the exact previous value when disabled.
-
-They are not per-app hook spoofers.
-
-## CVeyra Firewall
-
-The CVeyra firewall combines:
-
-- Android package networking control where supported
-- root-owned IPv4 UID rules
-- root-owned IPv6 UID rules
-- persistent re-application through VeyraKSU
-
-Only Veyra-managed package state is persisted.
-
-## ADB Manager
-
-The Veyra ADB Manager groups:
+The Veyra ADB Manager groups the supported startup paths:
 
 - Start via Wireless Debugging
 - Start via USB debugging
 - Start via Computer
 
-Wireless ADB keeps Veyra's own authenticated pairing/session implementation.
+Wireless ADB retains Veyra's own authenticated pairing/session handling.
 
-## System Manager
+## 🧱 System & recovery tools
 
-System Manager includes reversible system-update blocking through CVeyra.
+Veyra also contains system/recovery utilities, including reversible system-update control through CVeyra.
 
-Veyra remembers only update components it disabled itself, so restoring updates does not blindly re-enable unrelated packages the user had already disabled.
+Veyra remembers only updater components it disabled itself so restoring updates does not blindly re-enable unrelated packages that were already disabled by the user.
 
-## Release hardening
+---
 
-The official v1.0.0 APK enables a release-only protection layer.
+<details>
+<summary><strong>🔬 Research sources & project lineage</strong></summary>
 
-It includes:
+Veyra supports normal runnable payload feeds and built-in **Local / Research** sources.
 
-- official certificate pinning
-- package identity checks
-- critical APK-entry SHA-256 verification
-- non-debuggable release configuration
-- backup disabled
-- shell profiling disabled
-- cleartext traffic disabled
-- debugger detection
-- `TracerPid` / ptrace detection
-- process-local Frida/Xposed/LSPosed/Substrate detection
-- suspicious injected-thread detection
-- suspicious process file-descriptor detection
-- `LD_PRELOAD` detection
-- repeated runtime integrity checks
-- R8 minification/obfuscation focused on Veyra-owned code
-- legacy JNI ABI preservation
+Research-only entries remain analysis/reference material until a real Veyra-compatible exact payload definition exists.
 
-No Android client-side protection is mathematically unbreakable. The goal is to make casual repacking, resigning and runtime patching substantially harder without rejecting normal root use.
+Current research references include public work from:
 
-See [Release protection](docs/RELEASE_PROTECTION.md) and [Security Policy](SECURITY.md).
+- [p2p3p/GhostLock-for-OnePlus](https://github.com/p2p3p/GhostLock-for-OnePlus)
+- [NanoTurtle1145/root-my-s24](https://github.com/NanoTurtle1145/root-my-s24)
+- [yakidango-official/GhostLock-H80GT](https://github.com/yakidango-official/GhostLock-H80GT)
+- [JoinChang/ghostlock-oneplus](https://github.com/JoinChang/ghostlock-oneplus)
+- [sarabpal-dev/IonStack-S22U](https://github.com/sarabpal-dev/IonStack-S22U)
+- [zenyxx-xd/RootMyVivo](https://github.com/zenyxx-xd/RootMyVivo)
+- [zenyxx-xd/RootMyVivo-Payloads](https://github.com/zenyxx-xd/RootMyVivo-Payloads)
+- [rushiranpise/Shizuku-Next](https://github.com/rushiranpise/Shizuku-Next)
+- [ZProtons/android_kernel_vivo_kona](https://github.com/ZProtons/android_kernel_vivo_kona)
 
-## Build
+Veyra Root evolved from work based on **Root My Galaxy Next / Root My Galaxy** and retains compatibility code where required. Those projects and other referenced repositories remain the work of their respective authors.
 
-Requirements:
+See [THIRD_PARTY_RESEARCH.md](docs/THIRD_PARTY_RESEARCH.md).
+
+</details>
+
+<details>
+<summary><strong>🛠 Build from source</strong></summary>
+
+### Requirements
 
 - JDK 21
 - Android SDK 37
 - Android build tools compatible with API 37
 - arm64-v8a target
 
-Point Gradle at the Android SDK using `local.properties` or `ANDROID_HOME`.
+Point Gradle at the Android SDK through `local.properties` or `ANDROID_HOME`.
 
 Development build:
 
@@ -267,9 +302,11 @@ Release build:
 ./gradlew :app:assembleRelease
 ```
 
-The official hardened release additionally requires the official Veyra signer. A differently signed public-source build is intentionally not considered an official Veyra binary.
+The official hardened public build additionally depends on the official Veyra signing identity. A differently signed build from public source is intentionally not considered an official Veyra binary.
 
-## Release authenticity
+</details>
+
+## 🔐 Release authenticity
 
 Official signing-certificate SHA-256:
 
@@ -277,20 +314,15 @@ Official signing-certificate SHA-256:
 f1d8f55217d1149f88db9e1642735363d0198c33c8da8d77547987cedf08c582
 ```
 
-Release checksums are published with each GitHub release.
+APK checksums are published with each GitHub release.
 
-## Project lineage and credits
+The Public-v2 source baseline completed:
 
-Veyra Root evolved from work based on Root My Galaxy Next / Root My Galaxy and retains compatibility code where required.
+**796 / 796 unit tests passed — 0 failures · 0 errors · 0 skipped**
 
-Public third-party repositories listed in the research layer remain the work of their respective authors. Veyra does not relabel those repositories as its own payloads.
+---
 
-See:
-
-- [THIRD_PARTY_RESEARCH.md](docs/THIRD_PARTY_RESEARCH.md)
-
-## Status
-
-**v1.0.0 is the first public Veyra Root release.**
-
-Future releases can add exact device baselines and broader CVeyra policy automation without weakening the exact-evidence rules introduced here.
+<p align="center">
+  <strong>Veyra Root</strong><br>
+  <sub>Control. Understand. Verify. Go further.</sub>
+</p>
