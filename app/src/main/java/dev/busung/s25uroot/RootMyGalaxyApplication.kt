@@ -43,8 +43,8 @@ class RootMyGalaxyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        ReleaseGuard.install(this)
         AppLog.install(this)
+        ReleaseGuard.install(this)
         CVeyraAccessStore.enforce(this)
 
         if (AppPreferences.uiSoundsEnabled(this)) {

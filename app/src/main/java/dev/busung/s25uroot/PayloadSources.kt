@@ -39,7 +39,7 @@ data class PayloadSource(
         get() = if (isLocal) {
             when (localKey) {
                 "pixel" -> "Local / Pixel"
-                "dfroot" -> "Local / New (fast)"
+                "dfroot" -> "Local / DF Compatible + DF+"
                 "research-oneplus-p2p3p" -> "Local / GhostLock OnePlus"
                 "research-rootmys24" -> "Local / Root My S24"
                 "research-honor80gt" -> "Local / GhostLock Honor 80 GT"

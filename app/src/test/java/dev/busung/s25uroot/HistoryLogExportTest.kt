@@ -32,7 +32,7 @@ class HistoryLogExportTest {
         val name = HistoryLogExporter.archiveFileName(entries, now = 1_767_225_600_000)
 
         assertTrue(name.endsWith("-2.zip"))
-        assertTrue(name.startsWith("RootMyGalaxy-logs-"))
+        assertTrue(name.startsWith("VeyraRoot-logs-"))
     }
 
     @Test
@@ -55,7 +55,7 @@ class HistoryLogExportTest {
         // Date and time are formatted in the device's zone, so the shape is what is asserted here
         // rather than a fixed hour.
         assertTrue(
-            firstName.matches(Regex("RootMyGalaxy-\\d{8}-\\d{6}-succeeded-11111111\\.log")),
+            firstName.matches(Regex("VeyraRoot-\\d{8}-\\d{6}-succeeded-11111111\\.log")),
         )
         // Same second, same result: only the id keeps the two archive entries apart.
         assertNotEquals(firstName, HistoryLogExporter.entryFileName(second))

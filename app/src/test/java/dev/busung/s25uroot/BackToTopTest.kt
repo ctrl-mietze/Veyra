@@ -51,12 +51,11 @@ class BackToTopTest {
     fun `every tab page goes through the wrapper, and the one that does not draws the button itself`() {
         val main = source("MainActivity.kt")
 
-        // Overview, the run detail, Logs and Settings go through the wrapper. The history list is the
-        // exception, and it is the only place in this window that names the button directly - because the
-        // export and delete buttons already occupy that corner while a selection is live.
-        assertEquals(4, main.split("PageList(").size - 1)
-        // Three of the four own their state through the wrapper's helper; Settings passes the state it
-        // already holds, because that page jumps to a card by it.
+        // Overview, run detail, Logs, Settings and CVeyra Access use the wrapper. History remains
+        // the one list that draws the shared button itself because selection controls occupy that corner.
+        assertEquals(5, main.split("PageList(").size - 1)
+        // Four pages own their state through the helper; Settings and CVeyra Access keep list state
+        // explicitly because they also use it for navigation/jump behavior.
         assertEquals(4, main.split("rememberPageListState()").size - 1)
         assertEquals(1, main.split("BackToTopFab(").size - 1)
     }

@@ -2,7 +2,11 @@ package ctrl.mietze.veyraroot
 
 enum class RootMethod(val storedValue: String, val label: String) {
     Standard("standard", "Standard"),
-    Fast("fast", "New (fast)");
+    DfCompatible("df-compatible", "DF Compatible"),
+    Fast("fast", "Veyra DF+");
+
+    val usesDf: Boolean
+        get() = this == DfCompatible || this == Fast
 
     companion object {
         fun fromStoredValue(value: String?): RootMethod =
@@ -27,19 +31,39 @@ data class FastRootSupport(
             17 to setOf("6.18"),
         )
 
+        private fun androidMajorFromSdk(sdk: Int): Int = when (sdk) {
+            31, 32 -> 12
+            33 -> 13
+            34 -> 14
+            35 -> 15
+            36 -> 16
+            37 -> 17
+            else -> sdk
+        }
+
         fun forSnapshot(snapshot: DeviceSnapshot): FastRootSupport {
-            val androidMajor = snapshot.androidRelease.substringBefore('.').toIntOrNull()
-                ?: snapshot.sdk
+            val systemAndroidMajor = snapshot.androidRelease.substringBefore('.').toIntOrNull()
+                ?: androidMajorFromSdk(snapshot.sdk)
             val kernelSeries = snapshot.kernelRelease
                 .split('.')
                 .take(2)
                 .joinToString(".")
+            // The kernel's own GKI/KMI branch is authoritative when present. Updated phones can run
+            // newer Android userspace while retaining an older kernel KMI (for example Android 16
+            // userspace on an android15-6.6 kernel).
+            val kernelAndroidMajor = Regex("[-_]android(\\d+)(?:[-_]|$)")
+                .find(snapshot.kernelRelease)
+                ?.groupValues
+                ?.getOrNull(1)
+                ?.toIntOrNull()
+            val androidMajor = kernelAndroidMajor ?: systemAndroidMajor
             val available = kernelSeries in MATRIX[androidMajor].orEmpty()
             val kmi = if (available) "android${androidMajor}-${kernelSeries}" else null
             val reason = if (available) {
-                "UniNew/DFRoot KMI available: $kmi"
+                val source = if (kernelAndroidMajor != null) "kernel KMI" else "system fallback"
+                "DF-compatible KMI mapping available: $kmi · $source"
             } else {
-                "New (fast) is not available for Android $androidMajor / kernel $kernelSeries"
+                "DF is not available for KMI android$androidMajor / kernel $kernelSeries"
             }
             return FastRootSupport(
                 available = available,

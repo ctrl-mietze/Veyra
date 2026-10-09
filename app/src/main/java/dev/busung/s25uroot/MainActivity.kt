@@ -391,7 +391,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ReleaseGuard.checkNow(this)
         enableEdgeToEdge()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             window.isNavigationBarContrastEnforced = false
@@ -444,8 +443,7 @@ class MainActivity : ComponentActivity() {
         batteryUnrestricted = isBatteryUnrestricted()
         setContent {
             RootMyGalaxyTheme(accentColor = accentColor, themeMode = themeMode) {
-                MandatoryReleaseGate {
-                    RootApp(
+                RootApp(
                     installViewModel = installViewModel,
                     accentColor = accentColor,
                     themeMode = themeMode,
@@ -564,10 +562,9 @@ class MainActivity : ComponentActivity() {
                     onSettingsTargetHandled = { settingsTarget = null },
                     openedRunEntry = openedRunId,
                     onOpenedRunEntryHandled = { openedRunId = null },
-                        restartShortcut = restartShortcut,
-                        onRestartShortcutHandled = { restartShortcut = null },
-                    )
-                }
+                    restartShortcut = restartShortcut,
+                    onRestartShortcutHandled = { restartShortcut = null },
+                )
             }
         }
         maybeRequestBatteryExemption()
@@ -639,6 +636,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
+        ReleaseGuard.checkNow(this)
         // Battery optimisation is a system setting, so it can change while the app is backgrounded.
         batteryUnrestricted = isBatteryUnrestricted()
         // A retry is armed on the run screen and consumed by a boot, so coming back from either is
@@ -943,7 +941,34 @@ private fun RootApp(
     // that, and the honest one for an app that does ship update notifications.
     val runInFlight = installState.busy
     var updateRefusedDuringRun by remember { mutableStateOf(false) }
-    val checkForUpdate: () -> Unit = { }
+    val checkForUpdate: () -> Unit = checkForUpdate@{
+        if (runInFlight) {
+            updateRefusedDuringRun = true
+            return@checkForUpdate
+        }
+        updateStatus = UpdateStatus.Checking
+        scope.launch {
+            val result = withContext(Dispatchers.IO) {
+                runCatching { AppUpdater.check(context) }
+            }
+            updateStatus = result.fold(
+                onSuccess = { check ->
+                    when (check) {
+                        is UpdateCheck.Available -> UpdateStatus.Available(check.info)
+                        UpdateCheck.Current,
+                        UpdateCheck.Disabled -> UpdateStatus.UpToDate
+                    }
+                },
+                onFailure = { error ->
+                    AppLog.warn(
+                        AppLogTags.CATALOG,
+                        "Veyra update check failed: ${error.javaClass.simpleName}: ${error.message}",
+                    )
+                    UpdateStatus.Failed
+                },
+            )
+        }
+    }
     // What the cache holds, kept here because the plan needs it and the plan is built synchronously.
     // Reloaded whenever a run's phase changes, since a finished run is what publishes a cache entry.
     var cachedPayload by remember { mutableStateOf<CachedPayload?>(null) }
@@ -1009,9 +1034,52 @@ private fun RootApp(
             ),
         )
     }
-    val startDownload: (UpdateInfo) -> Unit = { _ -> }
-    // Not asked for at all while a run is in flight: an automatic check the user did not request is the
-    // last thing that should reach the network next to an exploit, and the card can wait for the run.
+    val startDownload: (UpdateInfo) -> Unit = startDownload@{ info ->
+        if (runInFlight) {
+            updateRefusedDuringRun = true
+            return@startDownload
+        }
+        updateStatus = UpdateStatus.Downloading(info, 0f)
+        scope.launch {
+            val result = withContext(Dispatchers.IO) {
+                runCatching {
+                    val apk = AppUpdater.download(context, info) { progress ->
+                        scope.launch {
+                            updateStatus = UpdateStatus.Downloading(info, progress)
+                        }
+                    }
+                    AppUpdater.install(context, apk)
+                }
+            }
+            result.onSuccess { installed ->
+                updateStatus = when (installed) {
+                    UpdateInstallResult.InstalledByCVeyra -> UpdateStatus.UpToDate
+                    UpdateInstallResult.InstallerOpened -> UpdateStatus.Available(info)
+                }
+            }.onFailure { error ->
+                AppLog.warn(
+                    AppLogTags.CATALOG,
+                    "Veyra update failed: ${error.javaClass.simpleName}: ${error.message}",
+                )
+                updateStatus = UpdateStatus.Failed
+            }
+        }
+    }
+    // Automatic checks never run beside a root attempt. The manual row uses the same guarded lambda.
+    LaunchedEffect(runInFlight) {
+        if (!runInFlight && updateStatus == UpdateStatus.Idle) {
+            delay(650)
+            checkForUpdate()
+        }
+    }
+
+    updateStatus.info?.takeIf { it.required }?.let { requiredInfo ->
+        MandatoryPublicUpdateDialog(
+            status = updateStatus,
+            info = requiredInfo,
+            onStartDownload = startDownload,
+        )
+    }
 
     if (updateRefusedDuringRun) {
         AlertDialog(
@@ -1643,18 +1711,39 @@ private fun OverviewPage(
     }
     val fastSupportRaw = remember(device) { FastRootSupport.forSnapshot(device) }
     val currentFlavor = AppPreferences.kernelsuFlavor(context)
-    val fastSupport = remember(fastSupportRaw, currentFlavor) {
-        if (currentFlavor == KernelSuFlavor.ReSukiSU) {
-            fastSupportRaw.copy(
-                available = false,
-                reason = "New (fast) currently supports KernelSU and KernelSU-Next, not ReSukiSU.",
-            )
-        } else {
-            fastSupportRaw
-        }
+    val dfEnhancedPlan = remember(device, currentFlavor, resumeTick) {
+        DfPlusPlanner.plan(context, device, currentFlavor)
     }
-    LaunchedEffect(fastSupport.available) {
-        if (!fastSupport.available && rootMethod == RootMethod.Fast) {
+    val dfCompatiblePlan = remember(device, currentFlavor, resumeTick) {
+        DfPlusPlanner.compatiblePlan(context, device, currentFlavor)
+    }
+    val fastSupport = remember(fastSupportRaw, dfEnhancedPlan) {
+        fastSupportRaw.copy(
+            available = fastSupportRaw.available && dfEnhancedPlan.available,
+            reason = if (dfEnhancedPlan.available) {
+                dfEnhancedPlan.routeLabel
+            } else {
+                dfEnhancedPlan.blockers.joinToString("; ").ifBlank { fastSupportRaw.reason }
+            },
+        )
+    }
+    val compatibleSupport = remember(fastSupportRaw, dfCompatiblePlan) {
+        fastSupportRaw.copy(
+            available = fastSupportRaw.available && dfCompatiblePlan.available,
+            reason = if (dfCompatiblePlan.available) {
+                dfCompatiblePlan.routeLabel
+            } else {
+                dfCompatiblePlan.blockers.joinToString("; ").ifBlank { fastSupportRaw.reason }
+            },
+        )
+    }
+    LaunchedEffect(fastSupport.available, compatibleSupport.available, rootMethod) {
+        val selectedAvailable = when (rootMethod) {
+            RootMethod.Standard -> true
+            RootMethod.DfCompatible -> compatibleSupport.available
+            RootMethod.Fast -> fastSupport.available
+        }
+        if (!selectedAvailable) {
             rootMethod = RootMethod.Standard
             AppPreferences.setRootMethod(context, RootMethod.Standard)
         }
@@ -1686,6 +1775,7 @@ private fun OverviewPage(
             padding = padding,
             rootAccess = rootAccess,
             current = rootMethod,
+            compatibleSupport = compatibleSupport,
             fastSupport = fastSupport,
             onSelect = { method ->
                 rootMethod = method
@@ -1910,7 +2000,7 @@ private fun MigrationReadyHomeCard(
     }
 }
 
-private sealed interface UpdateStatus {
+internal sealed interface UpdateStatus {
     data object Idle : UpdateStatus
     data object Checking : UpdateStatus
     data class Available(val info: UpdateInfo) : UpdateStatus
@@ -1922,7 +2012,7 @@ private sealed interface UpdateStatus {
 private val UpdateStatus.busy: Boolean
     get() = this is UpdateStatus.Checking || this is UpdateStatus.Downloading
 
-private val UpdateStatus.info: UpdateInfo?
+internal val UpdateStatus.info: UpdateInfo?
     get() = when (this) {
         is UpdateStatus.Available -> this.info
         is UpdateStatus.Downloading -> this.info
@@ -2032,26 +2122,35 @@ private fun UpdateCard(
                     modifier = Modifier.size(22.dp),
                 )
                 Text(
-                    text = stringResource(R.string.updater_available_title),
+                    text = stringResource(
+                        if (info.required) R.string.updater_required_title
+                        else R.string.updater_available_title,
+                    ),
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.weight(1f),
                 )
-                IconButton(
-                    onClick = {
-                        clickHaptic(view)
-                        onDismiss()
-                    },
-                    modifier = Modifier.size(24.dp),
-                ) {
-                    Icon(
-                        Icons.Rounded.Close,
-                        contentDescription = stringResource(R.string.action_close),
-                        modifier = Modifier.size(16.dp),
-                    )
+                if (!info.required) {
+                    IconButton(
+                        onClick = {
+                            clickHaptic(view)
+                            onDismiss()
+                        },
+                        modifier = Modifier.size(24.dp),
+                    ) {
+                        Icon(
+                            Icons.Rounded.Close,
+                            contentDescription = stringResource(R.string.action_close),
+                            modifier = Modifier.size(16.dp),
+                        )
+                    }
                 }
             }
             Text(
-                text = stringResource(R.string.updater_available_body, info.versionName),
+                text = stringResource(
+                    if (info.required) R.string.updater_required_body
+                    else R.string.updater_available_body,
+                    info.versionName,
+                ),
                 style = MaterialTheme.typography.bodyMedium,
             )
             when (status) {
@@ -2074,7 +2173,12 @@ private fun UpdateCard(
                         clickHaptic(view)
                         onStartDownload(info)
                     }) {
-                        Text(stringResource(R.string.updater_button_download))
+                        Text(
+                            stringResource(
+                                if (info.required) R.string.updater_button_required
+                                else R.string.updater_button_download,
+                            ),
+                        )
                     }
                 }
             }
@@ -2526,6 +2630,7 @@ private fun RootControlPage(
     padding: PaddingValues,
     rootAccess: RootAccessSnapshot,
     current: RootMethod,
+    compatibleSupport: FastRootSupport,
     fastSupport: FastRootSupport,
     onSelect: (RootMethod) -> Unit,
     onOpenManager: () -> Unit,
@@ -2534,14 +2639,30 @@ private fun RootControlPage(
     onBack: () -> Unit,
 ) {
     BackHandler(onBack = onBack)
+    val context = LocalContext.current
     val view = LocalView.current
     var showAddonMenu by remember { mutableStateOf(false) }
-    var showMarked by rememberSaveable { mutableStateOf(false) }
+    var showMarket by rememberSaveable { mutableStateOf(false) }
+    var dfBootRoot by remember { mutableStateOf(AppPreferences.bootRootMode(context)) }
+    var dfSoftReboot by remember { mutableStateOf(AppPreferences.restartAfterRoot(context)) }
+    var dfDisableModules by remember { mutableStateOf(AppPreferences.disableKsuModules(context)) }
+    var dfReadOnly by remember { mutableStateOf(AppPreferences.partitionReadOnlyMode(context)) }
+    val dfLoadKernelSu = AppPreferences.loadKernelSu(context)
+    val dfFlavor = AppPreferences.kernelsuFlavor(context)
+    val dfPlan = remember(current, dfFlavor) {
+        when (current) {
+            RootMethod.DfCompatible ->
+                DfPlusPlanner.compatiblePlan(context, DeviceSnapshot.current(), dfFlavor)
+            RootMethod.Fast ->
+                DfPlusPlanner.plan(context, DeviceSnapshot.current(), dfFlavor)
+            RootMethod.Standard -> null
+        }
+    }
 
-    if (showMarked) {
-        VeyraMarkedPage(
+    if (showMarket) {
+        VeyraMarketPage(
             padding = padding,
-            onBack = { showMarked = false },
+            onBack = { showMarket = false },
         )
         return
     }
@@ -2684,7 +2805,7 @@ private fun RootControlPage(
                         style = MaterialTheme.typography.titleMedium,
                     )
                     Text(
-                        "Standard stays the default. New (fast) can only be selected when this Android/kernel combination is supported.",
+                        "Standard stays the default. DF Compatible mirrors the conservative DirtyFrag flow; Veyra DF+ adds exact KMI/OEM preflight.",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -2696,6 +2817,13 @@ private fun RootControlPage(
                         onClick = { onSelect(RootMethod.Standard) },
                     )
                     RootMethodChoice(
+                        method = RootMethod.DfCompatible,
+                        selected = current == RootMethod.DfCompatible,
+                        enabled = compatibleSupport.available,
+                        summary = compatibleSupport.reason,
+                        onClick = { onSelect(RootMethod.DfCompatible) },
+                    )
+                    RootMethodChoice(
                         method = RootMethod.Fast,
                         selected = current == RootMethod.Fast,
                         enabled = fastSupport.available,
@@ -2703,10 +2831,13 @@ private fun RootControlPage(
                         onClick = { onSelect(RootMethod.Fast) },
                     )
                     Text(
-                        if (fastSupport.available) {
-                            "If a device has only one usable route, Veyra automatically uses that route."
-                        } else {
-                            "New (fast) is disabled for this device."
+                        when {
+                            fastSupport.available && compatibleSupport.available ->
+                                "Both DF routes are available. DF+ adds the stricter external-KMI/OEM evidence gate."
+                            compatibleSupport.available ->
+                                "DF Compatible is available; DF+ is blocked by its stricter evidence requirements."
+                            else ->
+                                "DF routes are disabled for this device."
                         },
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -2715,11 +2846,114 @@ private fun RootControlPage(
             }
         }
 
+        if (current.usesDf) {
+            item {
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                    ),
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth().padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
+                    ) {
+                        Text(
+                            "DF runtime & recovery",
+                            style = MaterialTheme.typography.titleMedium,
+                        )
+                        Text(
+                            dfPlan?.routeLabel ?: current.label,
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.primary,
+                        )
+                        Text(
+                            "These controls use Veyra's existing boot/recovery system; they are the same values shown in Settings.",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                        dfPlan?.notes?.take(3)?.forEach { note ->
+                            Text(
+                                "• $note",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+
+                        DfRuntimeToggleRow(
+                            title = "Root on boot",
+                            summary = if (dfLoadKernelSu) {
+                                "Re-run the cached DF route after a reboot when root is not active."
+                            } else {
+                                "Enable KernelSU loading in Settings first."
+                            },
+                            checked = dfBootRoot,
+                            enabled = dfLoadKernelSu,
+                            onCheckedChange = { enabled ->
+                                clickHaptic(view)
+                                dfBootRoot = enabled
+                                AppPreferences.setBootRootMode(context, enabled)
+                                if (
+                                    enabled &&
+                                    android.os.Build.VERSION.SDK_INT >= 33 &&
+                                    androidx.core.content.ContextCompat.checkSelfPermission(
+                                        context,
+                                        android.Manifest.permission.POST_NOTIFICATIONS,
+                                    ) != android.content.pm.PackageManager.PERMISSION_GRANTED
+                                ) {
+                                    (context as? android.app.Activity)?.requestPermissions(
+                                        arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),
+                                        9027,
+                                    )
+                                }
+                            },
+                        )
+                        HorizontalDivider()
+                        DfRuntimeToggleRow(
+                            title = "Auto Soft reboot",
+                            summary = "Ask KernelSU for its native userspace soft reboot after root so module lifecycle can complete.",
+                            checked = dfSoftReboot,
+                            enabled = dfLoadKernelSu,
+                            onCheckedChange = { enabled ->
+                                clickHaptic(view)
+                                dfSoftReboot = enabled
+                                AppPreferences.setRestartAfterRoot(context, enabled)
+                            },
+                        )
+                        HorizontalDivider()
+                        DfRuntimeToggleRow(
+                            title = "Disable KSU modules",
+                            summary = "Recovery mode: temporarily move KernelSU modules aside while the next load starts.",
+                            checked = dfDisableModules,
+                            enabled = dfLoadKernelSu,
+                            onCheckedChange = { enabled ->
+                                clickHaptic(view)
+                                dfDisableModules = enabled
+                                AppPreferences.setDisableKsuModules(context, enabled)
+                            },
+                        )
+                        HorizontalDivider()
+                        DfRuntimeToggleRow(
+                            title = "Protect image partitions",
+                            summary = "Keep boot/image partitions read-only after bootstrap root to prevent accidental writes.",
+                            checked = dfReadOnly,
+                            enabled = true,
+                            onCheckedChange = { enabled ->
+                                clickHaptic(view)
+                                dfReadOnly = enabled
+                                AppPreferences.setPartitionReadOnlyMode(context, enabled)
+                            },
+                        )
+                    }
+                }
+            }
+        }
+
         item {
             FilledTonalButton(
                 onClick = {
                     clickHaptic(view)
-                    showMarked = true
+                    showMarket = true
                 },
                 modifier = Modifier.fillMaxWidth(),
             ) {
@@ -2729,67 +2963,350 @@ private fun RootControlPage(
                     modifier = Modifier.size(24.dp),
                 )
                 Spacer(Modifier.width(9.dp))
-                Text("Veyra Marked +")
+                Text("Veyra Market")
             }
         }
     }
 }
 
 @Composable
-private fun VeyraMarkedPage(
+private fun DfRuntimeToggleRow(
+    title: String,
+    summary: String,
+    checked: Boolean,
+    enabled: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                title,
+                style = MaterialTheme.typography.bodyLarge,
+                color = if (enabled) {
+                    MaterialTheme.colorScheme.onSurface
+                } else {
+                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.45f)
+                },
+            )
+            Text(
+                summary,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(
+                    alpha = if (enabled) 1f else 0.55f,
+                ),
+            )
+        }
+        Switch(
+            checked = checked,
+            onCheckedChange = onCheckedChange,
+            enabled = enabled,
+        )
+    }
+}
+
+@Composable
+private fun VeyraMarketPage(
     padding: PaddingValues,
     onBack: () -> Unit,
 ) {
     BackHandler(onBack = onBack)
     val context = LocalContext.current
     val view = LocalView.current
-    LaunchedEffect(Unit) {
-        withContext(Dispatchers.IO) {
-            runCatching { VMarkedRepository.refresh(context) }
+    val scope = rememberCoroutineScope()
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    var manifest by remember { mutableStateOf(VeyraMarketRepository.current(context)) }
+    var loading by remember { mutableStateOf(false) }
+    var activeEntry by remember { mutableStateOf<String?>(null) }
+    var progress by remember { mutableStateOf(0f) }
+    var error by remember { mutableStateOf<String?>(null) }
+    var installedTick by remember { mutableStateOf(0) }
+
+    fun refreshMarket() {
+        if (loading) return
+        loading = true
+        error = null
+        scope.launch {
+            val result = withContext(Dispatchers.IO) {
+                runCatching {
+                    VeyraMarketRepository.reconcilePending(context)
+                    VeyraMarketRepository.refresh(context)
+                }
+            }
+            result.onSuccess {
+                manifest = it
+                installedTick++
+            }.onFailure {
+                error = it.message ?: it.javaClass.simpleName
+            }
+            loading = false
         }
     }
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(
-                start = 22.dp,
-                end = 22.dp,
-                top = padding.calculateTopPadding() + 20.dp,
-                bottom = padding.calculateBottomPadding() + 24.dp,
-            ),
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            IconButton(
-                onClick = {
-                    clickHaptic(view)
-                    onBack()
-                },
-            ) {
-                Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = null)
+
+    LaunchedEffect(Unit) { refreshMarket() }
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                VeyraMarketRepository.reconcilePending(context)
+                installedTick++
             }
-            Image(
-                painter = painterResource(R.drawable.ic_veyra_mark),
-                contentDescription = null,
-                modifier = Modifier.size(38.dp),
-            )
-            Spacer(Modifier.width(10.dp))
-            Text(
-                "Veyra Marked +",
-                style = MaterialTheme.typography.headlineMedium,
-            )
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+    }
+
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(
+            start = 20.dp,
+            end = 20.dp,
+            top = padding.calculateTopPadding() + 20.dp,
+            bottom = padding.calculateBottomPadding() + 32.dp,
+        ),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        item {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                IconButton(
+                    onClick = {
+                        clickHaptic(view)
+                        onBack()
+                    },
+                ) {
+                    Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = null)
+                }
+                Image(
+                    painter = painterResource(R.drawable.ic_veyra_mark),
+                    contentDescription = null,
+                    modifier = Modifier.size(38.dp),
+                )
+                Spacer(Modifier.width(10.dp))
+                Column(modifier = Modifier.weight(1f)) {
+                    Text("Veyra Market", style = MaterialTheme.typography.headlineMedium)
+                    Text(
+                        "Extensions · data packs · companion apps",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                IconButton(
+                    enabled = !loading,
+                    onClick = {
+                        clickHaptic(view)
+                        refreshMarket()
+                    },
+                ) {
+                    if (loading) {
+                        LoadingIndicator(modifier = Modifier.size(22.dp))
+                    } else {
+                        Icon(Icons.Rounded.Refresh, contentDescription = "Refresh")
+                    }
+                }
+            }
         }
 
-        Spacer(modifier = Modifier.weight(1f))
-        HorizontalDivider()
-        Text(
-            "Soon, stay hyped",
-            modifier = Modifier.padding(top = 10.dp),
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
+        item {
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                ),
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(7.dp),
+                ) {
+                    Text("Extension model", style = MaterialTheme.typography.titleMedium)
+                    Text(
+                        "Data packs extend known Veyra extension points without loading executable code. " +
+                            "Companion APKs stay separate Android packages and go through Android's package installer. " +
+                            "Downloaded artifacts are size/hash checked; companion packages can additionally pin package name and signer.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Text(
+                        "Channel: ${manifest.channel} · ${manifest.entries.size} extension(s)",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                }
+            }
+        }
+
+        error?.let { message ->
+            item {
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.errorContainer,
+                    ),
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(14.dp),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(Icons.Rounded.Warning, contentDescription = null)
+                        Text(message, modifier = Modifier.weight(1f))
+                    }
+                }
+            }
+        }
+
+        if (manifest.entries.isEmpty()) {
+            item {
+                Card {
+                    Text(
+                        "No Market entries are published for this channel yet.",
+                        modifier = Modifier.fillMaxWidth().padding(18.dp),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        } else {
+            items(manifest.entries, key = { it.id }) { entry ->
+                val installed = remember(entry.id, entry.versionCode, installedTick) {
+                    VeyraMarketRepository.installed(context, entry)
+                }
+                val isBusy = activeEntry == entry.id
+                val needsUpdate = installed != null && installed.versionCode < entry.versionCode
+
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                    ),
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth().padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(9.dp),
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        ) {
+                            Icon(
+                                if (installed != null) Icons.Rounded.CheckCircle else Icons.Rounded.Apps,
+                                contentDescription = null,
+                                tint = if (installed != null) {
+                                    MaterialTheme.colorScheme.primary
+                                } else {
+                                    MaterialTheme.colorScheme.onSurfaceVariant
+                                },
+                            )
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(entry.name, style = MaterialTheme.typography.titleMedium)
+                                Text(
+                                    "v${entry.version} · " +
+                                        if (entry.kind == VeyraMarketKind.DataPack) "Data pack"
+                                        else "Companion APK",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                            }
+                            if (installed != null) {
+                                Text(
+                                    if (needsUpdate) "Update" else "Installed",
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.primary,
+                                )
+                            }
+                        }
+
+                        if (entry.summary.isNotBlank()) {
+                            Text(
+                                entry.summary,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                        if (entry.capabilities.isNotEmpty()) {
+                            Text(
+                                entry.capabilities.joinToString(" · "),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.primary,
+                            )
+                        }
+
+                        if (isBusy) {
+                            LinearProgressIndicator(
+                                progress = { progress.coerceIn(0f, 1f) },
+                                modifier = Modifier.fillMaxWidth(),
+                            )
+                        }
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        ) {
+                            Button(
+                                enabled = !isBusy && (installed == null || needsUpdate),
+                                modifier = Modifier.weight(1f),
+                                onClick = {
+                                    clickHaptic(view)
+                                    activeEntry = entry.id
+                                    progress = 0f
+                                    error = null
+                                    scope.launch {
+                                        val result = withContext(Dispatchers.IO) {
+                                            runCatching {
+                                                VeyraMarketRepository.install(context, entry) { value ->
+                                                    progress = value
+                                                }
+                                            }
+                                        }
+                                        result.onSuccess { outcome ->
+                                            if (outcome is VeyraMarketInstallResult.Installed) {
+                                                installedTick++
+                                                Toast.makeText(
+                                                    context,
+                                                    "${entry.name} installed",
+                                                    Toast.LENGTH_SHORT,
+                                                ).show()
+                                            }
+                                        }.onFailure {
+                                            error = it.message ?: it.javaClass.simpleName
+                                        }
+                                        activeEntry = null
+                                    }
+                                },
+                            ) {
+                                Icon(Icons.Rounded.DownloadForOffline, contentDescription = null)
+                                Spacer(Modifier.width(7.dp))
+                                Text(
+                                    when {
+                                        needsUpdate -> "Update"
+                                        installed != null -> "Installed"
+                                        else -> "Install"
+                                    },
+                                )
+                            }
+
+                            if (installed != null) {
+                                FilledTonalButton(
+                                    enabled = !isBusy,
+                                    onClick = {
+                                        clickHaptic(view)
+                                        val removed = VeyraMarketRepository.remove(context, entry)
+                                        if (removed) installedTick++
+                                    },
+                                ) {
+                                    Icon(Icons.Rounded.Delete, contentDescription = null)
+                                    Spacer(Modifier.width(7.dp))
+                                    Text("Remove")
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -2829,7 +3346,7 @@ private fun RootMethodDialog(
                     style = MaterialTheme.typography.titleSmall,
                 )
                 Text(
-                    "Standard stays the default. New (fast) can only be selected when this Android/kernel combination is supported.",
+                    "Standard stays the default. DF Compatible mirrors the conservative DirtyFrag flow; Veyra DF+ adds exact KMI/OEM preflight.",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -2842,14 +3359,17 @@ private fun RootMethodDialog(
                     onClick = { onSelect(RootMethod.Standard) },
                 )
                 RootMethodChoice(
+                    method = RootMethod.DfCompatible,
+                    selected = current == RootMethod.DfCompatible,
+                    enabled = fastSupport.available,
+                    summary = "Conservative DirtyFrag-compatible route with manager-daemon fallback.",
+                    onClick = { onSelect(RootMethod.DfCompatible) },
+                )
+                RootMethodChoice(
                     method = RootMethod.Fast,
                     selected = current == RootMethod.Fast,
                     enabled = fastSupport.available,
-                    summary = if (fastSupport.available) {
-                        fastSupport.reason
-                    } else {
-                        fastSupport.reason
-                    },
+                    summary = fastSupport.reason,
                     onClick = { onSelect(RootMethod.Fast) },
                 )
 
@@ -2857,7 +3377,7 @@ private fun RootMethodDialog(
                     if (fastSupport.available) {
                         "If a device has only one usable route, Veyra automatically uses that route."
                     } else {
-                        "New (fast) is disabled for this device."
+                        "DF routes are disabled for this device."
                     },
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -4411,12 +4931,20 @@ private fun SettingsPage(
     var selectedSettingsSection by rememberSaveable {
         mutableStateOf<SettingsSection?>(null)
     }
+    var showBuilderWorkbenchPage by rememberSaveable { mutableStateOf(false) }
+    var showVeyraBuilderPage by rememberSaveable { mutableStateOf(false) }
+    var showVeyraBuilderSettingsPage by rememberSaveable { mutableStateOf(false) }
     var showPayloadBuilderPage by rememberSaveable { mutableStateOf(false) }
     var showMagicBuilderPage by rememberSaveable { mutableStateOf(false) }
     var showMagicBuilderSettingsPage by rememberSaveable { mutableStateOf(false) }
     var showBuilderSettingsPage by rememberSaveable { mutableStateOf(false) }
     var showVeyraKsuPage by rememberSaveable { mutableStateOf(false) }
     var showRootMigrationPage by rememberSaveable { mutableStateOf(false) }
+    var showVeyraMarketPage by rememberSaveable { mutableStateOf(false) }
+    var showPublicVersionInfo by remember { mutableStateOf(false) }
+    var marketSettings by remember {
+        mutableStateOf(VeyraMarketRepository.installedSettings(context))
+    }
     // What this app has left in /data/local/tmp, read once when the screen is opened rather than on
     // every pass: the staging changes during a run, not while a settings list is on screen, and the
     // reading is a stat per catalogued path. Null is "not read yet" and is shown as such, because a
@@ -4462,6 +4990,8 @@ private fun SettingsPage(
             if (event == Lifecycle.Event.ON_RESUME) {
                 shizukuAvailability = ShizukuController.availability()
                 cveyraAccessActive = CVeyraAccessStore.isActive(context)
+                VeyraMarketRepository.reconcilePending(context)
+                marketSettings = VeyraMarketRepository.installedSettings(context)
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
@@ -5275,6 +5805,17 @@ private fun SettingsPage(
         return
     }
 
+    if (showVeyraMarketPage) {
+        VeyraMarketPage(
+            padding = padding,
+            onBack = {
+                showVeyraMarketPage = false
+                marketSettings = VeyraMarketRepository.installedSettings(context)
+            },
+        )
+        return
+    }
+
     if (showVeyraKsuPage) {
         VeyraKsuPage(
             padding = padding,
@@ -5295,6 +5836,60 @@ private fun SettingsPage(
         return
     }
 
+    if (showVeyraBuilderSettingsPage) {
+        VeyraGuidedBuilderSettingsPage(
+            padding = padding,
+            onBack = {
+                showVeyraBuilderSettingsPage = false
+                showVeyraBuilderPage = true
+            },
+        )
+        return
+    }
+
+    if (showVeyraBuilderPage) {
+        VeyraBuilderPage(
+            padding = padding,
+            onBack = {
+                showVeyraBuilderPage = false
+                showBuilderWorkbenchPage = true
+            },
+            onOpenSettings = {
+                showVeyraBuilderPage = false
+                showVeyraBuilderSettingsPage = true
+            },
+            onOpenLoadingBuilder = {
+                showVeyraBuilderPage = false
+                showPayloadBuilderPage = true
+            },
+            onOpenMagicBuilder = {
+                showVeyraBuilderPage = false
+                showMagicBuilderPage = true
+            },
+        )
+        return
+    }
+
+    if (showBuilderWorkbenchPage) {
+        BuilderWorkbenchPage(
+            padding = padding,
+            onBack = { showBuilderWorkbenchPage = false },
+            onOpenVeyraBuilder = {
+                showBuilderWorkbenchPage = false
+                showVeyraBuilderPage = true
+            },
+            onOpenLoadingBuilder = {
+                showBuilderWorkbenchPage = false
+                showPayloadBuilderPage = true
+            },
+            onOpenMagicBuilder = {
+                showBuilderWorkbenchPage = false
+                showMagicBuilderPage = true
+            },
+        )
+        return
+    }
+
     if (showMagicBuilderSettingsPage) {
         VeyraMagicBuilderSettingsPage(
             padding = padding,
@@ -5309,7 +5904,10 @@ private fun SettingsPage(
     if (showMagicBuilderPage) {
         VeyraMagicBuilderPage(
             padding = padding,
-            onBack = { showMagicBuilderPage = false },
+            onBack = {
+                showMagicBuilderPage = false
+                showBuilderWorkbenchPage = true
+            },
             onOpenSettings = {
                 showMagicBuilderPage = false
                 showMagicBuilderSettingsPage = true
@@ -5329,7 +5927,10 @@ private fun SettingsPage(
     if (showBuilderSettingsPage) {
         VeyraBuilderSettingsPage(
             padding = padding,
-            onBack = { showBuilderSettingsPage = false },
+            onBack = {
+                showBuilderSettingsPage = false
+                showPayloadBuilderPage = true
+            },
         )
         return
     }
@@ -5337,13 +5938,22 @@ private fun SettingsPage(
     if (showPayloadBuilderPage) {
         VeyraPayloadBuilderPage(
             padding = padding,
-            onBack = { showPayloadBuilderPage = false },
+            onBack = {
+                showPayloadBuilderPage = false
+                showBuilderWorkbenchPage = true
+            },
             onOpenBuilderSettings = {
                 showPayloadBuilderPage = false
                 showBuilderSettingsPage = true
             },
         )
         return
+    }
+
+    if (showPublicVersionInfo) {
+        PublicVersionInfoDialog(
+            onDismiss = { showPublicVersionInfo = false },
+        )
     }
 
     val navigationMode =
@@ -5638,35 +6248,13 @@ private fun SettingsPage(
                 )
                 SettingsCard(
                     icon = Icons.Rounded.Build,
-                    title = stringResource(R.string.loading_builder_title),
-                    description = stringResource(R.string.loading_builder_summary),
-                    value = LocalPayload.displayName(context)?.let {
-                        stringResource(R.string.payload_local_source_title)
-                    }.orEmpty(),
-                    position = SettingsCardPosition.Middle,
-                    onClick = {
-                        clickHaptic(view)
-                        showPayloadBuilderPage = true
-                    },
-                )
-                SettingsCard(
-                    icon = Icons.Rounded.AutoFixHigh,
-                    title = stringResource(R.string.magic_builder_title),
-                    description = stringResource(R.string.magic_builder_card_summary),
-                    position = SettingsCardPosition.Middle,
-                    onClick = {
-                        clickHaptic(view)
-                        showMagicBuilderPage = true
-                    },
-                )
-                SettingsCard(
-                    icon = Icons.Rounded.Tune,
-                    title = stringResource(R.string.builder_settings_title),
-                    description = stringResource(R.string.builder_settings_summary),
+                    title = "Builder Workingbench",
+                    description = "Veyra Builder, Loading Builder and Magic Builder in one dedicated workspace.",
+                    value = "3 builders",
                     position = SettingsCardPosition.Bottom,
                     onClick = {
                         clickHaptic(view)
-                        showBuilderSettingsPage = true
+                        showBuilderWorkbenchPage = true
                     },
                 )
             }
@@ -5808,6 +6396,7 @@ private fun SettingsPage(
         )
         if (SettingsSection.Shizuku in openSections) item {
             SettingsSectionBody {
+                val cveyraActiveStartPosition = SettingsCardPosition.Top
                 if (!cveyraAccessActive) {
                     SettingsSwitchCard(
                         icon = Icons.Rounded.Terminal,
@@ -5880,7 +6469,7 @@ private fun SettingsPage(
                         title = "CVeyra Access 2.0.0",
                         description = "Always on · Root broker enforced through VeyraKSU",
                         value = if (cveyraBackend == CVeyraBackend.Root) "Active" else "Waiting for root",
-                        position = SettingsCardPosition.Top,
+                        position = cveyraActiveStartPosition,
                         onClick = {
                             clickHaptic(view)
                             showCVeyraAccessPage = true
@@ -6448,6 +7037,57 @@ private fun SettingsPage(
         }
 
         settingsSectionHeading(
+            SettingsSection.Market,
+            openSections,
+            indexRows,
+            toggleSection,
+            onPinnedHeight = { pinnedHeadingHeight = it },
+            navigationMode = navigationMode,
+            visible = showSectionHeadings,
+        )
+        if (SettingsSection.Market in openSections) item {
+            SettingsSectionBody {
+                SettingsCard(
+                    icon = Icons.Rounded.Apps,
+                    title = "Veyra Market",
+                    description = "Install verified data packs and companion extensions.",
+                    value = if (marketSettings.isEmpty()) "Open" else "${marketSettings.size} active",
+                    position = if (marketSettings.isEmpty()) {
+                        SettingsCardPosition.GroupedSingle
+                    } else {
+                        SettingsCardPosition.Top
+                    },
+                    onClick = {
+                        clickHaptic(view)
+                        showVeyraMarketPage = true
+                    },
+                )
+                marketSettings.forEachIndexed { index, extension ->
+                    SettingsCard(
+                        icon = Icons.Rounded.CheckCircle,
+                        title = extension.title,
+                        description = extension.summary,
+                        value = "Installed",
+                        position = if (index == marketSettings.lastIndex) {
+                            SettingsCardPosition.Bottom
+                        } else {
+                            SettingsCardPosition.Middle
+                        },
+                        onClick = {
+                            clickHaptic(view)
+                            val message = runCatching {
+                                VeyraMarketRepository.performSettingsAction(context, extension)
+                            }.getOrElse { it.message ?: it.javaClass.simpleName }
+                            if (!message.isNullOrBlank()) {
+                                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                            }
+                        },
+                    )
+                }
+            }
+        }
+
+        settingsSectionHeading(
             SettingsSection.System,
             openSections,
             indexRows,
@@ -6528,10 +7168,21 @@ private fun SettingsPage(
                     description = stringResource(R.string.residue_card_summary),
                     value = residue?.summaryLine(context)
                         ?: stringResource(R.string.residue_reading),
-                    position = SettingsCardPosition.Bottom,
+                    position = SettingsCardPosition.Middle,
                     onClick = {
                         clickHaptic(view)
                         showResidueDialog = true
+                    },
+                )
+                SettingsCard(
+                    icon = Icons.Rounded.Info,
+                    title = "Version Info",
+                    description = "Veyra Root 2.0 Public Release · build and update-channel details.",
+                    value = BuildConfig.VERSION_NAME,
+                    position = SettingsCardPosition.Bottom,
+                    onClick = {
+                        clickHaptic(view)
+                        showPublicVersionInfo = true
                     },
                 )
             }
@@ -8877,6 +9528,32 @@ private fun SourceCoverageBlock(
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
+        if (coverage.adapterCount > 0) {
+            Text(
+                stringResource(R.string.payload_source_coverage_adapters, coverage.adapterCount),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.primary,
+            )
+            coverage.adapterLabel?.let { label ->
+                Text(
+                    stringResource(R.string.payload_source_adapter_name, label),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            if (coverage.adapterCapabilities.isNotEmpty()) {
+                Text(
+                    stringResource(
+                        R.string.payload_source_adapter_capabilities,
+                        coverage.adapterCapabilities.joinToString(" · "),
+                    ),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+        }
         if (models.isNotEmpty()) {
             Text(
                 stringResource(R.string.payload_source_coverage_models, models),
@@ -8913,6 +9590,22 @@ private fun SourceCoverageBlock(
                 color = MaterialTheme.colorScheme.primary,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
+            )
+        } else if (coverage.adapterCount > 0) {
+            Text(
+                stringResource(
+                    if (coverage.adapterMatchesDevice) {
+                        R.string.payload_source_adapter_match
+                    } else {
+                        R.string.payload_source_adapter_other
+                    },
+                ),
+                style = MaterialTheme.typography.bodySmall,
+                color = if (coverage.adapterMatchesDevice) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.onSurfaceVariant
+                },
             )
         } else {
             Text(
@@ -8953,7 +9646,7 @@ private fun LazyListScope.settingsSectionHeading(
     visible: Boolean = true,
 ) {
     if (!visible) return
-    if (section in openSections && !navigationMode) {
+    if (section in openSections) {
         stickyHeader {
             // The pinned heading has to be opaque *around* itself and not only on itself. It is drawn over the
             // rows of its own section, which are its own width, so without this they show through its rounded
@@ -11427,6 +12120,7 @@ private fun AboutDialog(onDismiss: () -> Unit) {
     val context = LocalContext.current
     val uriHandler = LocalUriHandler.current
     val view = LocalView.current
+    var showVersionInfo by remember { mutableStateOf(false) }
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
@@ -11467,11 +12161,36 @@ private fun AboutDialog(onDismiss: () -> Unit) {
                 Surface(
                     onClick = {
                         clickHaptic(view)
-                        Toast.makeText(
-                            context,
-                            context.getString(R.string.veyra_link_unavailable),
-                            Toast.LENGTH_SHORT,
-                        ).show()
+                        showVersionInfo = true
+                    },
+                    color = Color.Transparent,
+                    shape = MaterialTheme.shapes.medium,
+                ) {
+                    Row(
+                        modifier = Modifier.padding(vertical = 6.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    ) {
+                        Icon(Icons.Rounded.Info, contentDescription = null)
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                "Version Info",
+                                style = MaterialTheme.typography.titleSmall,
+                            )
+                            Text(
+                                "Veyra Root 2.0 · Public Release · ${BuildConfig.VERSION_CODE}",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                        Icon(Icons.Rounded.Link, contentDescription = null)
+                    }
+                }
+                HorizontalDivider()
+                Surface(
+                    onClick = {
+                        clickHaptic(view)
+                        uriHandler.openUri(PublicReleaseInfo.websiteUrl())
                     },
                     color = Color.Transparent,
                     shape = MaterialTheme.shapes.medium,
@@ -11496,7 +12215,6 @@ private fun AboutDialog(onDismiss: () -> Unit) {
                         Icon(
                             Icons.Rounded.Link,
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.45f),
                         )
                     }
                 }
@@ -11511,6 +12229,11 @@ private fun AboutDialog(onDismiss: () -> Unit) {
             }
         },
     )
+    if (showVersionInfo) {
+        PublicVersionInfoDialog(
+            onDismiss = { showVersionInfo = false },
+        )
+    }
 }
 
 @Composable

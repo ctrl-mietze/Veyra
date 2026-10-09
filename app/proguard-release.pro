@@ -1,6 +1,7 @@
 # Veyra Root v1.0.0 hardened release
 # Third-party libraries are deliberately kept stable; R8 focuses on Veyra-owned application code.
 
+-dontshrink
 -dontoptimize
 -allowaccessmodification
 -adaptclassstrings ctrl.mietze.veyraroot.**

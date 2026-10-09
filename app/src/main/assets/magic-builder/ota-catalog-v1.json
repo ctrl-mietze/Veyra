@@ -1,0 +1,638 @@
+{
+  "schemaVersion": 1,
+  "maxCandidatesPerDevice": 10,
+  "profiles": [
+    {
+      "id": "pixel-6",
+      "manufacturer": [
+        "google"
+      ],
+      "models": [
+        "Pixel 6"
+      ],
+      "devices": [
+        "oriole"
+      ],
+      "providers": [
+        "google-pixel-index"
+      ]
+    },
+    {
+      "id": "pixel-6-pro",
+      "manufacturer": [
+        "google"
+      ],
+      "models": [
+        "Pixel 6 Pro"
+      ],
+      "devices": [
+        "raven"
+      ],
+      "providers": [
+        "google-pixel-index"
+      ]
+    },
+    {
+      "id": "pixel-6a",
+      "manufacturer": [
+        "google"
+      ],
+      "models": [
+        "Pixel 6a"
+      ],
+      "devices": [
+        "bluejay"
+      ],
+      "providers": [
+        "google-pixel-index"
+      ]
+    },
+    {
+      "id": "pixel-7",
+      "manufacturer": [
+        "google"
+      ],
+      "models": [
+        "Pixel 7"
+      ],
+      "devices": [
+        "panther"
+      ],
+      "providers": [
+        "google-pixel-index"
+      ]
+    },
+    {
+      "id": "pixel-7-pro",
+      "manufacturer": [
+        "google"
+      ],
+      "models": [
+        "Pixel 7 Pro"
+      ],
+      "devices": [
+        "cheetah"
+      ],
+      "providers": [
+        "google-pixel-index"
+      ]
+    },
+    {
+      "id": "pixel-7a",
+      "manufacturer": [
+        "google"
+      ],
+      "models": [
+        "Pixel 7a"
+      ],
+      "devices": [
+        "lynx"
+      ],
+      "providers": [
+        "google-pixel-index"
+      ]
+    },
+    {
+      "id": "pixel-fold",
+      "manufacturer": [
+        "google"
+      ],
+      "models": [
+        "Pixel Fold"
+      ],
+      "devices": [
+        "felix"
+      ],
+      "providers": [
+        "google-pixel-index"
+      ]
+    },
+    {
+      "id": "pixel-8",
+      "manufacturer": [
+        "google"
+      ],
+      "models": [
+        "Pixel 8"
+      ],
+      "devices": [
+        "shiba"
+      ],
+      "providers": [
+        "google-pixel-index"
+      ]
+    },
+    {
+      "id": "pixel-8-pro",
+      "manufacturer": [
+        "google"
+      ],
+      "models": [
+        "Pixel 8 Pro"
+      ],
+      "devices": [
+        "husky"
+      ],
+      "providers": [
+        "google-pixel-index"
+      ]
+    },
+    {
+      "id": "pixel-8a",
+      "manufacturer": [
+        "google"
+      ],
+      "models": [
+        "Pixel 8a"
+      ],
+      "devices": [
+        "akita"
+      ],
+      "providers": [
+        "google-pixel-index"
+      ]
+    },
+    {
+      "id": "pixel-9",
+      "manufacturer": [
+        "google"
+      ],
+      "models": [
+        "Pixel 9"
+      ],
+      "devices": [
+        "tokay"
+      ],
+      "providers": [
+        "google-pixel-index"
+      ]
+    },
+    {
+      "id": "pixel-9-pro",
+      "manufacturer": [
+        "google"
+      ],
+      "models": [
+        "Pixel 9 Pro"
+      ],
+      "devices": [
+        "caiman"
+      ],
+      "providers": [
+        "google-pixel-index"
+      ]
+    },
+    {
+      "id": "pixel-9-pro-xl",
+      "manufacturer": [
+        "google"
+      ],
+      "models": [
+        "Pixel 9 Pro XL"
+      ],
+      "devices": [
+        "komodo"
+      ],
+      "providers": [
+        "google-pixel-index"
+      ]
+    },
+    {
+      "id": "pixel-9-pro-fold",
+      "manufacturer": [
+        "google"
+      ],
+      "models": [
+        "Pixel 9 Pro Fold"
+      ],
+      "devices": [
+        "comet"
+      ],
+      "providers": [
+        "google-pixel-index"
+      ]
+    },
+    {
+      "id": "pixel-9a",
+      "manufacturer": [
+        "google"
+      ],
+      "models": [
+        "Pixel 9a"
+      ],
+      "devices": [
+        "tegu"
+      ],
+      "providers": [
+        "google-pixel-index"
+      ]
+    },
+    {
+      "id": "nothing-phone-1",
+      "manufacturer": [
+        "nothing"
+      ],
+      "models": [
+        "A063",
+        "Nothing Phone (1)"
+      ],
+      "devices": [
+        "spacewar"
+      ],
+      "providers": [
+        "nothing-archive",
+        "veyra"
+      ]
+    },
+    {
+      "id": "nothing-phone-2",
+      "manufacturer": [
+        "nothing"
+      ],
+      "models": [
+        "A065",
+        "AIN065",
+        "Nothing Phone (2)"
+      ],
+      "devices": [
+        "pong"
+      ],
+      "providers": [
+        "nothing-archive",
+        "veyra"
+      ]
+    },
+    {
+      "id": "nothing-phone-2a",
+      "manufacturer": [
+        "nothing"
+      ],
+      "models": [
+        "A142",
+        "Nothing Phone (2a)"
+      ],
+      "devices": [
+        "pacman"
+      ],
+      "providers": [
+        "nothing-archive",
+        "veyra"
+      ]
+    },
+    {
+      "id": "nothing-phone-2a-plus",
+      "manufacturer": [
+        "nothing"
+      ],
+      "models": [
+        "A142P",
+        "Nothing Phone (2a) Plus"
+      ],
+      "devices": [
+        "pacmanpro"
+      ],
+      "providers": [
+        "nothing-archive",
+        "veyra"
+      ]
+    },
+    {
+      "id": "nothing-phone-3a",
+      "manufacturer": [
+        "nothing"
+      ],
+      "models": [
+        "A059",
+        "Nothing Phone (3a)"
+      ],
+      "devices": [
+        "asteroids"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "nothing-phone-3a-pro",
+      "manufacturer": [
+        "nothing"
+      ],
+      "models": [
+        "A059P",
+        "Nothing Phone (3a) Pro"
+      ],
+      "devices": [
+        "asteroids"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "nothing-phone-3",
+      "manufacturer": [
+        "nothing"
+      ],
+      "models": [
+        "A024",
+        "Nothing Phone (3)"
+      ],
+      "devices": [
+        "metroid"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "cmf-phone-1",
+      "manufacturer": [
+        "nothing",
+        "cmf"
+      ],
+      "models": [
+        "A015",
+        "CMF Phone 1"
+      ],
+      "devices": [
+        "tetris"
+      ],
+      "providers": [
+        "nothing-archive",
+        "veyra"
+      ]
+    },
+    {
+      "id": "cmf-phone-2-pro",
+      "manufacturer": [
+        "nothing",
+        "cmf"
+      ],
+      "models": [
+        "A001",
+        "CMF Phone 2 Pro"
+      ],
+      "devices": [
+        "galaga"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "galaxy-s22",
+      "manufacturer": [
+        "samsung"
+      ],
+      "modelPrefixes": [
+        "SM-S901"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "galaxy-s22-plus",
+      "manufacturer": [
+        "samsung"
+      ],
+      "modelPrefixes": [
+        "SM-S906"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "galaxy-s22-ultra",
+      "manufacturer": [
+        "samsung"
+      ],
+      "modelPrefixes": [
+        "SM-S908"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "galaxy-s23",
+      "manufacturer": [
+        "samsung"
+      ],
+      "modelPrefixes": [
+        "SM-S911"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "galaxy-s23-plus",
+      "manufacturer": [
+        "samsung"
+      ],
+      "modelPrefixes": [
+        "SM-S916"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "galaxy-s23-ultra",
+      "manufacturer": [
+        "samsung"
+      ],
+      "modelPrefixes": [
+        "SM-S918"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "galaxy-s24",
+      "manufacturer": [
+        "samsung"
+      ],
+      "modelPrefixes": [
+        "SM-S921"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "galaxy-s24-plus",
+      "manufacturer": [
+        "samsung"
+      ],
+      "modelPrefixes": [
+        "SM-S926"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "galaxy-s24-ultra",
+      "manufacturer": [
+        "samsung"
+      ],
+      "modelPrefixes": [
+        "SM-S928"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "galaxy-s25",
+      "manufacturer": [
+        "samsung"
+      ],
+      "modelPrefixes": [
+        "SM-S931"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "galaxy-s25-plus",
+      "manufacturer": [
+        "samsung"
+      ],
+      "modelPrefixes": [
+        "SM-S936"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "galaxy-s25-ultra",
+      "manufacturer": [
+        "samsung"
+      ],
+      "modelPrefixes": [
+        "SM-S938"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "oneplus-10-family",
+      "manufacturer": [
+        "oneplus"
+      ],
+      "modelPrefixes": [
+        "NE",
+        "CPH24"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "oneplus-11-family",
+      "manufacturer": [
+        "oneplus"
+      ],
+      "modelPrefixes": [
+        "PHB",
+        "CPH24"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "oneplus-12-family",
+      "manufacturer": [
+        "oneplus"
+      ],
+      "modelPrefixes": [
+        "PJD",
+        "CPH25"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "oneplus-13-family",
+      "manufacturer": [
+        "oneplus"
+      ],
+      "modelPrefixes": [
+        "PJZ",
+        "CPH26"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "oneplus-15-family",
+      "manufacturer": [
+        "oneplus"
+      ],
+      "modelPrefixes": [
+        "PLK",
+        "CPH27"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "honor-80-gt",
+      "manufacturer": [
+        "honor"
+      ],
+      "modelPrefixes": [
+        "AGT-AN00"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "vivo-x60",
+      "manufacturer": [
+        "vivo"
+      ],
+      "models": [
+        "V2046",
+        "V2047",
+        "V2059"
+      ],
+      "devices": [
+        "kona"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "vivo-iqoo-generic",
+      "manufacturer": [
+        "vivo",
+        "iqoo"
+      ],
+      "providers": [
+        "veyra"
+      ]
+    },
+    {
+      "id": "generic-android",
+      "providers": [
+        "veyra"
+      ]
+    }
+  ],
+  "entries": []
+}

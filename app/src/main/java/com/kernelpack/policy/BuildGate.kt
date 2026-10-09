@@ -162,7 +162,8 @@ object BuildGate {
             major == 5 -> LayoutFamily.FLAT_10W
             // ── Unstable 4.x ───────────────────────────────────────
             // Never claim an executable layout from this family alone. 4.x stays analysis-first;
-            // exact runnable output requires an exact registered baseline (currently 4.19.152-perf+).
+            // exact runnable output requires an exact registered baseline/base-library.
+            // 4.19.152-perf+ currently has public adapter evidence, not a registered executable baseline.
             major == 4 -> LayoutFamily.UNKNOWN
             else -> LayoutFamily.UNKNOWN
         }

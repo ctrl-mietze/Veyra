@@ -786,9 +786,16 @@ class InstallViewModel(application: Application) : AndroidViewModel(application)
                 val targetSnapshot = DeviceSnapshot.current()
                 val selectedFlavor = AppPreferences.kernelsuFlavor(app)
                 val requestedMethod = AppPreferences.rootMethod(app)
-                val fastSupport = FastRootSupport.forSnapshot(targetSnapshot)
-                val fastAllowed =
-                    fastSupport.available && selectedFlavor != KernelSuFlavor.ReSukiSU
+                val enhancedFallbackPlan =
+                    DfPlusPlanner.plan(app, targetSnapshot, selectedFlavor)
+                val requestedDfPlan = when (requestedMethod) {
+                    RootMethod.DfCompatible ->
+                        DfPlusPlanner.compatiblePlan(app, targetSnapshot, selectedFlavor)
+                    RootMethod.Fast -> enhancedFallbackPlan
+                    RootMethod.Standard -> null
+                }
+                val requestedDfAllowed = requestedDfPlan?.available == true
+                val fastFallbackAllowed = enhancedFallbackPlan.available
 
                 val profile = when {
                     // Attempted and unusable is a refusal, not a fallback. The run the user asked for is
@@ -799,19 +806,19 @@ class InstallViewModel(application: Application) : AndroidViewModel(application)
                     }.profile
                     offline -> cachedProfileFor(selectionId)
                     selectionId != null -> repository.resolveTarget(selectionId)
-                    requestedMethod == RootMethod.Fast && fastAllowed ->
+                    requestedMethod.usesDf && requestedDfAllowed ->
                         repository.resolveFastTarget(targetSnapshot, selectedFlavor)
                     else -> {
                         runCatching {
                             repository.resolveTarget(targetSnapshot)
                         }.getOrElse { standardFailure ->
-                            if (!fastAllowed) throw standardFailure
+                            if (!fastFallbackAllowed) throw standardFailure
                             val fastProfile = runCatching {
                                 repository.resolveFastTarget(targetSnapshot, selectedFlavor)
                             }.getOrNull() ?: throw standardFailure
                             AppPreferences.setRootMethod(app, RootMethod.Fast)
                             appendLog(
-                                "[*] Standard has no matching profile; New (fast) selected automatically.",
+                                "[*] Standard has no matching profile; Veyra DF+ selected automatically.",
                             )
                             fastProfile
                         }
@@ -1368,20 +1375,23 @@ class InstallViewModel(application: Application) : AndroidViewModel(application)
         routePolicy: ExploitRoutePolicy,
     ): Boolean {
         val preferredMethod = AppPreferences.rootMethod(app)
-        val fastSupport = FastRootSupport.forSnapshot(DeviceSnapshot.current())
-        val fastFlavorSupported = payloads.profile.flavor != KernelSuFlavor.ReSukiSU
-        if (preferredMethod == RootMethod.Fast && fastSupport.available && fastFlavorSupported) {
-            appendLog("[*] Root method: New (fast)")
-            return executeFastRoot(payloads.profile.flavor)
+        val snapshot = DeviceSnapshot.current()
+        val dfPlan = when (preferredMethod) {
+            RootMethod.DfCompatible ->
+                DfPlusPlanner.compatiblePlan(app, snapshot, payloads.profile.flavor)
+            RootMethod.Fast ->
+                DfPlusPlanner.plan(app, snapshot, payloads.profile.flavor)
+            RootMethod.Standard -> null
         }
-        if (preferredMethod == RootMethod.Fast) {
+        if (preferredMethod.usesDf && dfPlan?.available == true) {
+            appendLog("[*] Root method: ${dfPlan.mode.label}")
+            return executeFastRoot(payloads.profile.flavor, preferredMethod)
+        }
+        if (preferredMethod.usesDf) {
             appendLog(
-                "[!] New (fast) unavailable here; using Standard. " +
-                    if (!fastFlavorSupported) {
-                        "ReSukiSU uses the standard Pixel/local route."
-                    } else {
-                        fastSupport.reason
-                    },
+                "[!] ${preferredMethod.label} unavailable here; using Standard. " +
+                    (dfPlan?.blockers?.joinToString("; ")
+                        ?: "No coherent DF route is available."),
             )
         } else {
             appendLog("[*] Root method: Standard")
@@ -1525,20 +1535,41 @@ class InstallViewModel(application: Application) : AndroidViewModel(application)
         return recoveredKernelSu
     }
 
-    private suspend fun executeFastRoot(flavor: KernelSuFlavor): Boolean {
+    private suspend fun executeFastRoot(
+        flavor: KernelSuFlavor,
+        method: RootMethod,
+    ): Boolean {
         val next = flavor == KernelSuFlavor.KernelSuNext
         val snapshot = DeviceSnapshot.current()
-        val support = FastRootSupport.forSnapshot(snapshot)
-        val kmi = support.kmi
-            ?: error("New (fast) has no KMI for this device")
-        val koVariant = if (next) "next" else "classic"
-        val koAsset = "local-sources/dfroot/ko/$koVariant/${kmi}_kernelsu.ko"
-        withContext(Dispatchers.IO) {
-            app.assets.open(koAsset).use { input ->
-                require(input.read() >= 0) { "Empty DFRoot KMI module: $koAsset" }
+        val plan = when (method) {
+            RootMethod.DfCompatible -> DfPlusPlanner.compatiblePlan(app, snapshot, flavor)
+            RootMethod.Fast -> DfPlusPlanner.plan(app, snapshot, flavor)
+            RootMethod.Standard -> error("Standard cannot execute the DF engine")
+        }
+        require(plan.available) {
+            "Veyra DF+ preflight blocked: " + plan.blockers.joinToString("; ")
+        }
+        val kmi = requireNotNull(plan.kmi)
+        val koAsset = plan.koAsset
+        if (method == RootMethod.Fast) {
+            require(plan.exactKmiAsset && koAsset != null) {
+                "Veyra DF+ requires an exact external KMI module for $kmi"
+            }
+            withContext(Dispatchers.IO) {
+                app.assets.open(koAsset).use { input ->
+                    require(input.read() >= 0) { "Empty DFRoot KMI module: $koAsset" }
+                }
             }
         }
-        appendLog("[*] New (fast) KMI: $kmi · $koVariant")
+        appendLog("[*] ${plan.routeLabel}")
+        plan.notes.forEach { note -> appendLog("[DF+] $note") }
+        if (method == RootMethod.Fast) {
+            appendLog("[DF+] exact module evidence: $koAsset")
+        } else {
+            appendLog("[DF Compatible] native embedded KMI route: $kmi")
+        }
+        val managerPackage = KernelSuManager.installedFor(app, flavor)?.packageName
+        managerPackage?.let { appendLog("[DF] manager daemon source candidate: $it") }
         val report = mutableListOf<String>()
         val reporter = df.root.IReporter { line ->
             synchronized(report) {
@@ -1552,6 +1583,7 @@ class InstallViewModel(application: Application) : AndroidViewModel(application)
                     app,
                     next,
                     false,
+                    managerPackage,
                     reporter,
                 )
             }
@@ -1564,7 +1596,7 @@ class InstallViewModel(application: Application) : AndroidViewModel(application)
         }
 
         require(rc == 0) {
-            "New (fast) engine failed (rc=$rc)"
+            "DF engine failed (rc=$rc)"
         }
 
         appendLog(app.getString(R.string.log_bootstrap_root))
@@ -1572,13 +1604,13 @@ class InstallViewModel(application: Application) : AndroidViewModel(application)
         repeat(8) { attempt ->
             val status = runCatching { KernelSuRuntime.status(app) }.getOrNull()
             if (status == KernelSuStatus.Active) {
-                appendLog("[+] New (fast): KernelSU control path active")
+                appendLog("[+] DF route: KernelSU control path active")
                 return true
             }
             if (attempt < 7) delay(250)
         }
 
-        appendLog("[*] New (fast): root landed; KernelSU will be verified/loaded by Veyra")
+        appendLog("[*] DF route: root landed; KernelSU will be verified/loaded by Veyra")
         return false
     }
 

@@ -132,18 +132,26 @@ internal object MagicDiagnostics {
         )
     }
 
+    fun strategyMatrix(context: Context): MagicDiagnosticReport {
+        val report = BuilderStrategyPlanner.evaluate(context)
+        return MagicDiagnosticReport(
+            title = "Builder Strategy Matrix",
+            lines = report.lines(),
+        )
+    }
+
     fun kmiMatrix(context: Context): MagicDiagnosticReport {
         val snapshot = DeviceSnapshot.current()
-        val fast = FastRootSupport.forSnapshot(snapshot)
+        val flavor = AppPreferences.kernelsuFlavor(context)
+        val plan = DfPlusPlanner.plan(context, snapshot, flavor)
         val inventory = DfKmiInventory.read(context)
-        val expected = fast.kmi?.plus("_kernelsu.ko")
+        val expected = plan.kmi?.plus("_kernelsu.ko")
         val classic = expected != null && expected in inventory.classic
         val next = expected != null && expected in inventory.next
         return MagicDiagnosticReport(
-            "KMI Matrix",
+            "KMI / DF+ Matrix",
             buildList {
-                add("Android ${fast.androidMajor} · kernel ${fast.kernelSeries}")
-                add(fast.reason)
+                addAll(plan.asLines())
                 add("Classic KMI modules: ${inventory.classic.size}")
                 add("KernelSU-Next KMI modules: ${inventory.next.size}")
                 if (expected != null) {
@@ -152,13 +160,42 @@ internal object MagicDiagnostics {
                     add("Next: ${if (next) "present" else "missing"}")
                 }
                 add(
-                    if (fast.available && (classic || next)) {
-                        "Verdict: New (fast) has a matching local KMI module."
+                    if (plan.available) {
+                        "Verdict: ${plan.routeLabel} is locally coherent; runtime vulnerability still has to be proven by the device."
                     } else {
-                        "Verdict: no local exact KMI route; keep Standard/Magic analysis."
+                        "Verdict: DF+ blocked; Standard/Magic remains the fallback."
                     },
                 )
             },
+        )
+    }
+
+    fun vivoLiveCatalog(context: Context): MagicDiagnosticReport {
+        val snapshot = DeviceSnapshot.current()
+        if (MagicBuilderController.oemRoute(snapshot) != MagicBuilderOemRoute.VivoIqoo) {
+            return MagicDiagnosticReport(
+                "Vivo Live Catalog",
+                listOf("Current device is not on the vivo / iQOO OEM route."),
+            )
+        }
+        val report = VivoPayloadCatalog.refresh(context, snapshot)
+        return MagicDiagnosticReport(
+            title = "Vivo Live Catalog",
+            lines = report.lines(snapshot),
+        )
+    }
+
+    fun vivoKonaEvidence(context: Context): MagicDiagnosticReport {
+        val report = VivoKonaEvidence.inspect(context)
+        val saved = if (report.applicable) {
+            runCatching { VivoKonaEvidence.export(context) }.getOrNull()
+        } else {
+            null
+        }
+        return MagicDiagnosticReport(
+            title = "Vivo / Kona Evidence Ladder",
+            lines = report.lines(),
+            savedPath = saved,
         )
     }
 

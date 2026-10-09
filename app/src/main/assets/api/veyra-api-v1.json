@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "enabled": false,
+  "baseUrl": "https://api.veyracore.de/v1",
+  "clientId": "veyra-root",
+  "accountUrl": "https://veyracore.de/account",
+  "features": {
+    "accounts": true,
+    "sessions": true,
+    "marketEntitlements": true,
+    "deviceRegistration": true,
+    "licenses": true
+  }
+}

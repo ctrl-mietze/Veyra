@@ -3,6 +3,7 @@ package ctrl.mietze.veyraroot
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Bolt
+import androidx.compose.material.icons.rounded.Apps
 import androidx.compose.material.icons.rounded.Folder
 import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.Palette
@@ -45,10 +46,19 @@ internal enum class SettingsSection(
     Appearance(R.string.appearance, Icons.Rounded.Palette),
     Payloads(R.string.settings_section_payloads, Icons.Rounded.Folder),
     Run(R.string.settings_section_run, Icons.Rounded.Bolt, targets = listOf(SettingsTarget.PartitionReadOnly)),
-    Shizuku(R.string.settings_section_cveyra, Icons.Rounded.Terminal),
+    Shizuku(
+        R.string.settings_section_cveyra,
+        Icons.Rounded.Terminal,
+        targets = listOf(SettingsTarget.CVeyraAccess, SettingsTarget.CVeyraManagement),
+    ),
     WirelessAdb(R.string.settings_section_adb_manager, Icons.Rounded.Link),
-    Root(R.string.settings_section_root, Icons.Rounded.Security),
+    Root(
+        R.string.settings_section_root,
+        Icons.Rounded.Security,
+        targets = listOf(SettingsTarget.RootMigration, SettingsTarget.VeyraKsu),
+    ),
     Recovery(R.string.settings_recovery, Icons.Rounded.RestartAlt),
+    Market(R.string.settings_section_market, Icons.Rounded.Apps),
     System(R.string.settings_section_system, Icons.Rounded.Settings);
 
     companion object {

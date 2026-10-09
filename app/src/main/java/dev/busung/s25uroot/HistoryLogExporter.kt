@@ -40,10 +40,10 @@ internal object HistoryLogExporter {
         SimpleDateFormat("yyyyMMdd-HHmmss", Locale.US).format(Date(now)) +
         "-${exportable(entries).size}.zip"
 
-    /** Stable human-readable file name: app, timestamp and result, without an opaque run id. */
+    /** Stable human-readable file name with a short run id to prevent ZIP entry collisions. */
     fun entryFileName(entry: InstallHistoryEntry): String = "VeyraRoot-" +
         SimpleDateFormat("yyyyMMdd-HHmmss", Locale.US).format(Date(entry.startedAtMillis)) +
-        "-${entry.result.name.lowercase(Locale.US)}.log"
+        "-${entry.result.name.lowercase(Locale.US)}-${entry.id.take(8)}.log"
 
     /** Writes every completed run into one zip. */
     fun saveArchive(context: Context, uri: Uri, entries: Collection<InstallHistoryEntry>) {

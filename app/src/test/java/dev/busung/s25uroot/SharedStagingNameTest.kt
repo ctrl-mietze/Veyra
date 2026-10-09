@@ -38,11 +38,15 @@ class SharedStagingNameTest {
         // here would be a run staging into a file the other install is using, which no test of this
         // app's own behaviour could notice: both apps work perfectly until they run at the same time.
         val offenders = stagedInSources()
-            .filterNot { it.name in PAYLOAD_OWNED_NAMES || isThisForksOwn(it.name) }
+            .filterNot {
+                it.path in READ_ONLY_PATHS ||
+                    it.name in PAYLOAD_OWNED_NAMES ||
+                    isThisForksOwn(it.name)
+            }
 
         assertEquals(
             "these stage into a name the app this fork came from also writes, so the two installs would " +
-                "be fighting over one file - the fork's own names carry the $FORK_PREFIX prefix",
+                "be fighting over one file - Veyra-owned names must stay outside upstream's staging names",
             emptyList<String>(),
             offenders.map(Staged::toString),
         )
@@ -85,8 +89,11 @@ class SharedStagingNameTest {
         override fun toString(): String = "${file.path}:$line: $path"
     }
 
-    /** The fork's own generation of names, with or without the leading dot the markers use. */
-    private fun isThisForksOwn(name: String): Boolean = name.removePrefix(".").startsWith(FORK_PREFIX)
+    /** Veyra-owned generations of names, with or without a leading dot marker. */
+    private fun isThisForksOwn(name: String): Boolean {
+        val plain = name.removePrefix(".")
+        return plain in VEYRA_OWNED_EXACT || VEYRA_PREFIXES.any(plain::startsWith)
+    }
 
     /**
      * Every path the shipped sources name under the directory, read the way [StagedResidueTest] reads
@@ -113,7 +120,7 @@ class SharedStagingNameTest {
             staged.isNotEmpty(),
         )
         assertTrue(
-            "no staged path begins with $FORK_PREFIX, so the rule above is checking nothing",
+            "no Veyra-owned staged path was found, so the rule above is checking nothing",
             staged.any { isThisForksOwn(it.name) },
         )
         return staged
@@ -126,8 +133,12 @@ class SharedStagingNameTest {
 
     private companion object {
 
-        /** The prefix this fork's own staged names carry. */
-        const val FORK_PREFIX = "rmgnext-"
+        /** Current and retained Veyra-owned staging namespaces. */
+        val VEYRA_PREFIXES = setOf("rmgnext-", "veyra-", "cveyra-")
+        val VEYRA_OWNED_EXACT = setOf("ksud-pixel")
+
+        /** Paths mentioned as read-only inputs, not written by Veyra. */
+        val READ_ONLY_PATHS = setOf("/data/local/tmp/boot.img")
 
         /**
          * What the app this fork came from stages, read off its own staging code.

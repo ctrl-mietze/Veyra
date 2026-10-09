@@ -47,7 +47,7 @@ class PermissionGrantTest {
     @Test
     fun `a transport that was not asked grants nothing`() {
         assertFalse(GrantOutcome.NoTransport.granted)
-        assertFalse(GrantOutcome.Refused(GrantTransport.ShizukuShell, "denied").granted)
+        assertFalse(GrantOutcome.Refused(GrantTransport.CVeyraShell, "denied").granted)
         assertTrue(GrantOutcome.AlreadyGranted.granted)
         assertTrue(GrantOutcome.Granted(GrantTransport.RootShell).granted)
     }

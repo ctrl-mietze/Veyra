@@ -1,13 +1,13 @@
 .gradle/
-**/build/
+.kotlin/
+.cxx/
+.idea/
 local.properties
+**/build/
+captures/
+*.iml
+
+# Release signing material: never commit.
 keystore/
 *.jks
 *.keystore
-*.p12
-*.pem
-*.key
-*.properties.local
-.DS_Store
-
-.kotlin/

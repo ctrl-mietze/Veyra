@@ -30,6 +30,9 @@ internal object ReleaseGuard {
         "assets/local-sources/dfroot/targets-v3.json" to "e0246f4f16195bbd71fa864bd81acb698ce609982e517fb39b10d599a1a08058",
         "assets/local-sources/pixel/targets-v3.json" to "bd5a31a2cd793920e2e8e911c345fed9c63ce5ae691f9141325513f40841257d",
         "assets/vmarked/manifest.json" to "51646425e1e9c76a0057d27316252767ee0b1b8ddfbe5c0b4240ed565d32e48d",
+        "assets/magic-builder/ota-catalog-v1.json" to "2db5eb1af83fcbfbdf43af3fffe2cd87c79c0d1650c547fc65f7db97b9a145eb",
+        "assets/market/manifest.json" to "451a59ebb86c0a09b9e0380e7919bb3e3f685acd6de092f6ea7f2f7e6a37ebdf",
+        "assets/api/veyra-api-v1.json" to "0221250d0930ae6552c3faa6d87e33e5b1c97ceb6724fee1bbee2399cd5130c2",
         "assets/local-sources/research-oneplus-p2p3p/source.json" to "68c83bcf53408c09bdc8fbf9d345e5f6cfe517b3327e004546e62e549ffab4a4",
         "assets/local-sources/research-rootmys24/source.json" to "ff133da0ca445ce60e4959553a7898ee6864934dbffe382d2422e30b97a6beb9",
         "assets/local-sources/research-honor80gt/source.json" to "d4708060eec5489e8a84aae4cb6c04ddff296ae426415ffb3abb8f7fdadb1157",
@@ -70,7 +73,7 @@ internal object ReleaseGuard {
     )
 
     fun install(context: Context) {
-        if (!BuildConfig.RELEASE_HARDENED) return
+        if (!notDebuggable(context)) return
         val app = context.applicationContext
         checkOrTerminate(app)
         if (watchdogStarted.compareAndSet(false, true)) {
@@ -92,7 +95,7 @@ internal object ReleaseGuard {
     }
 
     fun checkNow(context: Context) {
-        if (!BuildConfig.RELEASE_HARDENED) return
+        if (!notDebuggable(context)) return
         checkOrTerminate(context.applicationContext)
     }
 
@@ -100,8 +103,14 @@ internal object ReleaseGuard {
         val valid = runCatching {
             context.packageName == EXPECTED_PACKAGE &&
                 BuildConfig.APPLICATION_ID == EXPECTED_PACKAGE &&
-                !BuildConfig.DEBUG &&
+                BuildConfig.PUBLIC_RELEASE &&
+                BuildConfig.RELEASE_HARDENED &&
+                BuildConfig.VERSION_BASE == "2.0.0" &&
+                BuildConfig.VERSION_CODE >= 200_000_000 &&
                 notDebuggable(context) &&
+                notTestOnly(context) &&
+                hasExecutableCode(context) &&
+                singleApkInstall(context) &&
                 signerMatches(context) &&
                 trustedApkLocation(context) &&
                 apkStructureMatches(context) &&
@@ -118,6 +127,15 @@ internal object ReleaseGuard {
 
     private fun notDebuggable(context: Context): Boolean =
         context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE == 0
+
+    private fun notTestOnly(context: Context): Boolean =
+        context.applicationInfo.flags and ApplicationInfo.FLAG_TEST_ONLY == 0
+
+    private fun hasExecutableCode(context: Context): Boolean =
+        context.applicationInfo.flags and ApplicationInfo.FLAG_HAS_CODE != 0
+
+    private fun singleApkInstall(context: Context): Boolean =
+        context.applicationInfo.splitSourceDirs.isNullOrEmpty()
 
     private fun signerMatches(context: Context): Boolean {
         val pm = context.packageManager

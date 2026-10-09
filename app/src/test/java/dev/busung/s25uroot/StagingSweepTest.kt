@@ -77,7 +77,7 @@ class StagingSweepTest {
         // sweep would be narrowed everywhere and the daemon copy would stay in /data/local/tmp after
         // every run - a bug that reads like a deliberate policy.
         assertNotEquals(BuildConfig.APPLICATION_ID, SiblingInstall.PACKAGE)
-        assertEquals("ctrl.mietze.veyraroot", SiblingInstall.PACKAGE)
+        assertEquals("dev.rushiranpise.rmgnext", SiblingInstall.PACKAGE)
     }
 
     @Test

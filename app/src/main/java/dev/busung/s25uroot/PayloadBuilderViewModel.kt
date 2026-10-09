@@ -197,6 +197,13 @@ data class PayloadBuildState(
     val summary: String = "",
     /** 结果里的「提示」行（单独拿出来上色）。 */
     val notices: List<String> = emptyList(),
+    /** Parsed full release from the currently selected boot image. */
+    val detectedKernelRelease: String = "",
+    /**
+     * Persistent route intelligence for an exact boot image from the running device.
+     * Kept separate from the log so a blocked Standard build can still show usable alternatives.
+     */
+    val strategyReport: BuilderStrategyReport? = null,
     /** 产物 .so 的名字 / 大小 / sha256。 */
     val outputName: String = "",
     val outputSize: Long = 0,
@@ -507,6 +514,51 @@ class PayloadBuilderViewModel(application: Application) : AndroidViewModel(appli
                     kernelReleaseFromBanner(version.first, version.second)
                 }
                 publish(app.getString(R.string.builder_detected_kernel, kernelRelease))
+                mutableState.value = mutableState.value.copy(
+                    detectedKernelRelease = kernelRelease,
+                )
+                val liveTargetSnapshot = DeviceSnapshot.current()
+                val exactLiveTarget = liveTargetSnapshot.kernelRelease.isNotBlank() &&
+                    kernelRelease.equals(liveTargetSnapshot.kernelRelease, ignoreCase = true)
+                if (exactLiveTarget) {
+                    val routeSnapshot = liveTargetSnapshot.copy(kernelRelease = kernelRelease)
+                    val strategyReport = BuilderStrategyPlanner.evaluate(app, routeSnapshot)
+                    mutableState.value = mutableState.value.copy(
+                        strategyReport = strategyReport,
+                    )
+                    strategyReport.recommended?.let { recommended ->
+                        publish(
+                            "[Strategy] recommended: ${recommended.label} · " +
+                                recommended.state.label,
+                        )
+                    }
+                    strategyReport.candidates
+                        .sortedBy { it.priority }
+                        .take(5)
+                        .forEach { candidate ->
+                            publish(
+                                "[Strategy] ${candidate.label}: " +
+                                    "${candidate.state.label} · ${candidate.reason}",
+                            )
+                        }
+
+                    val dfPlan = DfPlusPlanner.plan(
+                        app,
+                        routeSnapshot,
+                        AppPreferences.kernelsuFlavor(app),
+                    )
+                    if (dfPlan.available) {
+                        publish("[DF+] alternate exact route available: ${dfPlan.routeLabel}")
+                        dfPlan.notes.take(3).forEach { note -> publish("[DF+] $note") }
+                    } else if (magic) {
+                        publish(
+                            "[DF+] no exact route for this image: " +
+                                dfPlan.blockers.take(3).joinToString("; "),
+                        )
+                    }
+                } else if (!magic) {
+                    publish("[DF+] alternate route not evaluated: boot image is not the running device's exact kernel")
+                }
                 if (magic) {
                     val snapshot = DeviceSnapshot.current()
                     val route = MagicBuilderController.oemRoute(snapshot)
@@ -583,7 +635,7 @@ class PayloadBuilderViewModel(application: Application) : AndroidViewModel(appli
                 ) {
                     KernelSchemeSelector.Decision.Selected(
                         series = magicSeries,
-                        major = magicMajor ?: 0,
+                        major = magicMajor,
                         useTestScheme = magicMajor != 6,
                         notes = listOf(
                             "[Magic Builder] 4.x-7.x scan path: exact baselines are preferred; " +

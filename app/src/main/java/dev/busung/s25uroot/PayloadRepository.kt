@@ -282,9 +282,9 @@ class PayloadRepository(private val context: Context) {
 
         if (firstLooseSource != null && firstLooseTargets != null && firstLooseMatch != null) {
             return activateBuiltIn(
-                source = firstLooseSource!!,
-                targets = firstLooseTargets!!,
-                match = firstLooseMatch!!,
+                source = firstLooseSource,
+                targets = firstLooseTargets,
+                match = firstLooseMatch,
                 quality = "loose kernel-version fallback; no exact firmware profile found",
             )
         }
@@ -408,7 +408,15 @@ class PayloadRepository(private val context: Context) {
      */
     fun inspect(source: PayloadSource, snapshot: DeviceSnapshot): SourceCoverage {
         val fetched = fetchManifest(source)
-        return fetched.manifest.coverageFor(snapshot, fetched.commit)
+        val coverage = fetched.manifest.coverageFor(snapshot, fetched.commit)
+        val adapter = LocalSourceAdapters.forSource(source) ?: return coverage
+        return coverage.copy(
+            adapterCount = 1,
+            adapterLabel = adapter.title,
+            adapterKind = adapter.kind,
+            adapterMatchesDevice = adapter.matches(snapshot),
+            adapterCapabilities = adapter.capabilities,
+        )
     }
 
     /**

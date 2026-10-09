@@ -341,7 +341,7 @@ internal object MagicBuilderController {
         )
     }
 
-    private fun kernelReleaseOfBootImage(file: File): String? = runCatching {
+    internal fun kernelReleaseOfBootImage(file: File): String? = runCatching {
         val parsed = BootImageParser.parse(file.readBytes(), KernelDecompressor.default)
         val version = KallsymsFinder.linuxVersionFromImage(parsed.image)
             ?: return@runCatching null
@@ -599,6 +599,27 @@ internal object MagicBuilderController {
         }
 
         copyExisting(boot.file, "boot.img")
+
+        val dfPlan = DfPlusPlanner.plan(
+            context,
+            snapshot,
+            AppPreferences.kernelsuFlavor(context),
+        )
+        File(work, "df-route-report.txt").writeText(
+            buildString {
+                appendLine("Veyra DF Route Report")
+                appendLine("Selected method: ${AppPreferences.rootMethod(context).label}")
+                dfPlan.asLines().forEach(::appendLine)
+            },
+        )
+        captured += "df-route-report.txt"
+
+        val strategyReport = BuilderStrategyPlanner.evaluate(context, snapshot)
+        File(work, "builder-strategy-matrix.txt").writeText(
+            strategyReport.lines().joinToString("\n", postfix = "\n"),
+        )
+        captured += "builder-strategy-matrix.txt"
+
         if (rootMode) {
             rootCopy("/sys/kernel/btf/vmlinux", "vmlinux.btf", minBytes = 4096)
             rootCopy("/proc/kallsyms", "kallsyms.txt", minBytes = 256)
@@ -727,6 +748,18 @@ internal object MagicBuilderController {
             )
             captured += "vivo-kona-source-evidence.txt"
 
+            val evidenceLadder = VivoKonaEvidence.inspect(context, snapshot)
+            File(work, "vivo-kona-evidence-ladder.txt").writeText(
+                evidenceLadder.lines().joinToString("\n", postfix = "\n"),
+            )
+            captured += "vivo-kona-evidence-ladder.txt"
+
+            val liveCatalog = VivoPayloadCatalog.refresh(context, snapshot)
+            File(work, "vivo-rootmyvivo-live-catalog.txt").writeText(
+                liveCatalog.lines(snapshot).joinToString("\n", postfix = "\n"),
+            )
+            captured += "vivo-rootmyvivo-live-catalog.txt"
+
             val vivoRuntime = if (rootMode) {
                 CVeyraController.rootShell(
                     context,
@@ -853,6 +886,13 @@ internal fun VeyraMagicBuilderSettingsPage(
     val context = LocalContext.current
     val snapshot = remember { DeviceSnapshot.current() }
     val vivoProfile = remember(snapshot) { VivoLegacyProfiles.detect(snapshot) }
+    val vivoKonaCandidate = remember(snapshot, vivoProfile) {
+        vivoProfile != null ||
+            (
+                MagicBuilderController.oemRoute(snapshot) == MagicBuilderOemRoute.VivoIqoo &&
+                    snapshot.kernelRelease.startsWith("4.19.152", ignoreCase = true)
+            )
+    }
     val inventory = remember { DfKmiInventory.read(context) }
     val scope = rememberCoroutineScope()
     var radar by remember { mutableStateOf(VeyraCompatibilityRadar.scan(context)) }
@@ -1212,6 +1252,19 @@ internal fun VeyraMagicBuilderSettingsPage(
                             Text("Kernel Gate")
                         }
                     }
+                    FilledTonalButton(
+                        enabled = !magicToolsBusy,
+                        onClick = {
+                            runMagicDiagnostic {
+                                MagicDiagnostics.strategyMatrix(context)
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        Icon(Icons.Rounded.AutoFixHigh, contentDescription = null)
+                        Spacer(Modifier.width(8.dp))
+                        Text("Builder Strategy Matrix")
+                    }
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -1255,6 +1308,36 @@ internal fun VeyraMagicBuilderSettingsPage(
                         Icon(Icons.Rounded.FolderOpen, contentDescription = null)
                         Spacer(Modifier.width(8.dp))
                         Text("Boot Evidence Report")
+                    }
+                    if (MagicBuilderController.oemRoute(snapshot) == MagicBuilderOemRoute.VivoIqoo) {
+                        FilledTonalButton(
+                            enabled = !magicToolsBusy,
+                            onClick = {
+                                runMagicDiagnostic {
+                                    MagicDiagnostics.vivoLiveCatalog(context)
+                                }
+                            },
+                            modifier = Modifier.fillMaxWidth(),
+                        ) {
+                            Icon(Icons.Rounded.FolderOpen, contentDescription = null)
+                            Spacer(Modifier.width(8.dp))
+                            Text("Vivo Live Payload Catalog")
+                        }
+                    }
+                    if (vivoKonaCandidate) {
+                        FilledTonalButton(
+                            enabled = !magicToolsBusy,
+                            onClick = {
+                                runMagicDiagnostic {
+                                    MagicDiagnostics.vivoKonaEvidence(context)
+                                }
+                            },
+                            modifier = Modifier.fillMaxWidth(),
+                        ) {
+                            Icon(Icons.Rounded.Memory, contentDescription = null)
+                            Spacer(Modifier.width(8.dp))
+                            Text("Vivo / Kona Evidence Ladder")
+                        }
                     }
                     if (magicToolsBusy) {
                         Row(
@@ -1511,8 +1594,11 @@ internal fun VeyraMagicBuilderPage(
     val backend = CVeyraPreferences.backend(context)
     val proxyReady = backend == CVeyraBackend.WirelessAdb &&
         CVeyraPrivilegedStorageProxy.available(context)
-    val ready = CVeyraPreferences.enabled(context) &&
+    val liveReady = CVeyraPreferences.enabled(context) &&
         (backend == CVeyraBackend.Root || proxyReady)
+    // Magic Builder no longer needs live-root as its only input route. Without a live backend it
+    // falls through to exact OTA / stock-boot intelligence and still validates the full kernel release.
+    val ready = true
     val busy = captureBusy || buildState.busy || supportBundleBusy
 
     LaunchedEffect(
@@ -1588,7 +1674,7 @@ internal fun VeyraMagicBuilderPage(
         } else {
             autoRetryActive = false
             val capture = lastCapture
-            if (capture != null && ready) {
+            if (capture != null && liveReady) {
                 supportBundleBusy = true
                 val bundle = withContext(Dispatchers.IO) {
                     runCatching {
@@ -1711,7 +1797,7 @@ internal fun VeyraMagicBuilderPage(
                             },
                         ),
                         style = MaterialTheme.typography.bodySmall,
-                        color = if (ready) {
+                        color = if (liveReady) {
                             MaterialTheme.colorScheme.primary
                         } else {
                             MaterialTheme.colorScheme.onSurfaceVariant
@@ -2062,11 +2148,11 @@ internal fun VeyraMagicBuilderPage(
             }
         }
 
-        if (!ready) {
+        if (!liveReady) {
             item {
                 Card(
                     colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.errorContainer,
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
                     ),
                 ) {
                     Column(
@@ -2133,7 +2219,11 @@ internal fun VeyraMagicBuilderPage(
                             captureBusy = true
                             scope.launch {
                                 val result = withContext(Dispatchers.IO) {
-                                    runCatching { MagicBuilderController.captureLiveBoot(context) }
+                                    runCatching {
+                                        MagicBootResolver.resolve(context) { line ->
+                                            AppLog.info(AppLogTags.BUILDER, "[Magic OTA] $line")
+                                        }
+                                    }
                                 }
                                 captureBusy = false
                                 result.onSuccess { capture ->
@@ -2215,7 +2305,7 @@ internal fun VeyraMagicBuilderPage(
             }
         }
 
-        if (lastCapture != null && ready) {
+        if (lastCapture != null && liveReady) {
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -2349,6 +2439,15 @@ internal fun VeyraMagicBuilderPage(
                         )
                     }
                 }
+            }
+        }
+
+        buildState.strategyReport?.let { report ->
+            item {
+                BuilderStrategyCard(
+                    report = report,
+                    title = "Magic Route Matrix",
+                )
             }
         }
 

@@ -31,7 +31,7 @@ internal object SiblingInstall {
      * named: a fork that has moved its own id is exactly as invisible to this check as this app is to
      * it, which is why the sweep's answer is a smaller list rather than a clever one.
      */
-    const val PACKAGE = "ctrl.mietze.veyraroot"
+    const val PACKAGE = "dev.rushiranpise.rmgnext"
 
     fun isPresent(context: Context): Boolean =
         runCatching { context.packageManager.getPackageInfo(PACKAGE, 0) }.isSuccess

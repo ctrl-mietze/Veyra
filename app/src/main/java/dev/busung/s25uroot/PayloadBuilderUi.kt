@@ -574,6 +574,15 @@ internal fun VeyraPayloadBuilderPage(
             }
         }
 
+        state.strategyReport?.let { report ->
+            item {
+                BuilderStrategyCard(
+                    report = report,
+                    title = "Builder Route Matrix",
+                )
+            }
+        }
+
         state.error?.takeIf { state.blockedKind == null }?.let { error ->
             item {
                 Card(

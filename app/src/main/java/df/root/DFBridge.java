@@ -44,10 +44,20 @@ public final class DFBridge {
     );
     public static int run(Context context, boolean next, boolean softReboot, IReporter reporter)
             throws Exception {
+        return run(context, next, softReboot, null, reporter);
+    }
+
+    public static int run(
+            Context context,
+            boolean next,
+            boolean softReboot,
+            String preferredManagerPackage,
+            IReporter reporter
+    ) throws Exception {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
             throw new IllegalStateException("DirtyFrag requires Android 9 / API 28 or newer");
         }
-        return runApi28(context, next, softReboot, reporter);
+        return runApi28(context, next, softReboot, preferredManagerPackage, reporter);
     }
 
     @RequiresApi(Build.VERSION_CODES.P)
@@ -55,10 +65,11 @@ public final class DFBridge {
             Context context,
             boolean next,
             boolean softReboot,
+            String preferredManagerPackage,
             IReporter reporter
     ) throws Exception {
         load(next);
-        stageKsud(context, next, reporter);
+        stageKsud(context, next, preferredManagerPackage, reporter);
 
         IpSecManager manager = context.getSystemService(IpSecManager.class);
         if (manager == null) throw new IllegalStateException("IpSecManager unavailable");
@@ -103,24 +114,56 @@ public final class DFBridge {
             }
         }
     }
-    private static void stageKsud(Context context, boolean next, IReporter reporter) throws Exception {
+    private static void stageKsud(
+            Context context,
+            boolean next,
+            String preferredManagerPackage,
+            IReporter reporter
+    ) throws Exception {
         File dataDir = context.getFilesDir().getParentFile();
         if (dataDir == null) throw new IllegalStateException("App data directory unavailable");
         File destination = new File(dataDir, "ksud");
-        String asset = next
-                ? "local-sources/dfroot/ksud-new-next"
-                : "local-sources/dfroot/ksud-new-classic";
-
         File temporary = new File(dataDir, "ksud.part");
-        try (InputStream input = context.getAssets().open(asset);
-             FileOutputStream output = new FileOutputStream(temporary, false)) {
-            byte[] buffer = new byte[8192];
-            int count;
-            while ((count = input.read(buffer)) >= 0) {
-                output.write(buffer, 0, count);
+
+        String managerPackage =
+                preferredManagerPackage != null && !preferredManagerPackage.trim().isEmpty()
+                        ? preferredManagerPackage.trim()
+                        : (next ? "com.rifsxd.ksunext" : "me.weishu.kernelsu");
+        File managerKsud = null;
+        try {
+            android.content.pm.ApplicationInfo app =
+                    context.getPackageManager().getApplicationInfo(managerPackage, 0);
+            if (app.nativeLibraryDir != null) {
+                File candidate = new File(app.nativeLibraryDir, "libksud.so");
+                if (candidate.isFile() && candidate.length() > 0) managerKsud = candidate;
             }
-            output.getFD().sync();
+        } catch (android.content.pm.PackageManager.NameNotFoundException ignored) {
+            // Bundled offline daemon below.
         }
+
+        if (managerKsud != null) {
+            try (InputStream input = new java.io.FileInputStream(managerKsud);
+                 FileOutputStream output = new FileOutputStream(temporary, false)) {
+                byte[] buffer = new byte[8192];
+                int count;
+                while ((count = input.read(buffer)) >= 0) output.write(buffer, 0, count);
+                output.getFD().sync();
+            }
+            reporter.report("DF+: staged ksud from installed " + managerPackage + " manager");
+        } else {
+            String asset = next
+                    ? "local-sources/dfroot/ksud-new-next"
+                    : "local-sources/dfroot/ksud-new-classic";
+            try (InputStream input = context.getAssets().open(asset);
+                 FileOutputStream output = new FileOutputStream(temporary, false)) {
+                byte[] buffer = new byte[8192];
+                int count;
+                while ((count = input.read(buffer)) >= 0) output.write(buffer, 0, count);
+                output.getFD().sync();
+            }
+            reporter.report("DF+: installed manager has no usable libksud.so; using verified bundled daemon");
+        }
+
         if (destination.exists() && !destination.delete()) {
             throw new IllegalStateException("Could not replace staged ksud");
         }
@@ -131,6 +174,6 @@ public final class DFBridge {
         if (!destination.setExecutable(true, false)) {
             throw new IllegalStateException("Could not chmod staged ksud");
         }
-        reporter.report("DF: staged " + (next ? "KernelSU-Next" : "KernelSU") + " ksud");
+        reporter.report("DF+: staged " + (next ? "KernelSU-Next" : "KernelSU") + " ksud");
     }
 }

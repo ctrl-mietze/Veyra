@@ -147,8 +147,7 @@ internal object CVeyraPrivilegedStorageProxy {
                 val direct = runCatching { session.pull(source, destination) }
                 if (direct.isSuccess) return@use
 
-                val stage = "/data/local/tmp/cveyra-storage-proxy-" +
-                    System.nanoTime().toString(16) + ".bin"
+                val stage = "/data/local/tmp/veyra-storage-proxy.bin"
                 try {
                     val stageCommand = when {
                         source.startsWith("/data/data/") || source.startsWith("/data/user/") -> {

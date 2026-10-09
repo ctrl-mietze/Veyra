@@ -46,8 +46,10 @@ internal object VeyraCompatibilityRadar {
         )
         val vivoLocal = VivoLegacyProfiles.detect(snapshot)
         val fast = FastRootSupport.forSnapshot(snapshot)
+        val flavor = AppPreferences.kernelsuFlavor(context)
+        val dfPlan = DfPlusPlanner.plan(context, snapshot, flavor)
         val inventory = DfKmiInventory.read(context)
-        val expectedKo = fast.kmi?.let { it + "_kernelsu.ko" }
+        val expectedKo = dfPlan.kmi?.let { it + "_kernelsu.ko" }
         val classicPresent = expectedKo != null && expectedKo in inventory.classic
         val nextPresent = expectedKo != null && expectedKo in inventory.next
 
@@ -89,11 +91,15 @@ internal object VeyraCompatibilityRadar {
                 },
             )
             add("Root method: ${AppPreferences.rootMethod(context).label}")
-            add("KernelSU flavor: ${AppPreferences.kernelsuFlavor(context).label}")
-            add("DFRoot: ${fast.reason}")
+            add("KernelSU flavor: ${flavor.label}")
+            add("DF route: ${if (dfPlan.available) dfPlan.routeLabel else "blocked"}")
+            if (!dfPlan.available) {
+                add("DF blockers: ${dfPlan.blockers.joinToString("; ")}")
+            }
             add("DF KMI assets: ${inventory.total} total · classic=${inventory.classic.size} · next=${inventory.next.size}")
-            if (fast.kmi != null) {
-                add("Required KMI: ${fast.kmi} · classic=${if (classicPresent) "OK" else "missing"} · next=${if (nextPresent) "OK" else "missing"}")
+            if (dfPlan.kmi != null) {
+                add("Required KMI: ${dfPlan.kmi} · classic=${if (classicPresent) "OK" else "missing"} · next=${if (nextPresent) "OK" else "missing"}")
+                add("OEM DF profile: ${dfPlan.oem.label}")
             }
             add("Local Pixel catalog: ${if (pixelManifest) "OK" else "missing"}")
             add("Local DFRoot catalog: ${if (dfManifest) "OK" else "missing"}")

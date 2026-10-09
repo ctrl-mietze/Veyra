@@ -352,6 +352,12 @@ data class SourceCoverage(
     val deviceProfileId: String?,
     /** How many payloads list this device's model and kernel version. */
     val deviceProfileCount: Int,
+    /** Non-binary capabilities exposed by Local/Research sources. */
+    val adapterCount: Int = 0,
+    val adapterLabel: String? = null,
+    val adapterKind: LocalAdapterKind? = null,
+    val adapterMatchesDevice: Boolean = false,
+    val adapterCapabilities: List<String> = emptyList(),
 )
 
 /**

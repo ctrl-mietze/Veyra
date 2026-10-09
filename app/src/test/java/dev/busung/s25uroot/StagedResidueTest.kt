@@ -278,6 +278,10 @@ class StagedResidueTest {
                 STAGING_PATH.findAll(source.readText()).map { match -> match.value }.toList()
             }
             .distinct()
+            // These are intentionally not residue owned by the cleanup catalog:
+            // boot.img is only a user/shell-provided read candidate, while .cveyra- is the
+            // persistent authenticated broker directory and must survive normal residue cleanup.
+            .filterNot { it in NON_RESIDUE_PATHS }
         assertTrue("the scan found no staged paths at all", staged.isNotEmpty())
 
         val catalogued = StagedResidue.catalog.map { it.path }.toSet()
@@ -306,6 +310,10 @@ class StagedResidueTest {
          * code refers to - because the point is to catch the name wherever it is written.
          */
         val STAGING_PATH = Regex("""/data/local/tmp/[A-Za-z0-9._-]+""")
+        val NON_RESIDUE_PATHS = setOf(
+            "/data/local/tmp/boot.img",
+            "/data/local/tmp/.cveyra-",
+        )
 
         /*
          * The errno numbers written out, rather than read from `OsConstants`.

@@ -31,7 +31,7 @@
         android:shortcutLongLabel="@string/reboot_sheet_title">
         <intent
             android:action="ctrl.mietze.veyraroot.action.RESTART_OPTIONS"
-            android:targetPackage="dev.rushiranpise.rmgnext"
+            android:targetPackage="ctrl.mietze.veyraroot"
             android:targetClass="ctrl.mietze.veyraroot.MainActivity" />
     </shortcut>
 
@@ -52,7 +52,7 @@
         android:shortcutLongLabel="@string/shortcut_soft_restart_long">
         <intent
             android:action="ctrl.mietze.veyraroot.action.SOFT_RESTART"
-            android:targetPackage="dev.rushiranpise.rmgnext"
+            android:targetPackage="ctrl.mietze.veyraroot"
             android:targetClass="ctrl.mietze.veyraroot.MainActivity" />
     </shortcut>
 </shortcuts>
